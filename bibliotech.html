@@ -18,7 +18,7 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-}
+}     
 
 /* Header */
 .header {
@@ -132,6 +132,21 @@ body {
     padding-top: 16px;
     border-top: 1px dashed #cbd5e1;
 }
+
+.solution-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+.solution-item input[type="checkbox"] {
+    width: 1.15em;
+    height: 1.15em;
+    cursor: pointer;
+}
+.solution-item label {
+    cursor: pointer;
+}
 </style>
 </head>
 <body>
@@ -163,99 +178,317 @@ body {
         id: "aerosol",
         name: "Aérosol",
         brands: [
-          { id: "breas", name: "Breas", models: [] },
-          { id: "lowenstein", name: "Lowenstein", models: [] },
-          { id: "philips", name: "Philips", models: [] },
-          { id: "resmed", name: "ResMed", models: [] },
-          { id: "sefam", name: "Sefam", models: [] }
+          { id: "breas", name: "Breas", models: [{ id: "neb-breas", name: "Nébuliseur Portable", failures: [] }] },
+          { id: "lowenstein", name: "Lowenstein", models: [{ id: "neb-lowenstein", name: "Nébuliseur Standard", failures: [] }] },
+          { id: "philips", name: "Philips", models: [{ id: "innospire", name: "InnoSpire", failures: [] }] },
+          { id: "resmed", name: "ResMed", models: [{ id: "neb-resmed", name: "Kit Nébulisation", failures: [] }] },
+          { id: "sefam", name: "Sefam", models: [{ id: "neb-sefam", name: "Nébuliseur", failures: [] }] }
+        ]
+      },
+      { 
+        id: "aspirateur",
+        name: "Aspirateur",
+        brands: [
+          { id: "devilbiss", name: "Devilbiss", models: [{ id: "vacuaide", name: "VacuAide", failures: [
+              { title: "Ne démarre pas", causes: ["Batterie déchargée", "Fusible HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Vérifier fusible", "Remplacer batterie"] },
+              { title: "Aspiration faible", causes: ["Bocal mal fermé", "Filtre bouché", "Tuyau percé"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Vérifier joint bocal", "Remplacer filtre"] }
+          ] }] },
+          { id: "laerdal", name: "Laerdal", models: [{ id: "lsu", name: "LSU", failures: [
+              { title: "Témoin batterie rouge", causes: ["Batterie HS", "Chargeur HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
+              { title: "Pas d'aspiration", causes: ["Tuyau coudé", "Bocal plein", "Fuite"], solutions: ["Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "Vider bocal", "Vérifier joint"] }
+          ] }] },
+          { id: "lowenstein", name: "Löwenstein", models: [{ id: "accuvac", name: "Accuvac", failures: [
+              { title: "Ne s'allume pas", causes: ["Batterie vide", "Carte mère HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
+              { title: "Manque de puissance", causes: ["Filtre encrassé", "Fuite bocal"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Changer filtre"] }
+          ] }] }
         ]
       },
       { 
         id: "concentrateur", 
         name: "Concentrateur", 
         brands: [
-          { id: "breas", name: "Breas", models: [] },
-          { id: "lowenstein", name: "Lowenstein", models: [] },
-          { id: "philips", name: "Philips", models: [] },
-          { id: "resmed", name: "ResMed", models: [] },
-          { id: "sefam", name: "Sefam", models: [] }
+          { id: "breas", name: "Breas", models: [{ id: "conc-breas", name: "Concentrateur Portable", failures: [] }] },
+          { id: "lowenstein", name: "Lowenstein", models: [{ id: "conc-lowenstein", name: "Concentrateur 5L", failures: [] }] },
+          { id: "philips", name: "Philips", models: [{ id: "everflo", name: "EverFlo", failures: [] }, { id: "simplygo", name: "SimplyGo", failures: [] }] },
+          { id: "resmed", name: "ResMed", models: [{ id: "conc-resmed", name: "Concentrateur O2", failures: [] }] },
+          { id: "sefam", name: "Sefam", models: [{ id: "conc-sefam", name: "Sefam O2", failures: [] }] }
         ] 
       },
       { 
         id: "humidificateur", 
         name: "Humidificateur", 
         brands: [
-          { id: "breas", name: "Breas", models: [] },
-          { id: "lowenstein", name: "Lowenstein", models: [] },
-          { id: "philips", name: "Philips", models: [] },
-          { id: "resmed", name: "ResMed", models: [] },
-          { id: "sefam", name: "Sefam", models: [] }
+          { id: "breas", name: "Breas", models: [{ id: "hum-breas", name: "Humidificateur Chauffant", failures: [] }] },
+          { id: "lowenstein", name: "Lowenstein", models: [{ id: "prisma-aqua", name: "PrismaAQUA", failures: [] }] },
+          { id: "philips", name: "Philips", models: [{ id: "hum-sys1", name: "Humidificateur System One", failures: [] }] },
+          { id: "resmed", name: "ResMed", models: [{ id: "humidair", name: "HumidAir", failures: [] }] },
+          { id: "sefam", name: "Sefam", models: [{ id: "hum-sbox", name: "Humidificateur S.Box", failures: [] }] }
         ] 
       },
       { 
         id: "ppc", 
         name: "PPC", 
         brands: [
-          { id: "breas", name: "Breas", models: [] },
-          { id: "lowenstein", name: "Lowenstein", models: [] },
-          { id: "philips", name: "Philips", models: [] },
-          { id: "resmed", name: "ResMed", models: [] },
-          { id: "sefam", name: "Sefam", models: [] }
+          { id: "breas", name: "Breas", models: [{ id: "z2-auto", name: "Z2 Auto", failures: [] }] },
+          { 
+            id: "lowenstein", 
+            name: "Lowenstein", 
+            models: [
+              {
+                id: "prisma-smart", name: "Prisma Smart", failures: [
+                  { title: "Erreur humidificateur", causes: ["bac mal mis", "joint HS", "module chauffant HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer joint", "remplacer humidificateur"] },
+                  { title: "Défaut pression", causes: ["fuite externe", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "contrôle étanchéité", "nettoyage", "remplacement capteur"] }
+                ]
+              }
+            ] 
+          },
+          { 
+            id: "philips", 
+            name: "Philips", 
+            models: [
+              {
+                id: "dreamstation-2", name: "DreamStation 2", failures: [
+                  { title: "Fuite humidificateur", causes: ["bac mal fermé", "bac fissuré"], solutions: ["reclipser", "remplacer bac"] },
+                  { title: "Erreur système", causes: ["bug logiciel", "carte mère HS"], solutions: ["Débrancher et rebrancher", "reset usine", "remplacement carte"] }
+                ]
+              },
+              {
+                id: "dreamstation-1", name: "DreamStation 1", failures: [
+                  { title: "Dégradation mousse PE-PUR", causes: ["vieillissement matériau"], solutions: ["remplacement appareil complet"] }
+                ]
+              }
+            ] 
+          },
+          { 
+            id: "resmed", 
+            name: "ResMed", 
+            models: [
+              {
+                id: "s11", name: "S11", failures: [
+                  { title: "Ne démarre pas", causes: ["prise débranchée", "câble mal inséré", "alimentation HS", "carte mère HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "vérifier prise", "tester autre câble", "remplacer alimentation", "remplacer carte"] },
+                  { title: "Humidificateur ne chauffe pas", causes: ["bac mal clipsé", "bac fissuré", "plaque HS", "carte gestion HS"], solutions: ["Débrancher et rebrancher", "reclipser", "tester autre bac", "remplacer module", "remplacer carte"] },
+                  { title: "Bruit anormal", causes: ["filtre sale", "corps étranger", "turbine usée"], solutions: ["Vérifier le serrage du masque", "Vérifier que le circuit est bien vissé", "remplacer filtre", "nettoyage interne", "remplacement moteur"] }
+                ]
+              },
+              {
+                id: "s10", name: "S10", failures: [
+                  { title: "Ne s’allume pas", causes: ["mauvais branchement", "alimentation HS", "carte interne HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "vérifier câble", "tester alimentation", "remplacer carte"] },
+                  { title: "Humidificateur non reconnu", causes: ["mauvais clipsage", "connecteur sale", "connecteur cassé", "carte interface HS"], solutions: ["Débrancher et rebrancher", "repositionner", "nettoyer", "tester autre humidificateur", "remplacer carte"] },
+                  { title: "Pression instable", causes: ["fuite masque", "filtre colmaté", "capteur encrassé", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacer filtre", "nettoyer capteur", "remplacer moteur"] }
+                ]
+              }
+            ] 
+          },
+          { 
+            id: "sefam", 
+            name: "Sefam", 
+            models: [
+              {
+                id: "nea", name: "NÉA", failures: [
+                  { title: "Alarme pression basse", causes: ["fuite masque", "filtre obstrué", "capteur débit HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier masque", "remplacer filtre", "remplacer capteur"] },
+                  { title: "Bruit moteur", causes: ["poussière", "roulement usé"], solutions: ["Vérifier filtre", "nettoyage", "remplacement turbine"] }
+                ]
+              }
+            ] 
+          }
         ] 
       },
       { 
         id: "vaa", 
         name: "VAA", 
         brands: [
-          { id: "breas", name: "Breas", models: [] },
-          { id: "lowenstein", name: "Lowenstein", models: [] },
-          { id: "philips", name: "Philips", models: [] },
-          { id: "resmed", name: "ResMed", models: [] },
-          { id: "sefam", name: "Sefam", models: [] }
+          { id: "breas", name: "Breas", models: [{ id: "vaa-breas", name: "Modèle VAA", failures: [] }] },
+          { 
+            id: "lowenstein", 
+            name: "Lowenstein", 
+            models: [
+              {
+                id: "prisma-cr", name: "Prisma CR", failures: [
+                  { title: "Défaut humidificateur", causes: ["bac mal mis", "module HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer humidificateur"] },
+                  { title: "Désynchronisation", causes: ["capteur encrassé", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "nettoyage", "remplacement capteur"] }
+                ]
+              }
+            ] 
+          },
+          { 
+            id: "philips", 
+            name: "Philips", 
+            models: [
+              {
+                id: "bipap-auto-sv", name: "BiPAP Auto SV", failures: [
+                  { title: "Problème alimentation", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "remplacer câble", "remplacer alimentation"] },
+                  { title: "Défaut interne", causes: ["capteur débit HS", "carte mère HS"], solutions: ["Débrancher et rebrancher", "remplacer capteur", "remplacer carte"] }
+                ]
+              }
+            ] 
+          },
+          { 
+            id: "resmed", 
+            name: "ResMed", 
+            models: [
+              {
+                id: "aircurve-10-pacewave", name: "AirCurve 10 PaceWave", failures: [
+                  { title: "Désynchronisation", causes: ["mauvais réglage", "fuite circuit", "capteur débit sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "ajuster paramètres", "vérifier circuit", "nettoyage", "remplacement capteur"] },
+                  { title: "Pression instable", causes: ["fuite", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacement moteur"] }
+                ]
+              }
+            ] 
+          },
+          { id: "sefam", name: "Sefam", models: [{ id: "sbox-duo-s", name: "S.Box Duo S", failures: [] }] }
         ] 
       },
       {
         id: "vni",
         name: "VNI",
-        brands: [
-          { id: "niv-i", name: "NIV I", models: [] },
-          { id: "niv-ii", name: "NIV II", models: [] },
-          { 
-            id: "niv-iii",  
-            name: "NIV III", 
-            models: [
-              { id: "eove-150", name: "Philips Eove 150", failures: [] }
-            ] 
-          }
+        // La clé 'brands' est remplacée par 'subTypes' pour la VNI pour une logique claire.
+        subTypes: [
+            { 
+                id: "niv-i", name: "NIV I", brands: [
+                    { id: "lowenstein", name: "Löwenstein", models: [
+                        { id: "prisma-30st", name: "Prisma 30ST", failures: [
+                            { title: "Désynchronisation", causes: ["mauvais réglage", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "réglage", "nettoyage", "remplacement capteur"] },
+                            { title: "Défaut électronique", causes: ["carte interne HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "philips", name: "Philips", models: [
+                        { id: "avaps", name: "AVAPS", failures: [
+                            { title: "Volume instable", causes: ["fuite", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement capteur"] },
+                            { title: "Défaut carte", causes: ["carte interne HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "resmed", name: "ResMed", models: [
+                        { id: "lumis-150", name: "Lumis 150", failures: [
+                            { title: "Défaut humidificateur", causes: ["bac mal clipsé", "module HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer module"] },
+                            { title: "IPAP instable", causes: ["fuite", "capteur pression HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacement capteur"] },
+                            { title: "Turbine bruyante", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] }
+                        ]}
+                    ]}
+                ] 
+            },
+            { 
+                id: "niv-ii", name: "NIV II", brands: [
+                    { id: "breas", name: "Breas", models: [
+                        { id: "vivo-3", name: "Vivo 3", failures: [
+                            { title: "Batterie", causes: ["fin de vie"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
+                            { title: "Turbine", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] },
+                            { title: "Connecteur patient", causes: ["usure mécanique"], solutions: ["Vérifier que le circuit est bien vissé", "remplacement connecteur"] }
+                        ]},
+                        { id: "vivo-45", name: "Vivo 45", failures: [
+                            { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement capteur"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "lowenstein", name: "Löwenstein", models: [
+                        { id: "vent-40", name: "Vent 40", failures: [
+                            { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
+                            { title: "Défaut écran", causes: ["nappe débranchée", "écran HS"], solutions: ["Débrancher et rebrancher", "reconnecter", "remplacer écran"] },
+                            { title: "Capteur pression", causes: ["encrassement", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement capteur"] }
+                        ]}
+                    ]},
+                    { id: "philips", name: "Philips", models: [
+                        { id: "bipap-a40", name: "BiPAP A40", failures: [
+                            { title: "Alimentation externe", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "remplacer câble", "remplacer bloc"] },
+                            { title: "Batterie interne", causes: ["usure"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "resmed", name: "ResMed", models: [
+                        { id: "stellar-150", name: "Stellar 150", failures: [
+                            { title: "Batterie faible", causes: ["non chargée", "fin de vie"], solutions: ["Vérifier le câble d'alimentation", "recharge", "test autonomie", "remplacement batterie"] },
+                            { title: "Alarme pression", causes: ["fuite", "capteur sale", "capteur HS", "turbine HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement capteur", "remplacement moteur"] },
+                            { title: "Défaut système", causes: ["carte mère HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]}
+                ] 
+            },
+            { 
+                id: "niv-iii", name: "NIV III", brands: [
+                    { id: "breas", name: "Breas", models: [
+                        { id: "vivo-45-ls", name: "Vivo 45 LS", failures: [
+                            { title: "Batterie", causes: ["fin de vie"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
+                            { title: "Turbine", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "lowenstein", name: "Löwenstein", models: [
+                        { id: "luisa", name: "Luisa", failures: [
+                            { title: "Batterie", causes: ["usure"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "philips", name: "Philips", models: [
+                        { id: "trilogy-evo", name: "Trilogy Evo", failures: [
+                            { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
+                            { title: "Module débit", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement module"] },
+                            { title: "Carte mère", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]},
+                        { id: "trilogy-100", name: "Trilogy 100", failures: [
+                            { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]},
+                        { id: "eove-150", name: "EOVE 150", failures: [
+                            { title: "Batterie", causes: ["fin de vie"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
+                            { title: "Capteur débit", causes: ["obstruction", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
+                        ]}
+                    ]},
+                    { id: "resmed", name: "ResMed", models: [
+                        { id: "astral-150", name: "Astral 150", failures: [
+                            { title: "Batterie externe", causes: ["non chargée", "fin de vie"], solutions: ["Vérifier le câble d'alimentation", "recharge", "remplacement"] },
+                            { title: "Batterie interne", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
+                            { title: "Alarme débit", causes: ["circuit obstrué", "capteur sale", "module HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement module"] },
+                            { title: "Turbine", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] }
+                        ]}
+                    ]}
+                ] 
+            }
         ]
       }
     ];
 
     // --- ÉTAT (State) ---
-    let state = { type: null, brand: null, model: null };
+    let state = { type: null, subType: null, brand: null, model: null, failure: null };
 
     // --- FONCTIONS DE NAVIGATION ---
     function selectType(typeId) {
         state.type = LIBRARY_DATA.find(t => t.id === typeId);
-        state.brand = null; state.model = null;
+        state.subType = null; state.brand = null; state.model = null; state.failure = null;
+        render();
+    }
+    function selectSubType(subTypeId) {
+        state.subType = state.type.subTypes.find(s => s.id === subTypeId);
+        state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectBrand(brandId) {
-        state.brand = state.type.brands.find(b => b.id === brandId);
-        state.model = null;
+        const source = state.subType || state.type;
+        state.brand = source.brands.find(b => b.id === brandId);
+        state.model = null; state.failure = null;
         render();
     }
     function selectModel(modelId) {
         state.model = state.brand.models.find(m => m.id === modelId);
+        state.failure = null;
         render();
     }
-    function resetAll() { state = { type: null, brand: null, model: null }; render(); }
-    function resetToType() { state.brand = null; state.model = null; render(); }
-    function resetToBrand() { state.model = null; render(); }
+    function selectFailure(failureIndex) {
+        state.failure = state.model.failures[failureIndex];
+        render();
+    }
+    function resetAll() { state = { type: null, subType: null, brand: null, model: null, failure: null }; render(); }
+    function resetToType() { state.subType = null; state.brand = null; state.model = null; state.failure = null; render(); }
+    function resetToSubType() { state.brand = null; state.model = null; state.failure = null; render(); }
+    function resetToBrand() { state.model = null; state.failure = null; render(); }
+    function resetToModel() { state.failure = null; render(); }
 
     function goBack() {
-        if (state.model) state.model = null;
+        if (state.failure) state.failure = null;
+        else if (state.model) state.model = null;
         else if (state.brand) state.brand = null;
+        else if (state.subType) state.subType = null;
         else if (state.type) state.type = null;
         render();
     }
@@ -272,9 +505,21 @@ body {
         // 1. Fil d'ariane
         html += `<div class="breadcrumb">
             <span class="breadcrumb-item ${state.type ? 'breadcrumb-active' : ''}" onclick="resetAll()">Accueil</span>`;
-        if (state.type) html += `<span>/</span><span class="breadcrumb-item ${state.brand ? 'breadcrumb-active' : ''}" onclick="resetToType()">${state.type.name}</span>`;
-        if (state.brand) html += `<span>/</span><span class="breadcrumb-item ${state.model ? 'breadcrumb-active' : ''}" onclick="resetToBrand()">${state.brand.name}</span>`;
-        if (state.model) html += `<span>/</span><span class="breadcrumb-item">${state.model.name}</span>`;
+        if (state.type) {
+            html += `<span>/</span><span class="breadcrumb-item ${state.subType || state.brand ? 'breadcrumb-active' : ''}" onclick="resetToType()">${state.type.name}</span>`;
+        }
+        if (state.subType) {
+            html += `<span>/</span><span class="breadcrumb-item ${state.brand ? 'breadcrumb-active' : ''}" onclick="resetToSubType()">${state.subType.name}</span>`;
+        }
+        if (state.brand) {
+            html += `<span>/</span><span class="breadcrumb-item ${state.model ? 'breadcrumb-active' : ''}" onclick="resetToBrand()">${state.brand.name}</span>`;
+        }
+        if (state.model) {
+            html += `<span>/</span><span class="breadcrumb-item ${state.failure ? 'breadcrumb-active' : ''}" onclick="resetToModel()">${state.model.name}</span>`;
+        }
+        if (state.failure) {
+            html += `<span>/</span><span class="breadcrumb-item">${state.failure.title}</span>`;
+        }
         html += `</div>`;
 
         // 2. Contenu
@@ -284,15 +529,25 @@ body {
                 html += `<div class="card" onclick="selectType('${type.id}')"><div style="font-size: 18px; font-weight: bold;">${type.name}</div></div>`;
             });
             html += `</div>`;
-        } else if (!state.brand) {
-            const isVni = state.type.id === 'vni';
-            const sectionTitle = isVni ? 'Type' : 'Marque';
-            html += `<h2>${sectionTitle} (${state.type.name})</h2><div class="card-grid">`;
-            if (state.type.brands.length === 0) html += `<p>Aucun élément répertorié.</p>`;
-            state.type.brands.forEach(brand => {
-                const imgTag = brand.logo ? `<img src="${brand.logo}" alt="${brand.name}" onerror="this.style.display='none'">` : '';
-                html += `<div class="card" onclick="selectBrand('${brand.id}')">${imgTag}<div style="font-size: 18px; font-weight: bold;">${brand.name}</div></div>`;
+        } else if (state.type.subTypes && !state.subType) {
+            // VNI Flow: Select NIV Level
+            html += `<h2>Type (${state.type.name})</h2><div class="card-grid">`;
+            state.type.subTypes.forEach(subType => {
+                html += `<div class="card" onclick="selectSubType('${subType.id}')"><div style="font-size: 18px; font-weight: bold;">${subType.name}</div></div>`;
             });
+            html += `</div>`;
+        } else if (!state.brand) {
+            const source = state.subType || state.type;
+            const title = state.subType ? `Marque (${state.subType.name})` : `Marque (${source.name})`;
+            html += `<h2>${title}</h2><div class="card-grid">`;
+            if (!source.brands || source.brands.length === 0) {
+                html += `<p>Aucune marque répertoriée.</p>`;
+            } else {
+                source.brands.forEach(brand => {
+                    const imgTag = brand.logo ? `<img src="${brand.logo}" alt="${brand.name}" onerror="this.style.display='none'">` : '';
+                    html += `<div class="card" onclick="selectBrand('${brand.id}')">${imgTag}<div style="font-size: 18px; font-weight: bold;">${brand.name}</div></div>`;
+                });
+            }
             html += `</div>`;
         } else if (!state.model) {
             html += `<h2>Modèle (${state.brand.name})</h2><div class="card-grid">`;
@@ -301,24 +556,38 @@ body {
                 html += `<div class="card" onclick="selectModel('${model.id}')"><div style="font-size: 18px; font-weight: bold;">${model.name}</div></div>`;
             });
             html += `</div>`;
-        } else {
-            html += `<h2 style="border-bottom: 2px solid #0284c7; display: inline-block; padding-bottom: 4px;">Guide de dépannage : ${state.model.name}</h2>`;
+        } else if (!state.failure) {
+            // Vue : Choix du problème
+            html += `<h2>Problèmes connus pour : ${state.model.name}</h2>`;
             if (state.model.failures.length === 0) {
                 html += `<p style="color: #64748b; font-style: italic;">Aucune panne connue enregistrée.</p>`;
             } else {
-                state.model.failures.forEach(failure => {
-                    const questionsHtml = failure.questions.map(q => `<li>${q}</li>`).join('');
-                    html += `
-                        <div class="failure-card">
-                            <h3 class="failure-title">⚠️ ${failure.title}</h3>
-                            <div class="solution-grid">
-                                <div class="box-cause"><strong style="color: #991b1b; display: block; margin-bottom: 8px;">Cause probable</strong><div style="color: #7f1d1d;">${failure.cause}</div></div>
-                                <div class="box-solution"><strong style="color: #166534; display: block; margin-bottom: 8px;">Solution recommandée</strong><div style="color: #14532d;">${failure.solution}</div></div>
-                            </div>
-                            <div class="questions-box"><strong style="display: block; margin-bottom: 10px;">❓ Questions à poser au client :</strong><ul style="margin: 0; padding-left: 20px; color: #334155;">${questionsHtml}</ul></div>
-                        </div>`;
+                html += `<div class="card-grid">`;
+                state.model.failures.forEach((failure, index) => {
+                    html += `<div class="card" onclick="selectFailure(${index})"><div style="font-size: 18px; font-weight: bold;">${failure.title}</div></div>`;
                 });
+                html += `</div>`;
             }
+        } else {
+            // Vue : Détail du problème (causes et solutions)
+            const failure = state.failure;
+            const causesHtml = failure.causes.join(' → ');
+            const solutionsHtml = failure.solutions.map((sol, solIdx) => `
+                <div class="solution-item">
+                    <input type="checkbox" id="sol-${solIdx}">
+                    <label for="sol-${solIdx}">${sol}</label>
+                </div>
+            `).join('');
+
+            html += `<h2 style="border-bottom: 2px solid #0284c7; display: inline-block; padding-bottom: 4px;">Guide de dépannage : ${state.model.name}</h2>`;
+            html += `
+                <div class="failure-card">
+                    <h3 class="failure-title">⚠️ ${failure.title}</h3>
+                    <div class="solution-grid">
+                        <div class="box-cause"><strong style="color: #991b1b; display: block; margin-bottom: 8px;">Causes probables</strong><div style="color: #7f1d1d;">${causesHtml}</div></div>
+                        <div class="box-solution"><strong style="color: #166534; display: block; margin-bottom: 8px;">Solutions (de la plus simple à la plus complexe)</strong><div style="margin-top: 10px;">${solutionsHtml}</div></div>
+                    </div>
+                </div>`;
         }
         app.innerHTML = html;
     }
