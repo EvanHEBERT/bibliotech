@@ -6,60 +6,94 @@ const LIBRARY_DATA = [
   {
     id: "echo",
     name: "Échographes",
-    brands: [
+    models: [
       {
-        id: "ge",
-        name: "GE Healthcare",
-        logo: "/logos/ge.png", // Chemin vers le dossier public
-        models: [
+        id: "voluson-e10",
+        name: "Voluson E10",
+        failures: [
           {
-            id: "voluson-e10",
-            name: "Voluson E10",
-            failures: [
-              {
-                title: "Image bruitée / Artefacts",
-                cause: "Interférences électromagnétiques ou sonde défectueuse.",
-                solution: "Vérifier la mise à la terre, éloigner les sources d'interférences (téléphones), tester une autre sonde.",
-                questions: [
-                  "Le problème est-il présent sur toutes les sondes ?",
-                  "Avez-vous déplacé l'appareil récemment ?"
-                ]
-              },
-              {
-                title: "Erreur de démarrage système",
-                cause: "Disque dur défaillant ou corruption logicielle.",
-                solution: "Tenter un redémarrage forcé. Si échec, réinstallation logicielle requise.",
-                questions: [
-                  "Y a-t-il eu une coupure de courant récente ?",
-                  "Quel est le code d'erreur affiché ?"
-                ]
-              }
+            title: "Image bruitée / Artefacts",
+            cause: "Interférences électromagnétiques ou sonde défectueuse.",
+            solution: "Vérifier la mise à la terre, éloigner les sources d'interférences (téléphones), tester une autre sonde.",
+            questions: [
+              "Le problème est-il présent sur toutes les sondes ?",
+              "Avez-vous déplacé l'appareil récemment ?"
             ]
           },
           {
-            id: "vivid-e95",
-            name: "Vivid E95",
-            failures: []
+            title: "Erreur de démarrage système",
+            cause: "Disque dur défaillant ou corruption logicielle.",
+            solution: "Tenter un redémarrage forcé. Si échec, réinstallation logicielle requise.",
+            questions: [
+              "Y a-t-il eu une coupure de courant récente ?",
+              "Quel est le code d'erreur affiché ?"
+            ]
           }
         ]
       },
       {
-        id: "philips",
-        name: "Philips",
-        logo: "/logos/philips.png",
-        models: []
+        id: "vivid-e95",
+        name: "Vivid E95",
+        failures: []
+      },
+      {
+        id: "affiniti-70",
+        name: "Affiniti 70",
+        failures: []
       }
     ]
   },
   {
     id: "ct",
     name: "Scanners (CT)",
-    brands: []
+    models: []
   },
   {
     id: "irm",
     name: "IRM",
+    models: []
+  },
+  {
+    id: "vni",
+    name: "Ventilation Non Invasive (VNI)",
+    brands: [
+      {
+        id: "resmed-vni",
+        name: "ResMed",
+        logo: "/logos/resmed.png",
+        models: [
+          { id: "aircurve-10", name: "AirCurve 10", failures: [] },
+          { id: "lumis-150", name: "Lumis 150", failures: [] }
+        ]
+      },
+      {
+        id: "philips-respironics",
+        name: "Philips Respironics",
+        logo: "/logos/philips.png",
+        models: [
+          { id: "trilogy-evo", name: "Trilogy Evo", failures: [] }
+        ]
+      }
+    ]
+  },
+  {
+    id: "vaa",
+    name: "Ventilation Assistée (VAA)",
     brands: []
+  },
+  {
+    id: "ppc",
+    name: "Pression Positive Continue (PPC)",
+    brands: [
+      {
+        id: "resmed-ppc",
+        name: "ResMed",
+        logo: "/logos/resmed.png",
+        models: [
+          { id: "airsense-10", name: "AirSense 10", failures: [] }
+        ]
+      }
+    ]
   }
 ];
 
@@ -119,6 +153,9 @@ const breadcrumbItemStyle = {
   borderRadius: "6px",
   transition: "background 0.2s"
 };
+
+// Les types qui nécessitent une sélection de marque
+const typesWithBrandsStep = ['vni', 'vaa', 'ppc'];
 
 // Composant Carte Simple déplacé à l'extérieur
 const SelectionCard = ({ label, image, onClick }) => (
@@ -190,10 +227,10 @@ export default function LibraryPage() {
               </span>
             </>
           )}
-          {selectedBrand && (
+          {selectedBrand && typesWithBrandsStep.includes(selectedType.id) && (
             <>
               <span>/</span>
-              <span style={{ ...breadcrumbItemStyle, color: selectedModel ? "#0284c7" : "#0f172a" }} onClick={resetModel}>
+              <span style={{ ...breadcrumbItemStyle, color: selectedModel ? "#0284c7" : "#0f172a" }} onClick={resetBrand}>
                 {selectedBrand.name}
               </span>
             </>
@@ -221,22 +258,43 @@ export default function LibraryPage() {
 
           {selectedType && !selectedBrand && (
             <>
-              <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Marque de l'appareil ({selectedType.name})</h2>
-              <div style={cardGridStyle}>
-                {selectedType.brands.map((brand) => (
-                  <SelectionCard 
-                    key={brand.id} 
-                    label={brand.name} 
-                    image={brand.logo} // On passe le logo ici
-                    onClick={() => setSelectedBrand(brand)} 
-                  />
-                ))}
-                {selectedType.brands.length === 0 && <p>Aucune marque répertoriée.</p>}
-              </div>
+              {typesWithBrandsStep.includes(selectedType.id) ? (
+                <>
+                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Marque de l'appareil ({selectedType.name})</h2>
+                  <div style={cardGridStyle}>
+                    {selectedType.brands.map((brand) => (
+                      <SelectionCard 
+                        key={brand.id} 
+                        label={brand.name} 
+                        image={brand.logo}
+                        onClick={() => setSelectedBrand(brand)} 
+                      />
+                    ))}
+                    {selectedType.brands.length === 0 && <p>Aucune marque répertoriée pour ce type d'équipement.</p>}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle ({selectedType.name})</h2>
+                  <div style={cardGridStyle}>
+                    {/* Supporte à la fois la structure 'models' directe et l'ancienne structure 'brands' aplatie */}
+                    {(selectedType.models || selectedType.brands?.flatMap(brand => brand.models) || []).map((model) => (
+                      <SelectionCard 
+                        key={model.id} 
+                        label={model.name} 
+                        onClick={() => {
+                          setSelectedModel(model);
+                        }} 
+                      />
+                    ))}
+                    {(selectedType.models || selectedType.brands?.flatMap(b => b.models) || []).length === 0 && <p>Aucun modèle répertorié pour ce type d'équipement.</p>}
+                  </div>
+                </>
+              )}
             </>
           )}
 
-          {selectedBrand && !selectedModel && (
+          {selectedBrand && !selectedModel && typesWithBrandsStep.includes(selectedType.id) && (
             <>
               <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle ({selectedBrand.name})</h2>
               <div style={cardGridStyle}>

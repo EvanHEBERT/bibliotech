@@ -161,7 +161,7 @@ body {
                 <span style="font-size: 12px; color: #64748b">Bibliothèque technique</span>
             </div>
         </div>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap:gsm 10px;">
             <button id="btn-back" onclick="goBack()" style="display: none; padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: 600;">Retour</button>
             <button onclick="resetAll()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #cbd5e1; background: white; cursor: pointer; font-weight: 600;">Accueil</button>
         </div>
@@ -177,53 +177,97 @@ body {
       {
         id: "aerosol",
         name: "Aérosol",
-        brands: [
-          { id: "breas", name: "Breas", models: [{ id: "neb-breas", name: "Nébuliseur Portable", failures: [] }] },
-          { id: "lowenstein", name: "Lowenstein", models: [{ id: "neb-lowenstein", name: "Nébuliseur Standard", failures: [] }] },
-          { id: "philips", name: "Philips", models: [{ id: "innospire", name: "InnoSpire", failures: [] }] },
-          { id: "resmed", name: "ResMed", models: [{ id: "neb-resmed", name: "Kit Nébulisation", failures: [] }] },
-          { id: "sefam", name: "Sefam", models: [{ id: "neb-sefam", name: "Nébuliseur", failures: [] }] }
+        models: [
+          { id: "neb-breas", name: "Nébuliseur Portable", failures: [] },
+          { id: "neb-lowenstein", name: "Nébuliseur Standard", failures: [] },
+          { id: "innospire", name: "InnoSpire", failures: [] },
+          { id: "neb-resmed", name: "Kit Nébulisation", failures: [] },
+          { id: "neb-sefam", name: "Nébuliseur", failures: [] }
         ]
       },
       { 
         id: "aspirateur",
         name: "Aspirateur",
-        brands: [
-          { id: "devilbiss", name: "Devilbiss", models: [{ id: "vacuaide", name: "VacuAide", failures: [
+        models: [
+          { id: "vacuaide", name: "VacuAide", failures: [
               { title: "Ne démarre pas", causes: ["Batterie déchargée", "Fusible HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Vérifier fusible", "Remplacer batterie"] },
               { title: "Aspiration faible", causes: ["Bocal mal fermé", "Filtre bouché", "Tuyau percé"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Vérifier joint bocal", "Remplacer filtre"] }
-          ] }] },
-          { id: "laerdal", name: "Laerdal", models: [{ id: "lsu", name: "LSU", failures: [
+          ] },
+          { id: "lsu", name: "LSU", failures: [
               { title: "Témoin batterie rouge", causes: ["Batterie HS", "Chargeur HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
               { title: "Pas d'aspiration", causes: ["Tuyau coudé", "Bocal plein", "Fuite"], solutions: ["Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "Vider bocal", "Vérifier joint"] }
-          ] }] },
-          { id: "lowenstein", name: "Löwenstein", models: [{ id: "accuvac", name: "Accuvac", failures: [
+          ] },
+          { id: "accuvac", name: "Accuvac", failures: [
               { title: "Ne s'allume pas", causes: ["Batterie vide", "Carte mère HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
               { title: "Manque de puissance", causes: ["Filtre encrassé", "Fuite bocal"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Changer filtre"] }
-          ] }] }
+          ] }
         ]
       },
-      { 
-        id: "concentrateur", 
-        name: "Concentrateur", 
-        brands: [
-          { id: "breas", name: "Breas", models: [{ id: "conc-breas", name: "Concentrateur Portable", failures: [] }] },
-          { id: "lowenstein", name: "Lowenstein", models: [{ id: "conc-lowenstein", name: "Concentrateur 5L", failures: [] }] },
-          { id: "philips", name: "Philips", models: [{ id: "everflo", name: "EverFlo", failures: [] }, { id: "simplygo", name: "SimplyGo", failures: [] }] },
-          { id: "resmed", name: "ResMed", models: [{ id: "conc-resmed", name: "Concentrateur O2", failures: [] }] },
-          { id: "sefam", name: "Sefam", models: [{ id: "conc-sefam", name: "Sefam O2", failures: [] }] }
-        ] 
+      {
+        id: "cough-assist",
+        name: "Cough Assist",
+        brands: []
       },
       { 
         id: "humidificateur", 
         name: "Humidificateur", 
-        brands: [
-          { id: "breas", name: "Breas", models: [{ id: "hum-breas", name: "Humidificateur Chauffant", failures: [] }] },
-          { id: "lowenstein", name: "Lowenstein", models: [{ id: "prisma-aqua", name: "PrismaAQUA", failures: [] }] },
-          { id: "philips", name: "Philips", models: [{ id: "hum-sys1", name: "Humidificateur System One", failures: [] }] },
-          { id: "resmed", name: "ResMed", models: [{ id: "humidair", name: "HumidAir", failures: [] }] },
-          { id: "sefam", name: "Sefam", models: [{ id: "hum-sbox", name: "Humidificateur S.Box", failures: [] }] }
+        models: [
+          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [] },
+          { id: "prisma-aqua", name: "PrismaAQUA", failures: [] },
+          { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
+          { id: "humidair", name: "HumidAir", failures: [] },
+          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [] }
         ] 
+      },
+      {
+        id: "insufflateur-exsufflateur",
+        name: "Insufflateur-Exsufflateur Mécanique",
+        brands: []
+      },
+      {
+        id: "o2",
+        name: "O₂",
+        subTypes: [
+          {
+            id: "bouteille-o2",
+            name: "Bouteille d'O₂",
+            brands: [] 
+          },
+          {
+            id: "concentrateur",
+            name: "Concentrateur",
+            subTypes: [
+              {
+                id: "fixe",
+                name: "Fixe",
+                brands: [
+                  { id: "lowenstein", name: "Lowenstein", models: [{ id: "conc-lowenstein", name: "Concentrateur 5L", failures: [] }] },
+                  { id: "philips", name: "Philips", models: [{ id: "everflo", name: "EverFlo", failures: [] }] },
+                  { id: "resmed", name: "ResMed", models: [{ id: "conc-resmed", name: "Concentrateur O2", failures: [] }] },
+                  { id: "sefam", name: "Sefam", models: [{ id: "conc-sefam", name: "Sefam O2", failures: [] }] }
+                ]
+              },
+              {
+                id: "portable",
+                name: "Portable",
+                brands: [
+                  { id: "breas", name: "Breas", models: [{ id: "conc-breas", name: "Concentrateur Portable", failures: [] }] },
+                  { id: "philips", name: "Philips", models: [{ id: "simplygo", name: "SimplyGo", failures: [] }] }
+                ]
+              },
+              {
+                id: "transportable",
+                name: "Transportable",
+                brands: []
+              }
+            ]
+          },
+          { 
+            id: "o2-liquide", 
+            name: "O₂ Liquide", 
+            brands: [] 
+          }
+        ]
       },
       { 
         id: "ppc", 
@@ -450,27 +494,33 @@ body {
     ];
 
     // --- ÉTAT (State) ---
-    let state = { type: null, subType: null, brand: null, model: null, failure: null };
+    let state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null };
 
     // --- FONCTIONS DE NAVIGATION ---
     function selectType(typeId) {
         state.type = LIBRARY_DATA.find(t => t.id === typeId);
-        state.subType = null; state.brand = null; state.model = null; state.failure = null;
+        state.subType = null; state.subSubType = null; state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectSubType(subTypeId) {
         state.subType = state.type.subTypes.find(s => s.id === subTypeId);
+        state.subSubType = null; state.brand = null; state.model = null; state.failure = null;
+        render();
+    }
+    function selectSubSubType(subSubTypeId) {
+        state.subSubType = state.subType.subTypes.find(s => s.id === subSubTypeId);
         state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectBrand(brandId) {
-        const source = state.subType || state.type;
+        const source = state.subSubType || state.subType || state.type;
         state.brand = source.brands.find(b => b.id === brandId);
         state.model = null; state.failure = null;
         render();
     }
     function selectModel(modelId) {
-        state.model = state.brand.models.find(m => m.id === modelId);
+        const source = state.brand || state.subSubType || state.subType || state.type;
+        state.model = source.models.find(m => m.id === modelId);
         state.failure = null;
         render();
     }
@@ -478,9 +528,10 @@ body {
         state.failure = state.model.failures[failureIndex];
         render();
     }
-    function resetAll() { state = { type: null, subType: null, brand: null, model: null, failure: null }; render(); }
-    function resetToType() { state.subType = null; state.brand = null; state.model = null; state.failure = null; render(); }
-    function resetToSubType() { state.brand = null; state.model = null; state.failure = null; render(); }
+    function resetAll() { state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null }; render(); }
+    function resetToType() { state.subType = null; state.subSubType = null; state.brand = null; state.model = null; state.failure = null; render(); }
+    function resetToSubType() { state.subSubType = null; state.brand = null; state.model = null; state.failure = null; render(); }
+    function resetToSubSubType() { state.brand = null; state.model = null; state.failure = null; render(); }
     function resetToBrand() { state.model = null; state.failure = null; render(); }
     function resetToModel() { state.failure = null; render(); }
 
@@ -488,6 +539,7 @@ body {
         if (state.failure) state.failure = null;
         else if (state.model) state.model = null;
         else if (state.brand) state.brand = null;
+        else if (state.subSubType) state.subSubType = null;
         else if (state.subType) state.subType = null;
         else if (state.type) state.type = null;
         render();
@@ -509,7 +561,10 @@ body {
             html += `<span>/</span><span class="breadcrumb-item ${state.subType || state.brand ? 'breadcrumb-active' : ''}" onclick="resetToType()">${state.type.name}</span>`;
         }
         if (state.subType) {
-            html += `<span>/</span><span class="breadcrumb-item ${state.brand ? 'breadcrumb-active' : ''}" onclick="resetToSubType()">${state.subType.name}</span>`;
+            html += `<span>/</span><span class="breadcrumb-item ${state.subSubType || state.brand ? 'breadcrumb-active' : ''}" onclick="resetToSubType()">${state.subType.name}</span>`;
+        }
+        if (state.subSubType) {
+            html += `<span>/</span><span class="breadcrumb-item ${state.brand ? 'breadcrumb-active' : ''}" onclick="resetToSubSubType()">${state.subSubType.name}</span>`;
         }
         if (state.brand) {
             html += `<span>/</span><span class="breadcrumb-item ${state.model ? 'breadcrumb-active' : ''}" onclick="resetToBrand()">${state.brand.name}</span>`;
@@ -536,9 +591,17 @@ body {
                 html += `<div class="card" onclick="selectSubType('${subType.id}')"><div style="font-size: 18px; font-weight: bold;">${subType.name}</div></div>`;
             });
             html += `</div>`;
-        } else if (!state.brand) {
-            const source = state.subType || state.type;
-            const title = state.subType ? `Marque (${state.subType.name})` : `Marque (${source.name})`;
+        } else if (state.subType && state.subType.subTypes && !state.subSubType) {
+            // Niveau supplémentaire (ex: Concentrateur -> Fixe/Portable)
+            html += `<h2>Type (${state.subType.name})</h2><div class="card-grid">`;
+            state.subType.subTypes.forEach(sub => {
+                html += `<div class="card" onclick="selectSubSubType('${sub.id}')"><div style="font-size: 18px; font-weight: bold;">${sub.name}</div></div>`;
+            });
+            html += `</div>`;
+        } else if (!state.brand && ( (state.type && state.type.brands) || (state.subType && state.subType.brands) || (state.subSubType && state.subSubType.brands) ) ) {
+            // Étape de sélection de la marque (pour VNI, VAA, PPC)
+            const source = state.subSubType || state.subType || state.type;
+            const title = source.name ? `Marque (${source.name})` : `Marque`;
             html += `<h2>${title}</h2><div class="card-grid">`;
             if (!source.brands || source.brands.length === 0) {
                 html += `<p>Aucune marque répertoriée.</p>`;
@@ -550,11 +613,17 @@ body {
             }
             html += `</div>`;
         } else if (!state.model) {
-            html += `<h2>Modèle (${state.brand.name})</h2><div class="card-grid">`;
-            if (state.brand.models.length === 0) html += `<p>Aucun modèle répertorié.</p>`;
-            state.brand.models.forEach(model => {
-                html += `<div class="card" onclick="selectModel('${model.id}')"><div style="font-size: 18px; font-weight: bold;">${model.name}</div></div>`;
-            });
+            // Étape de sélection du modèle
+            const source = state.brand || state.subSubType || state.subType || state.type;
+            const title = source.name ? `Modèle (${source.name})` : `Modèle`;
+            html += `<h2>${title}</h2><div class="card-grid">`;
+            if (!source.models || source.models.length === 0) {
+                html += `<p>Aucun modèle répertorié.</p>`;
+            } else {
+                source.models.forEach(model => {
+                    html += `<div class="card" onclick="selectModel('${model.id}')"><div style="font-size: 18px; font-weight: bold;">${model.name}</div></div>`;
+                });
+            }
             html += `</div>`;
         } else if (!state.failure) {
             // Vue : Choix du problème
