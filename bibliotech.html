@@ -178,28 +178,63 @@ body {
         id: "aerosol",
         name: "Aérosol",
         models: [
-          { id: "neb-breas", name: "Nébuliseur Portable", failures: [] },
-          { id: "neb-lowenstein", name: "Nébuliseur Standard", failures: [] },
-          { id: "innospire", name: "InnoSpire", failures: [] },
-          { id: "neb-resmed", name: "Kit Nébulisation", failures: [] },
-          { id: "neb-sefam", name: "Nébuliseur", failures: [] }
+          { id: "airforce-max", name: "Airforce Max", failures: [
+              { title: "Pas de nébulisation", causes: ["Chambre mal montée", "Tubulure obstruée", "Buse bouchée", "Membrane compresseur usée"], solutions: ["Repositionner kit", "Nettoyer tubulure", "Nettoyer buse", "Remplacement membrane"] },
+              { title: "Débit faible", causes: ["Filtre air encrassé", "Pression compresseur faible", "Fuite interne"], solutions: ["Remplacer filtre", "Test pression", "Remplacement compresseur"] },
+              { title: "Ne démarre pas", causes: ["Cordon secteur", "Interrupteur", "Carte interne"], solutions: ["Tester câble", "Remplacer interrupteur", "Remplacer carte"] }
+          ] },
+          { id: "pariboy-pro", name: "PariBoy Pro", failures: [
+              { title: "Jet absent", causes: ["Embout mal monté", "Tube air sale", "Buse bouchée"], solutions: ["Repositionner kit", "Nettoyer circuit", "Nettoyage buse"] },
+              { title: "Nébulisation lente", causes: ["Fuite", "Membrane usée", "Pression insuffisante"], solutions: ["Réparer fuite", "Remplacement membrane", "Test compresseur"] },
+              { title: "Défaut électrique", causes: ["Câble", "Bloc alimentation", "Carte interne"], solutions: ["Tester câble", "Remplacer bloc", "Remplacer carte"] }
+          ] },
+          { id: "pariboy-sx", name: "PariBoy SX", failures: [
+              { title: "Nébulisation irrégulière", causes: ["Humidité interne", "Tube partiellement bouché", "Membrane fatiguée"], solutions: ["Séchage complet", "Nettoyage tuyau", "Remplacement membrane"] },
+              { title: "Bruit anormal", causes: ["Fixations desserrées", "Pièce interne usée"], solutions: ["Resserrer", "Remplacer pièce"] },
+              { title: "Panne complète", causes: ["Alimentation HS", "Carte interne HS"], solutions: ["Remplacer alimentation", "Remplacer carte"] }
+          ] },
+          { id: "innospire-elegance", name: "Innospire Elegance", failures: [
+              { title: "Jet faible", causes: ["Filtre air sale", "Buse encrassée", "Membrane usée"], solutions: ["Remplacer filtre", "Nettoyer buse", "Remplacement membrane"] },
+              { title: "Bruit excessif", causes: ["Support moteur desserré", "Usure compresseur"], solutions: ["Refixer support", "Remplacement compresseur"] },
+              { title: "Ne démarre pas", causes: ["Cordon", "Interrupteur", "Carte"], solutions: ["Vérifier secteur", "Remplacer switch", "Remplacement carte"] }
+          ] },
+          { id: "innospire-mini", name: "Innospire Mini", failures: [
+              { title: "Jet faible", causes: ["Buse partiellement bouchée", "Membrane usée"], solutions: ["Nettoyage", "Remplacement membrane"] },
+              { title: "Pas d’alimentation", causes: ["Chargeur HS", "Batterie faible", "Carte gestion HS"], solutions: ["Tester chargeur", "Remplacer batterie", "Remplacement carte"] }
+          ] },
+          { id: "inspiration-elite", name: "Inspiration Elite", failures: [
+              { title: "Absence de nébulisation", causes: ["Fuite circuit", "Buse bouchée", "Membrane usée"], solutions: ["Vérifier étanchéité", "Nettoyer buse", "Remplacement membrane"] },
+              { title: "Fonctionnement intermittent", causes: ["Alimentation instable", "Pression instable"], solutions: ["Remplacement alimentation", "Test pression"] },
+              { title: "Défaut total", causes: ["Bloc alimentation", "Carte interne"], solutions: ["Remplacement bloc", "Remplacement carte"] }
+          ] }
         ]
       },
       { 
         id: "aspirateur",
         name: "Aspirateur",
         models: [
-          { id: "vacuaide", name: "VacuAide", failures: [
-              { title: "Ne démarre pas", causes: ["Batterie déchargée", "Fusible HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Vérifier fusible", "Remplacer batterie"] },
-              { title: "Aspiration faible", causes: ["Bocal mal fermé", "Filtre bouché", "Tuyau percé"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Vérifier joint bocal", "Remplacer filtre"] }
+          { id: "vacuaide", name: "Vacu-Aid", failures: [
+              { title: "Aspiration insuffisante", causes: ["Bocal mal vissé", "Fuite sur circuit", "Filtre colmaté", "Pompe fatiguée"], solutions: ["Repositionner bocal", "Vérifier étanchéité", "Remplacer filtre", "Remplacement pompe"] },
+              { title: "Bruit fort", causes: ["Pompe contrainte", "Support moteur usé", "Roulements HS"], solutions: ["Nettoyage interne", "Refixation", "Remplacement pompe"] },
+              { title: "Ne démarre pas", causes: ["Secteur absent", "Fusible grillé", "Alimentation HS", "Carte HS"], solutions: ["Vérifier secteur", "Remplacer fusible", "Remplacer alimentation", "Remplacer carte"] }
           ] },
           { id: "lsu", name: "LSU", failures: [
-              { title: "Témoin batterie rouge", causes: ["Batterie HS", "Chargeur HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
-              { title: "Pas d'aspiration", causes: ["Tuyau coudé", "Bocal plein", "Fuite"], solutions: ["Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "Vider bocal", "Vérifier joint"] }
+              { title: "Témoin batterie rouge", causes: ["Chargeur HS", "Batterie HS"], solutions: ["Vérifier le câble d'alimentation, Débrancher et rebrancher", "Remplacer batterie"] },
+              { title: "Pas d'aspiration", causes: ["Bocal plein", "Tuyau coudé", "Fuite"], solutions: ["Vider bocal", "Vérifier si le tuyau est percé", "Vérifier joint"] }
           ] },
           { id: "accuvac", name: "Accuvac", failures: [
               { title: "Ne s'allume pas", causes: ["Batterie vide", "Carte mère HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "Remplacer batterie"] },
-              { title: "Manque de puissance", causes: ["Filtre encrassé", "Fuite bocal"], solutions: ["Vérifier que le circuit est bien vissé", "Vérifier si le tuyau est percé", "Changer filtre"] }
+              { title: "Manque de puissance", causes: ["Fuite bocal", "Filtre encrassé"], solutions: ["Vérifier que le circuit est bien vissé, Vérifier si le tuyau est percé", "Changer filtre"] }
+          ] },
+          { id: "aidal", name: "AIDAL", failures: [
+              { title: "Aspiration faible / nulle", causes: ["Bocal plein", "Régulateur de dépression mal réglé", "Tuyau obstrué / pincé", "Filtre antibactérien saturé", "Pompe interne usée"], solutions: ["Vider bocal", "Vérifier réglage dépression", "Vérifier / déboucher tuyau", "Remplacer filtre", "Remplacement pompe"] },
+              { title: "Machine ne démarre pas", causes: ["Prise débranchée", "Fusible secteur grillé", "Interrupteur HS", "Alimentation interne HS", "Carte électronique HS"], solutions: ["Vérifier secteur", "Remplacer fusible", "Tester / remplacer interrupteur", "Remplacer bloc alimentation", "Remplacer carte"] },
+              { title: "Bruit anormal", causes: ["Obstruction interne", "Silent-bloc déplacé", "Pompe désaxée", "Roulements usés"], solutions: ["Inspection interne", "Refixer support moteur", "Réalignement pompe", "Remplacement pompe"] }
+          ] },
+          { id: "aidal-v7-ac", name: "V7+ AC", failures: [
+              { title: "Perte de vide", causes: ["Fuite circuit patient", "Joint bocal défectueux", "Filtre saturé", "Membrane pompe usée"], solutions: ["Contrôle étanchéité", "Remplacement joint", "Remplacement filtre", "Remplacement membrane/pompe"] },
+              { title: "Arrêts intempestifs", causes: ["Surchauffe", "Ventilation obstruée", "Protection thermique déclenchée", "Défaut moteur"], solutions: ["Laisser refroidir", "Nettoyage ventilation", "Test thermique", "Remplacement moteur"] },
+              { title: "Pas d’alimentation", causes: ["Cordon défectueux", "Chargeur HS", "Batterie HS (si version batterie)", "Carte gestion HS"], solutions: ["Tester câble", "Tester chargeur", "Tester/remplacer batterie", "Remplacement carte"] }
           ] }
         ]
       },
@@ -280,8 +315,8 @@ body {
             models: [
               {
                 id: "prisma-smart", name: "Prisma Smart", failures: [
-                  { title: "Erreur humidificateur", causes: ["bac mal mis", "joint HS", "module chauffant HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer joint", "remplacer humidificateur"] },
-                  { title: "Défaut pression", causes: ["fuite externe", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "contrôle étanchéité", "nettoyage", "remplacement capteur"] }
+                  { title: "Erreur humidificateur", causes: ["bac mal mis", "joint HS", "module chauffant HS"], solutions: ["repositionner", "remplacer joint", "remplacer humidificateur"] },
+                  { title: "Défaut pression", causes: ["fuite externe", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "nettoyage", "remplacement capteur"] }
                 ]
               }
             ] 
@@ -293,7 +328,7 @@ body {
               {
                 id: "dreamstation-2", name: "DreamStation 2", failures: [
                   { title: "Fuite humidificateur", causes: ["bac mal fermé", "bac fissuré"], solutions: ["reclipser", "remplacer bac"] },
-                  { title: "Erreur système", causes: ["bug logiciel", "carte mère HS"], solutions: ["Débrancher et rebrancher", "reset usine", "remplacement carte"] }
+                  { title: "Erreur système", causes: ["bug logiciel", "carte mère HS"], solutions: ["Débrancher et rebrancher, reset usine", "remplacement carte"] }
                 ]
               },
               {
@@ -309,16 +344,16 @@ body {
             models: [
               {
                 id: "s11", name: "S11", failures: [
-                  { title: "Ne démarre pas", causes: ["prise débranchée", "câble mal inséré", "alimentation HS", "carte mère HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "vérifier prise", "tester autre câble", "remplacer alimentation", "remplacer carte"] },
-                  { title: "Humidificateur ne chauffe pas", causes: ["bac mal clipsé", "bac fissuré", "plaque HS", "carte gestion HS"], solutions: ["Débrancher et rebrancher", "reclipser", "tester autre bac", "remplacer module", "remplacer carte"] },
-                  { title: "Bruit anormal", causes: ["filtre sale", "corps étranger", "turbine usée"], solutions: ["Vérifier le serrage du masque", "Vérifier que le circuit est bien vissé", "remplacer filtre", "nettoyage interne", "remplacement moteur"] }
+                  { title: "Ne démarre pas", causes: ["prise débranchée", "câble mal inséré", "alimentation HS", "carte mère HS"], solutions: ["vérifier prise", "Vérifier le câble d'alimentation, Débrancher et rebrancher", "tester autre câble, remplacer alimentation", "remplacer carte"] },
+                  { title: "Humidificateur ne chauffe pas", causes: ["bac mal clipsé", "bac fissuré", "plaque HS", "carte gestion HS"], solutions: ["reclipser", "tester autre bac", "remplacer module", "remplacer carte"] },
+                  { title: "Bruit anormal", causes: ["filtre sale", "corps étranger", "turbine usée"], solutions: ["remplacer filtre", "nettoyage interne", "remplacement moteur"] }
                 ]
               },
               {
                 id: "s10", name: "S10", failures: [
-                  { title: "Ne s’allume pas", causes: ["mauvais branchement", "alimentation HS", "carte interne HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "vérifier câble", "tester alimentation", "remplacer carte"] },
-                  { title: "Humidificateur non reconnu", causes: ["mauvais clipsage", "connecteur sale", "connecteur cassé", "carte interface HS"], solutions: ["Débrancher et rebrancher", "repositionner", "nettoyer", "tester autre humidificateur", "remplacer carte"] },
-                  { title: "Pression instable", causes: ["fuite masque", "filtre colmaté", "capteur encrassé", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacer filtre", "nettoyer capteur", "remplacer moteur"] }
+                  { title: "Ne s’allume pas", causes: ["mauvais branchement", "alimentation HS", "carte interne HS"], solutions: ["Vérifier le câble d'alimentation, Débrancher et rebrancher", "tester alimentation", "remplacer carte"] },
+                  { title: "Humidificateur non reconnu", causes: ["mauvais clipsage", "connecteur sale", "connecteur cassé", "carte interface HS"], solutions: ["repositionner", "nettoyer", "tester autre humidificateur", "remplacer carte"] },
+                  { title: "Pression instable", causes: ["fuite masque", "filtre colmaté", "capteur encrassé", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "remplacer filtre", "nettoyer capteur", "remplacer moteur"] }
                 ]
               }
             ] 
@@ -329,8 +364,8 @@ body {
             models: [
               {
                 id: "nea", name: "NÉA", failures: [
-                  { title: "Alarme pression basse", causes: ["fuite masque", "filtre obstrué", "capteur débit HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier masque", "remplacer filtre", "remplacer capteur"] },
-                  { title: "Bruit moteur", causes: ["poussière", "roulement usé"], solutions: ["Vérifier filtre", "nettoyage", "remplacement turbine"] }
+                  { title: "Alarme pression basse", causes: ["fuite masque", "filtre obstrué", "capteur débit HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "remplacer filtre", "remplacer capteur"] },
+                  { title: "Bruit moteur", causes: ["poussière", "roulement usé"], solutions: ["Vérifier filtre, nettoyage", "remplacement turbine"] }
                 ]
               }
             ] 
@@ -348,8 +383,8 @@ body {
             models: [
               {
                 id: "prisma-cr", name: "Prisma CR", failures: [
-                  { title: "Défaut humidificateur", causes: ["bac mal mis", "module HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer humidificateur"] },
-                  { title: "Désynchronisation", causes: ["capteur encrassé", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "nettoyage", "remplacement capteur"] }
+                  { title: "Défaut humidificateur", causes: ["bac mal mis", "module HS"], solutions: ["repositionner", "remplacer humidificateur"] },
+                  { title: "Désynchronisation", causes: ["capteur encrassé", "capteur HS"], solutions: ["nettoyage", "remplacement capteur"] }
                 ]
               }
             ] 
@@ -360,8 +395,8 @@ body {
             models: [
               {
                 id: "bipap-auto-sv", name: "BiPAP Auto SV", failures: [
-                  { title: "Problème alimentation", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "remplacer câble", "remplacer alimentation"] },
-                  { title: "Défaut interne", causes: ["capteur débit HS", "carte mère HS"], solutions: ["Débrancher et rebrancher", "remplacer capteur", "remplacer carte"] }
+                  { title: "Problème alimentation", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation, Débrancher et rebrancher, remplacer câble", "remplacer alimentation"] },
+                  { title: "Défaut interne", causes: ["capteur débit HS", "carte mère HS"], solutions: ["remplacer capteur", "remplacer carte"] }
                 ]
               }
             ] 
@@ -372,8 +407,8 @@ body {
             models: [
               {
                 id: "aircurve-10-pacewave", name: "AirCurve 10 PaceWave", failures: [
-                  { title: "Désynchronisation", causes: ["mauvais réglage", "fuite circuit", "capteur débit sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "ajuster paramètres", "vérifier circuit", "nettoyage", "remplacement capteur"] },
-                  { title: "Pression instable", causes: ["fuite", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacement moteur"] }
+                  { title: "Désynchronisation", causes: ["fuite circuit", "mauvais réglage", "capteur débit sale", "capteur HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "ajuster paramètres", "nettoyage", "remplacement capteur"] },
+                  { title: "Pression instable", causes: ["fuite", "turbine fatiguée"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "remplacement moteur"] }
                 ]
               }
             ] 
@@ -390,20 +425,20 @@ body {
                 id: "niv-i", name: "NIV I", brands: [
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "prisma-30st", name: "Prisma 30ST", failures: [
-                            { title: "Désynchronisation", causes: ["mauvais réglage", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "réglage", "nettoyage", "remplacement capteur"] },
+                            { title: "Désynchronisation", causes: ["mauvais réglage", "capteur sale", "capteur HS"], solutions: ["réglage", "nettoyage", "remplacement capteur"] },
                             { title: "Défaut électronique", causes: ["carte interne HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "avaps", name: "AVAPS", failures: [
-                            { title: "Volume instable", causes: ["fuite", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement capteur"] },
+                            { title: "Volume instable", causes: ["fuite", "capteur sale", "capteur HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "nettoyage", "remplacement capteur"] },
                             { title: "Défaut carte", causes: ["carte interne HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "lumis-150", name: "Lumis 150", failures: [
-                            { title: "Défaut humidificateur", causes: ["bac mal clipsé", "module HS"], solutions: ["Débrancher et rebrancher", "repositionner", "remplacer module"] },
-                            { title: "IPAP instable", causes: ["fuite", "capteur pression HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "remplacement capteur"] },
+                            { title: "Défaut humidificateur", causes: ["bac mal clipsé", "module HS"], solutions: ["repositionner", "remplacer module"] },
+                            { title: "IPAP instable", causes: ["fuite", "capteur pression HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "remplacement capteur"] },
                             { title: "Turbine bruyante", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] }
                         ]}
                     ]}
@@ -419,28 +454,28 @@ body {
                         ]},
                         { id: "vivo-45", name: "Vivo 45", failures: [
                             { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
-                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement capteur"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["nettoyage", "remplacement capteur"] },
                             { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "vent-40", name: "Vent 40", failures: [
                             { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
-                            { title: "Défaut écran", causes: ["nappe débranchée", "écran HS"], solutions: ["Débrancher et rebrancher", "reconnecter", "remplacer écran"] },
-                            { title: "Capteur pression", causes: ["encrassement", "capteur HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement capteur"] }
+                            { title: "Défaut écran", causes: ["nappe débranchée", "écran HS"], solutions: ["reconnecter", "remplacer écran"] },
+                            { title: "Capteur pression", causes: ["encrassement", "capteur HS"], solutions: ["nettoyage", "remplacement capteur"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "bipap-a40", name: "BiPAP A40", failures: [
-                            { title: "Alimentation externe", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher", "remplacer câble", "remplacer bloc"] },
+                            { title: "Alimentation externe", causes: ["câble HS", "bloc HS"], solutions: ["Vérifier le câble d'alimentation, Débrancher et rebrancher, remplacer câble", "remplacer bloc"] },
                             { title: "Batterie interne", causes: ["usure"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
                             { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "stellar-150", name: "Stellar 150", failures: [
-                            { title: "Batterie faible", causes: ["non chargée", "fin de vie"], solutions: ["Vérifier le câble d'alimentation", "recharge", "test autonomie", "remplacement batterie"] },
-                            { title: "Alarme pression", causes: ["fuite", "capteur sale", "capteur HS", "turbine HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement capteur", "remplacement moteur"] },
+                            { title: "Batterie faible", causes: ["non chargée", "fin de vie"], solutions: ["recharge", "remplacement batterie"] },
+                            { title: "Alarme pression", causes: ["fuite", "capteur sale", "capteur HS", "turbine HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "nettoyage", "remplacement capteur", "remplacement moteur"] },
                             { title: "Défaut système", causes: ["carte mère HS"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]}
@@ -458,32 +493,32 @@ body {
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "luisa", name: "Luisa", failures: [
                             { title: "Batterie", causes: ["usure"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
-                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["nettoyage", "remplacement"] },
                             { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "trilogy-evo", name: "Trilogy Evo", failures: [
                             { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
-                            { title: "Module débit", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement module"] },
+                            { title: "Module débit", causes: ["encrassement", "HS"], solutions: ["nettoyage", "remplacement module"] },
                             { title: "Carte mère", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]},
                         { id: "trilogy-100", name: "Trilogy 100", failures: [
                             { title: "Batterie", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
-                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Capteur pression", causes: ["encrassement", "HS"], solutions: ["nettoyage", "remplacement"] },
                             { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]},
                         { id: "eove-150", name: "EOVE 150", failures: [
                             { title: "Batterie", causes: ["fin de vie"], solutions: ["Vérifier le câble d'alimentation", "remplacement"] },
-                            { title: "Capteur débit", causes: ["obstruction", "HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "nettoyage", "remplacement"] },
+                            { title: "Capteur débit", causes: ["obstruction", "HS"], solutions: ["nettoyage", "remplacement"] },
                             { title: "Carte électronique", causes: ["défaut interne"], solutions: ["Débrancher et rebrancher", "remplacement carte"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "astral-150", name: "Astral 150", failures: [
-                            { title: "Batterie externe", causes: ["non chargée", "fin de vie"], solutions: ["Vérifier le câble d'alimentation", "recharge", "remplacement"] },
+                            { title: "Batterie externe", causes: ["non chargée", "fin de vie"], solutions: ["recharge", "remplacement"] },
                             { title: "Batterie interne", causes: ["vieillissement"], solutions: ["Vérifier le câble d'alimentation", "remplacement batterie"] },
-                            { title: "Alarme débit", causes: ["circuit obstrué", "capteur sale", "module HS"], solutions: ["Vérifier le serrage du masque", "Vérifier si le tuyau est percé", "Vérifier que le circuit est bien vissé", "vérifier circuit", "nettoyage", "remplacement module"] },
+                            { title: "Alarme débit", causes: ["circuit obstrué", "capteur sale", "module HS"], solutions: ["Vérifier le serrage du masque, Vérifier si le tuyau est percé, Vérifier que le circuit est bien vissé", "nettoyage", "remplacement module"] },
                             { title: "Turbine", causes: ["usure"], solutions: ["Vérifier filtre", "remplacement moteur"] }
                         ]}
                     ]}
