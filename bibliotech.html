@@ -148,6 +148,45 @@ body {
     cursor: pointer;
 }
 
+.step-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    background: #f8fafc;
+}
+.step-number {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.step-instruction {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: #1e293b;
+    line-height: 1.5;
+}
+.step-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+}
+.btn-action {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.2s;
+}
+.btn-yes { background: #22c55e; color: white; }
+.btn-no { background: #f1f5f9; color: #334155; }
+.btn-tech { background: #f59e0b; color: white; }
+.btn-restart { background: #64748b; color: white; }
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
@@ -184,33 +223,33 @@ body {
         name: "Aérosol",
         models: [
           { id: "airforce-max", name: "Airforce Max", failures: [
-              { title: "Nébulisation inexistante", causes: ["Chambre mal montée", "Tubulure obstruée", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Repositionner le kit", "Nettoyer la tubulure", "Nettoyer la buse"], solutionsTech: ["Remplacer la membrane"] },
-              { title: "Nébulisation faible", causes: ["Filtre encrassé", "Pression compresseur faible", "Fuite interne"], solutionsPatient: ["Remplacer le filtre"], solutionsTech: ["Tester la pression", "Remplacer le compresseur"] },
-              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Interrupteur défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer l'interrupteur", "Remplacer la carte électronique"] }
+              { title: "Nébulisation inexistante", causes: ["Chambre mal montée", "Tubulure obstruée", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Démontez le kit de nébulisation (chambre, masque/embout).", "Remontez chaque pièce en vous assurant qu'elles sont bien vissées/clipsées.", "Vérifiez que la tubulure n'est pas pliée ou écrasée."], solutionsTech: ["Remplacer la membrane"] },
+              { title: "Nébulisation faible", causes: ["Filtre encrassé", "Pression compresseur faible", "Fuite interne"], solutionsPatient: ["Localisez le filtre à air (souvent une petite trappe).", "Retirez l'ancien filtre et remplacez-le par un neuf."], solutionsTech: ["Tester la pression", "Remplacer le compresseur"] },
+              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Interrupteur défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Assurez-vous que l'interrupteur de la prise ou de la multiprise est allumé.", "Essayez de brancher un autre appareil (ex: une lampe) sur la même prise pour vérifier qu'elle fonctionne.", "Inspectez le cordon d'alimentation pour tout signe de dommage (coupure, pliure)."], solutionsTech: ["Remplacer l'interrupteur", "Remplacer la carte électronique"] }
           ] },
           { id: "pariboy-pro", name: "PariBoy Pro", failures: [
-              { title: "Nébulisation inexistante", causes: ["Embout mal monté", "Tubulure encrassée", "Buse obstruée"], solutionsPatient: ["Repositionner le kit", "Nettoyer la tubulure", "Nettoyer la buse"], solutionsTech: [] },
-              { title: "Nébulisation faible", causes: ["Fuite circuit", "Membrane du compresseur usée", "Pression insuffisante"], solutionsPatient: [], solutionsTech: ["Réparer la fuite", "Remplacer la membrane", "Tester le compresseur"] },
-              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Bloc d'alimentation défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer le bloc d'alimentation", "Remplacer la carte électronique"] }
+              { title: "Nébulisation inexistante", causes: ["Embout mal monté", "Tubulure encrassée", "Buse obstruée"], solutionsPatient: ["Démontez le kit de nébulisation et remontez-le en suivant la notice.", "Vérifiez que la tubulure n'est pas pliée ou écrasée.", "Nettoyez la buse avec les outils fournis ou selon la notice."], solutionsTech: [] },
+              { title: "Nébulisation faible", causes: ["Fuite circuit", "Membrane du compresseur usée", "Pression insuffisante"], solutionsPatient: ["Vérifiez que la tubulure est bien enfoncée des deux côtés (appareil et kit)."], solutionsTech: ["Réparer la fuite", "Remplacer la membrane", "Tester le compresseur"] },
+              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Bloc d'alimentation défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Assurez-vous que l'interrupteur de la prise ou de la multiprise est allumé.", "Essayez de brancher sur une autre prise.", "Inspectez le cordon et le bloc d'alimentation pour tout signe de dommage."], solutionsTech: ["Remplacer le bloc d'alimentation", "Remplacer la carte électronique"] }
           ] },
           { id: "pariboy-sx", name: "PariBoy SX", failures: [
-              { title: "Nébulisation instable", causes: ["Humidité interne", "Tubulure partiellement obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Sécher l'appareil", "Nettoyer la tubulure"], solutionsTech: ["Remplacer la membrane"] },
-              { title: "Bruit anormal", causes: ["Fixations desserrées", "Pièce interne usée"], solutionsPatient: [], solutionsTech: ["Resserrer les fixations", "Remplacer la pièce usée"] },
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: [], solutionsTech: ["Remplacer l'alimentation", "Remplacer la carte électronique"] }
+              { title: "Nébulisation instable", causes: ["Humidité interne", "Tubulure partiellement obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Faites fonctionner l'appareil à vide (sans médicament) pendant quelques minutes pour le sécher.", "Nettoyez la tubulure en suivant la notice."], solutionsTech: ["Remplacer la membrane"] },
+              { title: "Bruit anormal", causes: ["Fixations desserrées", "Pièce interne usée"], solutionsPatient: ["Assurez-vous que l'appareil est sur une surface plane et stable."], solutionsTech: ["Resserrer les fixations", "Remplacer la pièce usée"] },
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Essayez de brancher sur une autre prise.", "Inspectez le cordon et le bloc d'alimentation pour tout signe de dommage."], solutionsTech: ["Remplacer l'alimentation", "Remplacer la carte électronique"] }
           ] },
           { id: "innospire-elegance", name: "Innospire Elegance", failures: [
-              { title: "Nébulisation faible", causes: ["Filtre encrassé", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Remplacer le filtre", "Nettoyer la buse"], solutionsTech: ["Remplacer la membrane"] },
-              { title: "Bruit anormal", causes: ["Support moteur desserré", "Compresseur usé"], solutionsPatient: [], solutionsTech: ["Refixer le support", "Remplacer le compresseur"] },
-              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Interrupteur défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier l'alimentation secteur"], solutionsTech: ["Remplacer l'interrupteur", "Remplacer la carte électronique"] }
+              { title: "Nébulisation faible", causes: ["Filtre encrassé", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Localisez le filtre à air, retirez-le et remplacez-le par un neuf.", "Nettoyez la buse du kit de nébulisation."], solutionsTech: ["Remplacer la membrane"] },
+              { title: "Bruit anormal", causes: ["Support moteur desserré", "Compresseur usé"], solutionsPatient: ["Assurez-vous que l'appareil est sur une surface plane et stable."], solutionsTech: ["Refixer le support", "Remplacer le compresseur"] },
+              { title: "L'appareil ne démarre pas", causes: ["Cordon d'alimentation défectueux", "Interrupteur défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Assurez-vous que l'interrupteur de la prise ou de la multiprise est allumé.", "Essayez de brancher un autre appareil sur la même prise.", "Inspectez le cordon d'alimentation pour tout signe de dommage."], solutionsTech: ["Remplacer l'interrupteur", "Remplacer la carte électronique"] }
           ] },
           { id: "innospire-mini", name: "Innospire Mini", failures: [
-              { title: "Nébulisation faible", causes: ["Buse partiellement obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Nettoyer la buse"], solutionsTech: ["Remplacer la membrane"] },
-              { title: "L'appareil ne démarre pas", causes: ["Chargeur défectueux", "Batterie défectueuse ou déchargée", "Carte électronique défectueuse"], solutionsPatient: ["Tester le chargeur"], solutionsTech: ["Remplacer la batterie", "Remplacer la carte électronique"] }
+              { title: "Nébulisation faible", causes: ["Buse partiellement obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Nettoyez la buse du kit de nébulisation en suivant la notice."], solutionsTech: ["Remplacer la membrane"] },
+              { title: "L'appareil ne démarre pas", causes: ["Chargeur défectueux", "Batterie défectueuse ou déchargée", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le chargeur est bien branché à l'appareil et à la prise murale.", "Laissez l'appareil en charge pendant au moins 30 minutes avant de réessayer.", "Si le chargeur a un voyant, vérifiez s'il est allumé."], solutionsTech: ["Remplacer la batterie", "Remplacer la carte électronique"] }
           ] },
           { id: "inspiration-elite", name: "Inspiration Elite", failures: [
-              { title: "Nébulisation inexistante", causes: ["Fuite circuit", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Vérifier l'étanchéité", "Nettoyer la buse"], solutionsTech: ["Remplacer la membrane"] },
-              { title: "Fonctionnement intermittent", causes: ["Alimentation instable", "Pression instable"], solutionsPatient: [], solutionsTech: ["Remplacer l'alimentation", "Tester la pression"] },
-              { title: "L'appareil ne démarre pas", causes: ["Bloc d'alimentation défectueux", "Carte électronique défectueuse"], solutionsPatient: [], solutionsTech: ["Remplacer le bloc d'alimentation", "Remplacer la carte électronique"] }
+              { title: "Nébulisation inexistante", causes: ["Fuite circuit", "Buse obstruée", "Membrane du compresseur usée"], solutionsPatient: ["Vérifiez que la tubulure est bien enfoncée des deux côtés.", "Nettoyez la buse du kit de nébulisation."], solutionsTech: ["Remplacer la membrane"] },
+              { title: "Fonctionnement intermittent", causes: ["Alimentation instable", "Pression instable"], solutionsPatient: ["Vérifiez que le cordon d'alimentation est bien branché et non endommagé."], solutionsTech: ["Remplacer l'alimentation", "Tester la pression"] },
+              { title: "L'appareil ne démarre pas", causes: ["Bloc d'alimentation défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Essayez de brancher sur une autre prise.", "Inspectez le cordon et le bloc d'alimentation pour tout signe de dommage."], solutionsTech: ["Remplacer le bloc d'alimentation", "Remplacer la carte électronique"] }
           ] }
         ]
       },
@@ -219,27 +258,27 @@ body {
         name: "Aspirateur",
         models: [
           { id: "vacuaide", name: "Vacu-Aid", failures: [
-              { title: "Aspiration faible", causes: ["Bocal mal vissé", "Fuite sur circuit", "Filtre encrassé", "Pompe usée"], solutionsPatient: ["Repositionner le bocal", "Vérifier l'étanchéité", "Remplacer le filtre"], solutionsTech: ["Remplacer la pompe"] },
-              { title: "Bruit anormal", causes: ["Pompe contrainte", "Support moteur usé", "Roulements usés"], solutionsPatient: [], solutionsTech: ["Nettoyer l'intérieur", "Refixer le support", "Remplacer la pompe"] },
-              { title: "L'appareil ne démarre pas", causes: ["Absence secteur", "Fusible grillé", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier l'alimentation secteur"], solutionsTech: ["Remplacer le fusible", "Remplacer l'alimentation", "Remplacer la carte électronique"] }
+              { title: "Aspiration faible", causes: ["Bocal mal vissé", "Fuite sur circuit", "Filtre encrassé", "Pompe usée"], solutionsPatient: ["Dévissez puis revissez fermement le couvercle du bocal.", "Assurez-vous que le joint du couvercle est propre et bien en place.", "Vérifiez que le tuyau est bien connecté au bocal et à la canule, sans fuite d'air audible.", "Changez le filtre antibactérien s'il est humide ou décoloré."], solutionsTech: ["Remplacer la pompe"] },
+              { title: "Bruit anormal", causes: ["Pompe contrainte", "Support moteur usé", "Roulements usés"], solutionsPatient: ["Assurez-vous que l'appareil est sur une surface plane et stable."], solutionsTech: ["Nettoyer l'intérieur", "Refixer le support", "Remplacer la pompe"] },
+              { title: "L'appareil ne démarre pas", causes: ["Absence secteur", "Fusible grillé", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Assurez-vous que l'interrupteur de la prise ou de la multiprise est allumé.", "Essayez de brancher sur une autre prise.", "Inspectez le cordon pour tout dommage."], solutionsTech: ["Remplacer le fusible", "Remplacer l'alimentation", "Remplacer la carte électronique"] }
           ] },
           { id: "lsu", name: "LSU", failures: [
-              { title: "Défaut batterie", causes: ["Chargeur défectueux", "Batterie défectueuse"], solutionsPatient: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher"], solutionsTech: ["Remplacer la batterie"] },
-              { title: "Aspiration inexistante", causes: ["Bocal plein", "Tuyau coudé", "Fuite circuit"], solutionsPatient: ["Vider le bocal", "Vérifier le tuyau", "Vérifier le joint"], solutionsTech: [] }
+              { title: "Défaut batterie", causes: ["Chargeur défectueux", "Batterie défectueuse"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Débranchez l'appareil, attendez 10 secondes, puis rebranchez-le.", "Laissez l'appareil en charge pendant au moins 1 heure sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+              { title: "Aspiration inexistante", causes: ["Bocal plein", "Tuyau coudé", "Fuite circuit"], solutionsPatient: ["Videz le bocal de recueil.", "Suivez le tuyau pour vérifier qu'il n'est pas plié ou écrasé.", "Vérifiez que le couvercle du bocal est bien fermé et que le joint est en place."], solutionsTech: [] }
           ] },
           { id: "accuvac", name: "Accuvac", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Batterie déchargée", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier le câble d'alimentation", "Débrancher et rebrancher"], solutionsTech: ["Remplacer la batterie"] },
-              { title: "Aspiration faible", causes: ["Fuite bocal", "Filtre encrassé"], solutionsPatient: ["Vérifier l'étanchéité du circuit", "Vérifier le tuyau"], solutionsTech: ["Remplacer le filtre"] }
+              { title: "L'appareil ne démarre pas", causes: ["Batterie déchargée", "Carte électronique défectueuse"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Laissez l'appareil en charge pendant au moins 1 heure sans y toucher.", "Vérifiez que le voyant de charge est allumé (si applicable).", "Débranchez, attendez 10 secondes, puis rebranchez."], solutionsTech: ["Remplacer la batterie"] },
+              { title: "Aspiration faible", causes: ["Fuite bocal", "Filtre encrassé"], solutionsPatient: ["Vérifiez que le couvercle du bocal est bien fermé et que le joint est en place.", "Suivez le tuyau pour vérifier qu'il n'est pas plié ou écrasé.", "Remplacez le filtre s'il est sale ou humide."], solutionsTech: ["Remplacer le filtre"] }
           ] },
           { id: "aidal", name: "AIDAL", failures: [
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal plein", "Régulateur mal réglé", "Tuyau obstrué", "Filtre encrassé", "Pompe usée"], solutionsPatient: ["Vider le bocal", "Vérifier le réglage", "Déboucher le tuyau", "Remplacer le filtre"], solutionsTech: ["Remplacer la pompe"] },
-              { title: "L'appareil ne démarre pas", causes: ["Prise débranchée", "Fusible grillé", "Interrupteur défectueux", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier l'alimentation secteur"], solutionsTech: ["Remplacer le fusible", "Remplacer l'interrupteur", "Remplacer l'alimentation", "Remplacer la carte électronique"] },
-              { title: "Bruit anormal", causes: ["Obstruction interne", "Silent-bloc déplacé", "Pompe désaxée", "Roulements usés"], solutionsPatient: [], solutionsTech: ["Inspecter l'intérieur", "Refixer le support", "Réaligner la pompe", "Remplacer la pompe"] }
+              { title: "Aspiration faible ou inexistante", causes: ["Bocal plein", "Régulateur mal réglé", "Tuyau obstrué", "Filtre encrassé", "Pompe usée"], solutionsPatient: ["Videz le bocal de recueil.", "Tournez le bouton de réglage de l'aspiration dans le sens des aiguilles d'une montre.", "Vérifiez que le tuyau n'est pas bouché.", "Remplacez le filtre."], solutionsTech: ["Remplacer la pompe"] },
+              { title: "L'appareil ne démarre pas", causes: ["Prise débranchée", "Fusible grillé", "Interrupteur défectueux", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le cordon est bien branché à l'appareil et à la prise murale.", "Assurez-vous que l'interrupteur de la prise ou de la multiprise est allumé.", "Essayez de brancher sur une autre prise.", "Inspectez le cordon pour tout dommage."], solutionsTech: ["Remplacer le fusible", "Remplacer l'interrupteur", "Remplacer l'alimentation", "Remplacer la carte électronique"] },
+              { title: "Bruit anormal", causes: ["Obstruction interne", "Silent-bloc déplacé", "Pompe désaxée", "Roulements usés"], solutionsPatient: ["Assurez-vous que l'appareil est sur une surface plane et stable."], solutionsTech: ["Inspecter l'intérieur", "Refixer le support", "Réaligner la pompe", "Remplacer la pompe"] }
           ] },
           { id: "aidal-v7-ac", name: "V7+ AC", failures: [
-              { title: "Aspiration faible", causes: ["Fuite circuit", "Joint bocal défectueux", "Filtre encrassé", "Membrane pompe usée"], solutionsPatient: ["Contrôler l'étanchéité"], solutionsTech: ["Remplacer le joint", "Remplacer le filtre", "Remplacer la membrane/pompe"] },
-              { title: "Arrêts intempestifs", causes: ["Surchauffe", "Ventilation obstruée", "Protection thermique déclenchée", "Moteur défectueux"], solutionsPatient: ["Laisser refroidir", "Nettoyer la ventilation"], solutionsTech: ["Tester la protection thermique", "Remplacer le moteur"] },
-              { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Chargeur défectueux", "Batterie défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Tester le cordon", "Tester le chargeur"], solutionsTech: ["Remplacer la batterie", "Remplacer la carte électronique"] }
+              { title: "Aspiration faible", causes: ["Fuite circuit", "Joint bocal défectueux", "Filtre encrassé", "Membrane pompe usée"], solutionsPatient: ["Vérifiez que le couvercle du bocal est bien fermé et que le tuyau est bien branché."], solutionsTech: ["Remplacer le joint", "Remplacer le filtre", "Remplacer la membrane/pompe"] },
+              { title: "Arrêts intempestifs", causes: ["Surchauffe", "Ventilation obstruée", "Protection thermique déclenchée", "Moteur défectueux"], solutionsPatient: ["Éteignez l'appareil et laissez-le refroidir pendant 30 minutes.", "Vérifiez que les grilles de ventilation ne sont pas obstruées par de la poussière ou un objet."], solutionsTech: ["Tester la protection thermique", "Remplacer le moteur"] },
+              { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Chargeur défectueux", "Batterie défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifiez que le chargeur est bien branché à l'appareil et à la prise murale.", "Laissez l'appareil en charge pendant au moins 30 minutes avant de réessayer.", "Si le chargeur a un voyant, vérifiez s'il est allumé.", "Inspectez le cordon et le chargeur pour tout dommage."], solutionsTech: ["Remplacer la batterie", "Remplacer la carte électronique"] }
           ] }
         ]
       },
@@ -320,8 +359,8 @@ body {
             models: [
               {
                 id: "prisma-smart", name: "Prisma Smart", failures: [
-                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal positionné", "Joint défectueux", "Module chauffant défectueux"], solutionsPatient: ["Repositionner le bac"], solutionsTech: ["Remplacer le joint", "Remplacer l'humidificateur"] },
-                  { title: "Instabilité pression", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Vérifier le masque et le circuit", "Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] }
+                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal positionné", "Joint défectueux", "Module chauffant défectueux"], solutionsPatient: ["Retirez le bac de l'humidificateur.", "Vérifiez qu'il n'est pas fissuré et que le joint est bien en place.", "Réinsérez le bac fermement jusqu'à entendre un 'clic' de verrouillage."], solutionsTech: ["Remplacer le joint", "Remplacer l'humidificateur"] },
+                  { title: "Instabilité pression", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Vérifiez l'ajustement de votre masque pour éliminer les fuites.", "Vérifiez que le tuyau est bien branché des deux côtés.", "Changez le filtre à air s'il est sale."], solutionsTech: ["Remplacer le capteur"] }
                 ]
               }
             ] 
@@ -332,13 +371,13 @@ body {
             models: [
               {
                 id: "dreamstation-2", name: "DreamStation 2", failures: [
-                  { title: "Fuite humidificateur", causes: ["Bac mal fermé", "Bac fissuré"], solutionsPatient: ["Reclipser le bac"], solutionsTech: ["Remplacer le bac"] },
-                  { title: "Erreur système", causes: ["Bug logiciel", "Carte électronique défectueuse"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Réinitialiser (Reset usine)", "Remplacer la carte électronique"] }
+                  { title: "Fuite humidificateur", causes: ["Bac mal fermé", "Bac fissuré"], solutionsPatient: ["Retirez le bac de l'humidificateur.", "Vérifiez qu'il n'est pas fissuré.", "Réinsérez le bac fermement jusqu'à entendre un 'clic' de verrouillage."], solutionsTech: ["Remplacer le bac"] },
+                  { title: "Erreur système", causes: ["Bug logiciel", "Carte électronique défectueuse"], solutionsPatient: ["Débranchez l'appareil du secteur.", "Attendez une minute.", "Rebranchez l'appareil et essayez de le redémarrer."], solutionsTech: ["Réinitialiser (Reset usine)", "Remplacer la carte électronique"] }
                 ]
               },
               {
                 id: "dreamstation-1", name: "DreamStation 1", failures: [
-                  { title: "Dégradation mousse PE-PUR", causes: ["Vieillissement matériau"], solutionsPatient: [], solutionsTech: ["Remplacer l'appareil complet"] }
+                  { title: "Dégradation mousse PE-PUR", causes: ["Vieillissement matériau"], solutionsPatient: ["Cessez immédiatement d'utiliser l'appareil.", "Contactez votre prestataire de santé pour un remplacement."], solutionsTech: ["Remplacer l'appareil complet"] }
                 ]
               }
             ] 
@@ -349,16 +388,16 @@ body {
             models: [
               {
                 id: "s11", name: "S11", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Prise débranchée", "Cordon mal connecté", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier la prise", "Vérifier le cordon d'alimentation"], solutionsTech: ["Tester un autre cordon", "Remplacer l'alimentation", "Remplacer la carte électronique"] },
-                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal clipsé", "Bac fissuré", "Module chauffant défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Reclipser le bac", "Tester un autre bac"], solutionsTech: ["Remplacer le module", "Remplacer la carte électronique"] },
-                  { title: "Bruit anormal", causes: ["Filtre encrassé", "Corps étranger", "Turbine usée"], solutionsPatient: ["Remplacer le filtre"], solutionsTech: ["Nettoyer l'intérieur", "Remplacer la turbine"] }
+                  { title: "L'appareil ne démarre pas", causes: ["Prise débranchée", "Cordon mal connecté", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Débranchez le cordon à l'arrière de l'appareil et rebranchez-le fermement.", "Vérifiez que le bloc d'alimentation est bien connecté au cordon secteur.", "Branchez sur une autre prise murale dont le fonctionnement est vérifié."], solutionsTech: ["Tester un autre cordon", "Remplacer l'alimentation", "Remplacer la carte électronique"] },
+                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal clipsé", "Bac fissuré", "Module chauffant défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Retirez le bac de l'humidificateur et réinsérez-le jusqu'à entendre un 'clic'.", "Inspectez le bac pour détecter d'éventuelles fissures."], solutionsTech: ["Remplacer le module", "Remplacer la carte électronique"] },
+                  { title: "Bruit anormal", causes: ["Filtre encrassé", "Corps étranger", "Turbine usée"], solutionsPatient: ["Changez le filtre à air situé sur le côté de l'appareil."], solutionsTech: ["Nettoyer l'intérieur", "Remplacer la turbine"] }
                 ]
               },
               {
                 id: "s10", name: "S10", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Mauvais branchement", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Vérifier le cordon d'alimentation", "Débrancher et rebrancher"], solutionsTech: ["Tester l'alimentation", "Remplacer la carte électronique"] },
-                  { title: "Dysfonctionnement humidificateur", causes: ["Mauvais clipsage", "Connecteur encrassé", "Connecteur cassé", "Carte interface défectueuse"], solutionsPatient: ["Repositionner l'humidificateur", "Nettoyer le connecteur"], solutionsTech: ["Tester un autre humidificateur", "Remplacer la carte interface"] },
-                  { title: "Instabilité pression", causes: ["Fuite masque", "Filtre encrassé", "Capteur encrassé", "Turbine usée"], solutionsPatient: ["Vérifier le masque et le circuit", "Remplacer le filtre"], solutionsTech: ["Nettoyer le capteur", "Remplacer la turbine"] }
+                  { title: "L'appareil ne démarre pas", causes: ["Mauvais branchement", "Alimentation défectueuse", "Carte électronique défectueuse"], solutionsPatient: ["Débranchez le cordon à l'arrière de l'appareil et rebranchez-le fermement.", "Vérifiez que le bloc d'alimentation est bien connecté au cordon secteur.", "Branchez sur une autre prise murale dont le fonctionnement est vérifié."], solutionsTech: ["Tester l'alimentation", "Remplacer la carte électronique"] },
+                  { title: "Dysfonctionnement humidificateur", causes: ["Mauvais clipsage", "Connecteur encrassé", "Connecteur cassé", "Carte interface défectueuse"], solutionsPatient: ["Séparez l'humidificateur de l'appareil et reclipsez-le fermement.", "Nettoyez les contacts métalliques entre l'appareil et l'humidificateur avec un chiffon sec."], solutionsTech: ["Tester un autre humidificateur", "Remplacer la carte interface"] },
+                  { title: "Instabilité pression", causes: ["Fuite masque", "Filtre encrassé", "Capteur encrassé", "Turbine usée"], solutionsPatient: ["Lancez le test d'ajustement du masque depuis le menu.", "Changez le filtre à air s'il est sale."], solutionsTech: ["Nettoyer le capteur", "Remplacer la turbine"] }
                 ]
               }
             ] 
@@ -369,8 +408,8 @@ body {
             models: [
               {
                 id: "nea", name: "NÉA", failures: [
-                  { title: "Alarme pression basse", causes: ["Fuite masque", "Filtre encrassé", "Capteur débit défectueux"], solutionsPatient: ["Vérifier le masque et le circuit", "Remplacer le filtre"], solutionsTech: ["Remplacer le capteur"] },
-                  { title: "Bruit anormal", causes: ["Poussière interne", "Roulement usé"], solutionsPatient: ["Vérifier le filtre", "Nettoyer l'appareil"], solutionsTech: ["Remplacer la turbine"] }
+                  { title: "Alarme pression basse", causes: ["Fuite masque", "Filtre encrassé", "Capteur débit défectueux"], solutionsPatient: ["Réajustez votre masque pour éliminer les fuites d'air.", "Vérifiez que le tuyau est bien branché.", "Changez le filtre à air."], solutionsTech: ["Remplacer le capteur"] },
+                  { title: "Bruit anormal", causes: ["Poussière interne", "Roulement usé"], solutionsPatient: ["Changez le filtre à air.", "Assurez-vous que l'appareil est sur une surface stable."], solutionsTech: ["Remplacer la turbine"] }
                 ]
               }
             ] 
@@ -388,8 +427,8 @@ body {
             models: [
               {
                 id: "prisma-cr", name: "Prisma CR", failures: [
-                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal positionné", "Module défectueux"], solutionsPatient: ["Repositionner le bac"], solutionsTech: ["Remplacer l'humidificateur"] },
-                  { title: "Instabilité pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] }
+                  { title: "Dysfonctionnement humidificateur", causes: ["Bac mal positionné", "Module défectueux"], solutionsPatient: ["Retirez le bac de l'humidificateur et réinsérez-le fermement jusqu'au 'clic'."], solutionsTech: ["Remplacer l'humidificateur"] },
+                  { title: "Instabilité pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] }
                 ]
               }
             ] 
@@ -400,8 +439,8 @@ body {
             models: [
               {
                 id: "bipap-auto-sv", name: "BiPAP Auto SV", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Bloc d'alimentation défectueux"], solutionsPatient: ["Vérifier le cordon d'alimentation", "Débrancher et rebrancher"], solutionsTech: ["Remplacer le cordon", "Remplacer l'alimentation"] },
-                  { title: "Défaut interne", causes: ["Capteur débit défectueux", "Carte électronique défectueuse"], solutionsPatient: [], solutionsTech: ["Remplacer le capteur", "Remplacer la carte électronique"] }
+                  { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Bloc d'alimentation défectueux"], solutionsPatient: ["Débranchez le cordon à l'arrière de l'appareil et rebranchez-le fermement.", "Vérifiez que le bloc d'alimentation est bien connecté au cordon secteur.", "Branchez sur une autre prise murale dont le fonctionnement est vérifié."], solutionsTech: ["Remplacer le cordon", "Remplacer l'alimentation"] },
+                  { title: "Défaut interne", causes: ["Capteur débit défectueux", "Carte électronique défectueuse"], solutionsPatient: ["Débranchez l'appareil, attendez une minute, puis rebranchez-le."], solutionsTech: ["Remplacer le capteur", "Remplacer la carte électronique"] }
                 ]
               }
             ] 
@@ -412,8 +451,8 @@ body {
             models: [
               {
                 id: "aircurve-10-pacewave", name: "AirCurve 10 PaceWave", failures: [
-                  { title: "Instabilité pression/débit", causes: ["Fuite circuit", "Mauvais réglage", "Capteur débit encrassé", "Capteur défectueux"], solutionsPatient: ["Vérifier le masque et le circuit"], solutionsTech: ["Ajuster les paramètres", "Nettoyer le capteur", "Remplacer le capteur"] },
-                  { title: "Pression instable", causes: ["Fuite circuit", "Turbine usée"], solutionsPatient: ["Vérifier le masque et le circuit"], solutionsTech: ["Remplacer la turbine"] }
+                  { title: "Instabilité pression/débit", causes: ["Fuite circuit", "Mauvais réglage", "Capteur débit encrassé", "Capteur défectueux"], solutionsPatient: ["Lancez le test d'ajustement du masque depuis le menu.", "Vérifiez que le tuyau est bien branché et non percé."], solutionsTech: ["Ajuster les paramètres", "Nettoyer le capteur", "Remplacer le capteur"] },
+                  { title: "Pression instable", causes: ["Fuite circuit", "Turbine usée"], solutionsPatient: ["Lancez le test d'ajustement du masque depuis le menu.", "Vérifiez que le tuyau est bien branché et non percé."], solutionsTech: ["Remplacer la turbine"] }
                 ]
               }
             ] 
@@ -430,21 +469,21 @@ body {
                 id: "niv-i", name: "NIV I", brands: [
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "prisma-30st", name: "Prisma 30ST", failures: [
-                            { title: "Instabilité pression", causes: ["Mauvais réglage", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer l'appareil"], solutionsTech: ["Ajuster les réglages", "Remplacer le capteur"] },
-                            { title: "Défaut électronique", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Instabilité pression", causes: ["Mauvais réglage", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil.", "Vérifiez l'ajustement de votre masque."], solutionsTech: ["Ajuster les réglages", "Remplacer le capteur"] },
+                            { title: "Défaut électronique", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Débranchez l'appareil, attendez une minute, puis rebranchez-le."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "avaps", name: "AVAPS", failures: [
-                            { title: "Volume instable", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Vérifier le masque et le circuit", "Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Défaut carte", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Volume instable", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Vérifiez l'ajustement de votre masque pour éliminer les fuites.", "Vérifiez que le tuyau est bien branché et non percé.", "Changez le filtre à air."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Défaut carte", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Débranchez l'appareil, attendez une minute, puis rebranchez-le."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "lumis-150", name: "Lumis 150", failures: [
-                            { title: "Dysfonctionnement humidificateur", causes: ["Bac mal clipsé", "Module défectueux"], solutionsPatient: ["Repositionner le bac"], solutionsTech: ["Remplacer le module"] },
-                            { title: "IPAP instable", causes: ["Fuite circuit", "Capteur pression défectueux"], solutionsPatient: ["Vérifier le masque et le circuit"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Bruit anormal", causes: ["Turbine usée"], solutionsPatient: ["Vérifier le filtre"], solutionsTech: ["Remplacer la turbine"] }
+                            { title: "Dysfonctionnement humidificateur", causes: ["Bac mal clipsé", "Module défectueux"], solutionsPatient: ["Séparez l'humidificateur de l'appareil et reclipsez-le fermement."], solutionsTech: ["Remplacer le module"] },
+                            { title: "IPAP instable", causes: ["Fuite circuit", "Capteur pression défectueux"], solutionsPatient: ["Lancez le test d'ajustement du masque depuis le menu.", "Vérifiez que le tuyau est bien branché et non percé."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Bruit anormal", causes: ["Turbine usée"], solutionsPatient: ["Changez le filtre à air."], solutionsTech: ["Remplacer la turbine"] }
                         ]}
                     ]}
                 ] 
@@ -453,35 +492,35 @@ body {
                 id: "niv-ii", name: "NIV II", brands: [
                     { id: "breas", name: "Breas", models: [
                         { id: "vivo-3", name: "Vivo 3", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Problème turbine", causes: ["Turbine usée"], solutionsPatient: ["Vérifier le filtre"], solutionsTech: ["Remplacer la turbine"] },
-                            { title: "Connecteur patient", causes: ["Usure mécanique"], solutionsPatient: ["Vérifier la connexion du circuit"], solutionsTech: ["Remplacer le connecteur"] }
+                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Problème turbine", causes: ["Turbine usée"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer la turbine"] },
+                            { title: "Connecteur patient", causes: ["Usure mécanique"], solutionsPatient: ["Vérifiez que le tuyau est bien enfoncé dans le connecteur de l'appareil."], solutionsTech: ["Remplacer le connecteur"] }
                         ]},
                         { id: "vivo-45", name: "Vivo 45", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "vent-40", name: "Vent 40", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Défaut écran", causes: ["Nappe débranchée", "Écran défectueux"], solutionsPatient: [], solutionsTech: ["Reconnecter la nappe", "Remplacer l'écran"] },
-                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] }
+                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Défaut écran", causes: ["Nappe débranchée", "Écran défectueux"], solutionsPatient: ["Redémarrez l'appareil."], solutionsTech: ["Reconnecter la nappe", "Remplacer l'écran"] },
+                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "bipap-a40", name: "BiPAP A40", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Bloc d'alimentation défectueux"], solutionsPatient: ["Vérifier le cordon d'alimentation", "Débrancher et rebrancher"], solutionsTech: ["Remplacer le cordon", "Remplacer le bloc d'alimentation"] },
-                            { title: "Problème de batterie", causes: ["Batterie usée"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "L'appareil ne démarre pas", causes: ["Cordon défectueux", "Bloc d'alimentation défectueux"], solutionsPatient: ["Débranchez le cordon à l'arrière de l'appareil et rebranchez-le fermement.", "Vérifiez que le bloc d'alimentation est bien connecté au cordon secteur.", "Branchez sur une autre prise murale dont le fonctionnement est vérifié."], solutionsTech: ["Remplacer le cordon", "Remplacer le bloc d'alimentation"] },
+                            { title: "Problème de batterie", causes: ["Batterie usée"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "stellar-150", name: "Stellar 150", failures: [
-                            { title: "Batterie faible", causes: ["Batterie déchargée", "Batterie en fin de vie"], solutionsPatient: ["Recharger la batterie"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Alarme pression", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux", "Turbine défectueuse"], solutionsPatient: ["Vérifier le masque et le circuit", "Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur", "Remplacer la turbine"] },
-                            { title: "Défaut système", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Batterie faible", causes: ["Batterie déchargée", "Batterie en fin de vie"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher.", "Vérifiez que le voyant de charge est allumé."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Alarme pression", causes: ["Fuite circuit", "Capteur encrassé", "Capteur défectueux", "Turbine défectueuse"], solutionsPatient: ["Vérifiez l'ajustement de votre masque pour éliminer les fuites.", "Vérifiez que le tuyau est bien branché et non percé.", "Changez le filtre à air."], solutionsTech: ["Remplacer le capteur", "Remplacer la turbine"] },
+                            { title: "Défaut système", causes: ["Carte électronique défectueuse"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]}
                 ] 
@@ -490,41 +529,41 @@ body {
                 id: "niv-iii", name: "NIV III", brands: [
                     { id: "breas", name: "Breas", models: [
                         { id: "vivo-45-ls", name: "Vivo 45 LS", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Problème turbine", causes: ["Turbine usée"], solutionsPatient: ["Vérifier le filtre"], solutionsTech: ["Remplacer la turbine"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Problème turbine", causes: ["Turbine usée"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer la turbine"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "luisa", name: "Luisa", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie usée"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer l'appareil"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie usée"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "trilogy-evo", name: "Trilogy Evo", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie vieillissante"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Module débit", causes: ["Module encrassé", "Module défectueux"], solutionsPatient: ["Nettoyer le module"], solutionsTech: ["Remplacer le module"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie vieillissante"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Module débit", causes: ["Module encrassé", "Module défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le module"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]},
                         { id: "trilogy-100", name: "Trilogy 100", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie vieillissante"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Nettoyer le capteur"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie vieillissante"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Capteur pression", causes: ["Capteur encrassé", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]},
                         { id: "eove-150", name: "EOVE 150", failures: [
-                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Capteur débit", causes: ["Capteur obstrué", "Capteur défectueux"], solutionsPatient: ["Nettoyer le capteur"], solutionsTech: ["Remplacer le capteur"] },
-                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Débrancher et rebrancher"], solutionsTech: ["Remplacer la carte électronique"] }
+                            { title: "Problème de batterie", causes: ["Batterie en fin de vie"], solutionsPatient: ["Assurez-vous que l'appareil est branché sur secteur.", "Vérifiez que le voyant de charge est allumé.", "Laissez l'appareil en charge pendant au moins 2 heures sans y toucher."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Capteur débit", causes: ["Capteur obstrué", "Capteur défectueux"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le capteur"] },
+                            { title: "Carte électronique", causes: ["Défaut interne"], solutionsPatient: ["Éteignez l'appareil, débranchez-le, attendez une minute, puis rebranchez et redémarrez."], solutionsTech: ["Remplacer la carte électronique"] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "astral-150", name: "Astral 150", failures: [
-                            { title: "Batterie externe", causes: ["Batterie déchargée", "Batterie en fin de vie"], solutionsPatient: ["Recharger la batterie"], solutionsTech: ["Remplacer la batterie"] },
-                            { title: "Batterie interne", causes: ["Batterie vieillissante"], solutionsPatient: ["Vérifier le cordon d'alimentation"], solutionsTech: ["Remplacer la batterie interne"] },
-                            { title: "Alarme débit", causes: ["Circuit obstrué", "Capteur encrassé", "Module défectueux"], solutionsPatient: ["Vérifier le masque et le circuit", "Nettoyer l'appareil"], solutionsTech: ["Remplacer le module"] },
-                            { title: "Bruit anormal", causes: ["Turbine usée"], solutionsPatient: ["Vérifier le filtre"], solutionsTech: ["Remplacer la turbine"] }
+                            { title: "Batterie externe", causes: ["Batterie déchargée", "Batterie en fin de vie"], solutionsPatient: ["Branchez la batterie externe à son chargeur.", "Laissez la batterie en charge jusqu'à ce que le voyant indique une charge complète.", "Vérifiez que les connecteurs de la batterie et de l'appareil sont propres."], solutionsTech: ["Remplacer la batterie"] },
+                            { title: "Batterie interne", causes: ["Batterie vieillissante"], solutionsPatient: ["Branchez l'appareil sur secteur en continu.", "Laissez l'appareil en charge pendant au moins 4 heures sans interruption.", "Vérifiez si l'autonomie s'améliore après une charge complète."], solutionsTech: ["Remplacer la batterie interne"] },
+                            { title: "Alarme débit", causes: ["Circuit obstrué", "Capteur encrassé", "Module défectueux"], solutionsPatient: ["Vérifiez que le tuyau n'est pas plié ou obstrué.", "Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer le module"] },
+                            { title: "Bruit anormal", causes: ["Turbine usée"], solutionsPatient: ["Changez le filtre à air de l'appareil."], solutionsTech: ["Remplacer la turbine"] }
                         ]}
                     ]}
                 ] 
@@ -715,7 +754,7 @@ body {
                 `;
             } 
             // Cas 2 : Transition vers Technicien (si non autorisé encore)
-            else if (state.stepIndex === totalPatientSteps && !state.showTech) {
+            else if (state.stepIndex === totalPatientSteps && !state.showTech && techSteps.length > 0) {
                 guideContent = `
                     <div class="step-card" style="border-color: #f59e0b; background: #fffbeb;">
                         <div class="step-instruction" style="color: #b45309;">⚠️ Les solutions patient n'ont pas fonctionné.<br>Voulez-vous passer aux étapes technicien ?</div>
