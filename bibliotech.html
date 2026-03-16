@@ -205,7 +205,9 @@ body {
                 <span style="font-size: 12px; color: #64748b">Bibliothèque technique</span>
             </div>
         </div>
-        <!-- Buttons are now rendered dynamically with the breadcrumb -->
+        <div style="flex-grow: 1; margin: 0 20px 0 40px;">
+            <input type="search" id="global-search" placeholder="Rechercher un appareil, une marque..." style="width: 100%; padding: 10px 15px; font-size: 15px; border-radius: 8px; border: 1px solid #e2e8f0; background-color: white;">
+        </div>
     </div>
 
     <!-- Zone d'affichage dynamique -->
@@ -223,14 +225,6 @@ body {
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale.", "Vérifier que l'interrupteur est bien sur 'I'."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
               { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
           ] },
-          { id: "pariboy-pro", name: "PariBoy Pro", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
-          ] },
-          { id: "pariboy-sx", name: "PariBoy SX", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
-          ] },
           { id: "innospire-elegance", name: "Innospire Elegance", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
               { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
@@ -242,6 +236,14 @@ body {
           { id: "inspiration-elite", name: "Inspiration Elite", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
               { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+          ] },
+          { id: "pariboy-pro", name: "PariBoy Pro", failures: [
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+          ] },
+          { id: "pariboy-sx", name: "PariBoy SX", failures: [
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
           ] }
         ]
       },
@@ -249,29 +251,34 @@ body {
         id: "aspirateur",
         name: "Aspirateur",
         models: [
+          { id: "aidal", name: "AIDAL", failures: [
+              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement secteur.", "Tester sur une autre prise."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le cordon.", "Vérifier l'interrupteur et le fusible.", "Remplacer la carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier le bocal et son joint.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas obstrué."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier les fuites internes."] }
+          ] },
+          { id: "clario-medela", name: "Clario Medela", failures: [
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+          ] },
           { id: "vacuaide-7314", name: "Vacu-Aid 7314", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "vacuaide-7325", name: "Vacu-Aid 7325", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
-          { id: "aidal", name: "AIDAL", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement secteur.", "Tester sur une autre prise."], solutionsTech: ["Tester le cordon.", "Vérifier l'interrupteur et le fusible.", "Remplacer la carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier le bocal et son joint.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas obstrué."], solutionsTech: ["Tester la pompe.", "Vérifier les fuites internes."] }
-          ] },
           { id: "aidal-v7-ac", name: "V7+ AC", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Tester la pompe.", "Vérifier l'étanchéité interne."] }
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] }
           ] },
-          { id: "aidal-v7-ac-batt", name: "V7+ AC Batterie", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Tester la pompe.", "Vérifier l'étanchéité interne."] },
+          { id: "aidal-v7-ac-batt", name: "V7+ AC-B", failures: [
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] }
         ]
@@ -285,11 +292,11 @@ body {
         id: "humidificateur", 
         name: "Humidificateur", 
         models: [
-          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [] },
-          { id: "prisma-aqua", name: "PrismaAQUA", failures: [] },
-          { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
           { id: "humidair", name: "HumidAir", failures: [] },
-          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [] }
+          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [] },
+          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [] },
+          { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
+          { id: "prisma-aqua", name: "PrismaAQUA", failures: [] }
         ] 
       },
       {
@@ -365,16 +372,16 @@ body {
             name: "Philips", 
             models: [
               {
+                id: "dreamstation-1", name: "DreamStation 1", failures: [
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Dégradation mousse PE-PUR (Rappel)", causes: ["Vieillissement matériau"], solutionsPatient: ["Cessez immédiatement d'utiliser l'appareil.", "Contactez votre prestataire de santé pour un remplacement."], solutionsTech: ["Remplacer l'appareil complet selon la procédure de rappel du fabricant"] }
+                ]
+              },
+              {
                 id: "dreamstation-2", name: "DreamStation 2", failures: [
                   { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
                   { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
                   { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
-                ]
-              },
-              {
-                id: "dreamstation-1", name: "DreamStation 1", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Dégradation mousse PE-PUR (Rappel)", causes: ["Vieillissement matériau"], solutionsPatient: ["Cessez immédiatement d'utiliser l'appareil.", "Contactez votre prestataire de santé pour un remplacement."], solutionsTech: ["Remplacer l'appareil complet selon la procédure de rappel du fabricant"] }
                 ]
               }
             ] 
@@ -384,7 +391,7 @@ body {
             name: "ResMed", 
             models: [
               {
-                id: "s11", name: "S11", failures: [
+                id: "s10", name: "S10", failures: [
                   { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
                   { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                   { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
@@ -392,7 +399,7 @@ body {
                 ]
               },
               {
-                id: "s10", name: "S10", failures: [
+                id: "s11", name: "S11", failures: [
                   { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
                   { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                   { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
@@ -545,7 +552,7 @@ body {
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
-                        { id: "trilogy-evo", name: "Trilogy Evo", failures: [
+                        { id: "eove-150", name: "EOVE 150", failures: [
                             { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
                             { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                             { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
@@ -555,7 +562,7 @@ body {
                             { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                             { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]},
-                        { id: "eove-150", name: "EOVE 150", failures: [
+                        { id: "trilogy-evo", name: "Trilogy Evo", failures: [
                             { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
                             { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                             { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
@@ -575,9 +582,51 @@ body {
     ];
 
     // --- ÉTAT (State) ---
-    let state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0 };
+    let state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] };
 
     // --- FONCTIONS DE NAVIGATION ---
+    function performSearch(query) {
+        if (!query || query.length < 2) {
+            state.searchResults = [];
+            return;
+        }
+        const lowerQuery = query.toLowerCase();
+        const results = [];
+
+        LIBRARY_DATA.forEach(type => {
+            const processBrands = (brands, currentType, subType = null, subSubType = null) => {
+                if (!brands) return;
+                brands.forEach(brand => {
+                    if (brand.models) {
+                        brand.models.forEach(model => {
+                            if (model.name.toLowerCase().includes(lowerQuery) || brand.name.toLowerCase().includes(lowerQuery)) {
+                                let path = `${currentType.name}`;
+                                if (subType) path += ` > ${subType.name}`;
+                                if (subSubType) path += ` > ${subSubType.name}`;
+                                if (brand.name) path += ` > ${brand.name}`;
+                                path += ` > ${model.name}`;
+                                results.push({ type, subType, subSubType, brand, model, path });
+                            }
+                        });
+                    }
+                });
+            };
+
+            const processSubTypes = (subTypes, currentType) => {
+                if (!subTypes) return;
+                subTypes.forEach(subType => {
+                    if (subType.brands) processBrands(subType.brands, currentType, subType);
+                    if (subType.subTypes) subType.subTypes.forEach(subSubType => { if (subSubType.brands) processBrands(subSubType.brands, currentType, subType, subSubType); });
+                });
+            };
+
+            if (type.models) type.models.forEach(model => { if (model.name.toLowerCase().includes(lowerQuery) || type.name.toLowerCase().includes(lowerQuery)) results.push({ type: type, subType: null, subSubType: null, brand: null, model: model, path: `${type.name} > ${model.name}` }); });
+            else if (type.brands) processBrands(type.brands, type);
+            else if (type.subTypes) processSubTypes(type.subTypes, type);
+        });
+        state.searchResults = results;
+    }
+
     function selectType(typeId) {
         state.type = LIBRARY_DATA.find(t => t.id === typeId);
         state.subType = null; state.subSubType = null; state.brand = null; state.model = null; state.failure = null;
@@ -629,7 +678,12 @@ body {
         }
     }
     
-    function resetAll() { state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0 }; render(); }
+    function resetAll() { 
+        state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] }; 
+        const searchInput = document.getElementById('global-search');
+        if (searchInput) searchInput.value = '';
+        render(); 
+    }
     function resetToType() { state.subType = null; state.subSubType = null; state.brand = null; state.model = null; state.failure = null; state.showTech = false; state.stepIndex = 0; render(); }
     function resetToSubType() { state.subSubType = null; state.brand = null; state.model = null; state.failure = null; state.showTech = false; state.stepIndex = 0; render(); }
     function resetToSubSubType() { state.brand = null; state.model = null; state.failure = null; state.showTech = false; state.stepIndex = 0; render(); }
@@ -688,7 +742,23 @@ body {
         html += `</div>`; // End of top bar
 
         // 2. Contenu
-        if (!state.type) {
+        if (state.searchQuery.length > 1) {
+            html += `<h2 style="margin-bottom: 20px;">Résultats de recherche pour "${state.searchQuery}"</h2>`;
+            if (state.searchResults.length > 0) {
+                html += `<div class="card-grid">`;
+                state.searchResults.forEach((result, index) => {
+                    html += `
+                        <div class="card" data-action="select-search-result" data-index="${index}">
+                            <div style="font-size: 18px; font-weight: bold;">${result.model.name}</div>
+                            <div style="font-size: 12px; color: #64748b; margin-top: 8px; line-height: 1.4;">${result.path}</div>
+                        </div>`;
+                });
+                html += `</div>`;
+            } else {
+                html += `<p>Aucun résultat trouvé.</p>`;
+            }
+        }
+        else if (!state.type) {
             html += `<h2>Sélectionnez le type d'équipement</h2><div class="card-grid">`;
             LIBRARY_DATA.forEach(type => {
                 html += `<div class="card" data-action="select-type" data-id="${type.id}"><div style="font-size: 18px; font-weight: bold;">${type.name}</div></div>`;
@@ -857,6 +927,16 @@ body {
             case 'select-brand': selectBrand(id); break;
             case 'select-model': selectModel(id); break;
             case 'select-failure': selectFailure(parseInt(index, 10)); break;
+            case 'select-search-result':
+                const result = state.searchResults[parseInt(index, 10)];
+                state.type = result.type;
+                state.subType = result.subType;
+                state.subSubType = result.subSubType;
+                state.brand = result.brand;
+                state.model = result.model;
+                resetAll(); // Reset everything including search state and input
+                render();
+                break;
 
             // Breadcrumb / Header
             case 'reset-all': resetAll(); break;
@@ -877,6 +957,14 @@ body {
         }
     }
     document.addEventListener('click', handleInteraction);
+
+    document.addEventListener('input', (event) => {
+        if (event.target.id === 'global-search') {
+            state.searchQuery = event.target.value;
+            performSearch(state.searchQuery);
+            render();
+        }
+    });
 </script>
 </body>
 </html>
