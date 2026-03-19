@@ -252,25 +252,30 @@ body {
         name: "Aspirateur",
         models: [
           { id: "aidal", name: "AIDAL", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement secteur.", "Tester sur une autre prise."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le cordon.", "Vérifier l'interrupteur et le fusible.", "Remplacer la carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier le bocal et son joint.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas obstrué."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier les fuites internes."] }
+              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce qu'il est tombé ou a aspiré du liquide récemment ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le cordon.", "Vérifier l'interrupteur et le fusible.", "Remplacer la carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier les fuites internes."] }
           ] },
           { id: "clario-medela", name: "Clario Medela", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
-              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { 
+                title: "Aspiration faible ou inexistante", 
+                causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], 
+                solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], 
+                solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."],
+              },
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "vacuaide-7314", name: "Vacu-Aid 7314", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
-              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "vacuaide-7325", name: "Vacu-Aid 7325", failures: [
               { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
               { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
-              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "aidal-v7-ac", name: "V7+ AC", failures: [
               { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
@@ -279,7 +284,7 @@ body {
           { id: "aidal-v7-ac-batt", name: "V7+ AC-B", failures: [
               { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
               { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
-              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] }
         ]
       },
@@ -393,7 +398,7 @@ body {
               {
                 id: "s10", name: "S10", failures: [
                   { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
                   { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
                   { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Remplacer le filtre à air.", "Vérifier la stabilité."], solutionsTech: ["Remplacer la turbine."] }
                 ]
@@ -826,7 +831,7 @@ body {
                     <label for="cause-${idx}">${cause}</label>
                 </div>
             `).join('');
-            
+
             // Logique du guide étape par étape
             const patientSteps = failure.solutionsPatient || [];
             const techSteps = failure.solutionsTech || [];
@@ -899,7 +904,9 @@ body {
                 <div class="failure-card">
                     <h3 class="failure-title">⚠️ ${failure.title}</h3>
                     <div class="solution-grid">
-                        <div class="box-cause"><strong style="color: #991b1b; display: block; margin-bottom: 8px;">Causes probables</strong><div style="color: #7f1d1d;">${causesHtml}</div></div>
+                        <div class="box-cause">
+                            <strong style="color: #991b1b; display: block; margin-bottom: 8px;">Causes probables</strong><div style="color: #7f1d1d;">${causesHtml}</div>
+                        </div>
                         <div class="box-solution" style="display: flex; flex-direction: column; justify-content: center;">
                             ${guideContent}
                         </div>

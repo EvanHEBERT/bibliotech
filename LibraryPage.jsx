@@ -16,38 +16,26 @@ const LIBRARY_DATA = [
             title: "Alarme 'Pression faible' ou 'Pression basse'",
             cause: "Fuite importante dans le circuit, masque mal ajusté, ou problème de la turbine.",
             solutionsPatient: [
-              "Vérifiez que le tuyau est bien enfoncé dans la sortie d'air de l'appareil.",
-              "Suivez le tuyau et vérifiez que l'autre extrémité est bien connectée au masque.",
-              "Passez votre main le long du tuyau pour sentir d'éventuelles fuites d'air provenant de trous ou de fissures.",
-              "Réajustez le masque sur votre visage. Il doit être stable mais pas trop serré. Écoutez s'il y a des sifflements de fuite.",
-              "Assurez-vous que le réservoir d'eau de l'humidificateur est bien enclenché et que son couvercle est fermé."
+              "Est-ce que ça sonne tout le temps, ou juste quand vous vous tournez dans le lit ?",
+              "Vous sentez de l'air qui s'échappe près de vos yeux ou de votre bouche ? Ça fait un sifflement ?"
             ],
             solutionsTech: [
               "Guidez le patient pour utiliser la fonction 'Ajustement du masque' (Mask Fit) disponible dans le menu patient pour visualiser l'étanchéité.",
               "Accédez au menu clinicien et vérifiez que la pression prescrite (IPAP/EPAP) correspond à l'ordonnance.",
               "Entrez dans le menu de service pour lancer un test de la turbine et vérifier que la pression mesurée correspond à la pression de consigne."
-            ],
-            questions: [
-              "L'alarme se déclenche-t-elle tout le temps ou seulement dans certaines positions ?",
-              "Entendez-vous ou sentez-vous de l'air s'échapper autour du masque ?"
             ]
           }] },
           { id: "lumis-150", name: "Lumis 150", failures: [{
             title: "L'appareil ne détecte pas la respiration (pas de trigger)",
             cause: "Masque mal ajusté, fuites, ou mauvais réglage de la sensibilité du trigger.",
             solutionsPatient: [
-              "Vérifiez l'ajustement de votre masque. Les fuites, même petites, peuvent empêcher l'appareil de détecter votre respiration.",
-              "Prenez une inspiration volontairement plus ample et plus rapide pour voir si cela déclenche le ventilateur.",
-              "Dans le menu utilisateur, vérifiez que le 'Type de masque' sélectionné (Nasal, Facial, etc.) est bien celui que vous portez."
+              "Si vous forcez un peu l'inspiration, est-ce que la machine se déclenche ?",
+              "C'est arrivé juste après avoir changé de masque ou touché un bouton ?"
             ],
             solutionsTech: [
               "Accédez au menu clinicien. Diminuez le réglage de sensibilité du trigger inspiratoire (ex: passez de 'Moyen' à 'Élevé') pour que l'appareil détecte des efforts plus faibles.",
               "Vérifiez le réglage de la 'Rampe'. Si elle est active, désactivez-la temporairement pour tester le déclenchement à la pression prescrite.",
               "Assurez-vous que le trigger expiratoire (Cycle) n'est pas réglé sur une valeur trop élevée (trop sensible), ce qui pourrait interrompre le cycle prématurément."
-            ],
-            questions: [
-              "L'appareil finit-il par se déclencher si vous attendez ?",
-              "Le problème est-il apparu après un changement de masque ou de réglages ?"
             ]
           }] }
         ]
@@ -63,18 +51,16 @@ const LIBRARY_DATA = [
             title: "L'appareil ne s'allume pas",
             cause: "Problème d'alimentation externe, batterie déchargée/défectueuse, ou panne matérielle interne.",
             solutionsPatient: [
-              "Appuyez une fois brièvement sur le bouton Marche/Arrêt. L'écran s'allume-t-il ?",
-              "Vérifiez la connexion du câble d'alimentation au dos de l'appareil. Débranchez et rebranchez-le.",
-              "Branchez le bloc d'alimentation sur une autre prise murale, dont vous avez vérifié le fonctionnement avec une lampe.",
-              "Inspectez le câble et le bloc d'alimentation. S'ils sont endommagés, ne les utilisez pas.",
-              "Laissez l'appareil branché sur secteur pendant 30 minutes sans y toucher, puis réessayez de l'allumer. Cela permet de recharger une batterie très faible."
+              "Quand vous appuyez sur le bouton, est-ce que l'écran s'allume, même une seconde ?",
+              "Est-ce que l'appareil est tombé, a pris l'eau, ou y'a eu une coupure de courant juste avant la panne ?",
+              "C'était quand la dernière fois qu'il a bien marché ?",
+              "Est-ce que vous êtes dehors avec l'appareil ?"
             ],
             solutionsTech: [
               "Si disponible, utilisez un bloc d'alimentation et un câble d'un autre appareil identique pour écarter un problème d'alimentation externe.",
               "Si l'appareil a une batterie amovible, retirez-la. Branchez l'appareil sur secteur et essayez de démarrer. Si ça marche, la batterie est défectueuse.",
               "Si rien ne fonctionne, une panne de la carte mère ou d'un composant interne est probable. L'appareil nécessite une intervention en atelier."
-            ],
-            questions: ["L'écran affiche-t-il un voyant ou un message, même brièvement ?", "Y a-t-il eu un événement particulier avant la panne (chute, liquide, coupure de courant) ?", "Quand l'appareil a-t-il fonctionné pour la dernière fois ?"]
+            ]
           }]
         }]
       }
@@ -94,19 +80,13 @@ const LIBRARY_DATA = [
                 title: "Alarme 'Pression voies aériennes haute' (Paw haute)",
                 cause: "Obstruction dans le circuit patient, toux du patient, encombrement bronchique, ou mauvais réglages.",
                 solutionsPatient: [
-                  "Observez le patient. Tousse-t-il ou semble-t-il 'se battre' contre le ventilateur ? Si oui, une aspiration ou une sédation peut être nécessaire.",
-                  "Suivez le circuit patient du ventilateur jusqu'au patient. Assurez-vous qu'aucun tuyau n'est plié, coincé ou écrasé.",
-                  "Regardez dans les pièges à eau du circuit. S'ils sont remplis de condensation, videz-les.",
-                  "Si l'état du patient le suggère, effectuez une aspiration endo-trachéale pour lever un éventuel bouchon muqueux."
+                  "L'alarme sonne en continu, ou seulement quand le patient tousse ?",
+                  "Sur l'écran, le chiffre de la pression monte à combien juste avant que ça sonne ?"
                 ],
                 solutionsTech: [
                   "Sur l'écran du ventilateur, vérifiez le réglage de l'alarme 'Pression Max'. Assurez-vous qu'il est réglé environ 10 cmH2O au-dessus de la pression de crête (Ppeak) habituelle du patient.",
                   "Lancez la procédure de 'Test du circuit' ou 'Calibration du circuit' depuis le menu de service pour vérifier sa compliance et sa résistance.",
                   "Si le problème persiste sans cause évidente, calibrez les capteurs de pression et de débit."
-                ],
-                questions: [
-                  "L'alarme est-elle intermittente (pendant la toux) ou continue ?",
-                  "Quelle est la valeur de la pression de crête (Ppeak) affichée juste avant l'alarme ?"
                 ]
             }]
         }]
@@ -129,20 +109,62 @@ const LIBRARY_DATA = [
                 title: "Fuites de masque importantes",
                 cause: "Mauvais ajustement du masque, coussin usé, ou mauvaise taille de masque.",
                 solutionsPatient: [
-                  "Retirez votre masque et nettoyez le coussin en silicone avec une lingette ou de l'eau savonneuse douce pour enlever les graisses de la peau.",
-                  "Repositionnez le masque sur votre visage. Pour un masque nasal ou facial, le haut doit se situer sur l'arête du nez.",
-                  "Tout en étant assis, tirez doucement sur les sangles pour réduire les fuites, sans trop serrer. Les sangles doivent être ajustées de manière égale.",
-                  "Allongez-vous dans votre position de sommeil. Les fuites peuvent apparaître à ce moment. Réajustez si nécessaire.",
-                  "Lancez la fonction 'Ajustement du masque' sur votre appareil. Il vous montrera un smiley vert si l'étanchéité est bonne."
+                  "La partie en silicone de votre masque, vous l'avez changée quand pour la dernière fois ?",
+                  "Ça fuit surtout quand vous dormez sur le côté, ou sur le dos ?"
                 ],
                 solutionsTech: [
                   "Examinez le coussin en silicone du masque. Recherchez des déchirures, des fissures ou une perte de souplesse. S'il est usé, il doit être remplacé.",
                   "Utilisez le gabarit de taille du fabricant pour confirmer que le patient a la bonne taille de masque. Un masque trop grand ou trop petit fuira toujours.",
                   "Si les fuites persistent malgré tout, proposez au patient d'essayer un masque d'un autre type ou d'une autre marque."
+                ]
+              }
+            ] 
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: "aspiration",
+    name: "Aspirateurs de mucosités",
+    brands: [
+      {
+        id: "laerdal",
+        name: "Laerdal",
+        logo: "/logos/laerdal.png",
+        models: [
+          { 
+            id: "lcs-u4", 
+            name: "LCSU 4", 
+            failures: [
+              {
+                title: "Faible aspiration ou pas d'aspiration",
+                cause: "Manomètre mal réglé, tuyauterie bouchée ou mal connectée, bocal plein, batterie faible.",
+                solutionsPatient: [
+                  "Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?",
+                  "Quand la machine tourne, est-ce que vous entendez de l'air qui sort quelque part ?",
+                  "Le petit filtre blanc, il a l'air sale ou vieux ?"
                 ],
-                questions: [
-                  "Quand avez-vous remplacé votre coussin de masque pour la dernière fois ?",
-                  "Les fuites se produisent-elles dans une position de sommeil particulière ?"
+                solutionsTech: [
+                  "Démontez et inspectez toute la tuyauterie à la recherche d'un bouchon ou d'une fissure.",
+                  "Testez l'aspiration directement à la sortie de la machine (sans le bocal) pour isoler le problème.",
+                  "Vérifiez le filtre antibactérien, il peut être colmaté et doit être remplacé.",
+                  "Si la batterie est suspectée, testez l'appareil sur secteur uniquement. Si l'aspiration est bonne, la batterie est à remplacer."
+                ]
+              },
+              {
+                title: "L'appareil ne démarre pas",
+                cause: "Batterie complètement déchargée, problème d'alimentation, fusible interne grillé.",
+                solutionsPatient: [
+                    "Quand vous le branchez sur la prise, est-ce qu'il y a une petite lumière qui s'allume ?",
+                    "Ça fait longtemps qu'il n'a pas servi ou qu'il n'a pas été chargé ?",
+                    "Est-ce que vous êtes dehors avec l'appareil ?"
+                ],
+                solutionsTech: [
+                    "Testez avec un autre chargeur compatible si disponible.",
+                    "Vérifiez le compartiment batterie. Assurez-vous que la batterie est bien connectée.",
+                    "Si l'appareil a un fusible accessible, vérifiez-le et remplacez-le si nécessaire.",
+                    "Si rien ne fonctionne, une intervention interne est requise."
                 ]
               }
             ] 
@@ -249,7 +271,7 @@ const baseGuideButtonStyle = {
 };
 
 // Les types qui nécessitent une sélection de marque
-const typesWithBrandsStep = ['vni', 'vaa', 'ppc'];
+const typesWithBrandsStep = ['vni', 'vaa', 'ppc', 'aspiration'];
 
 // Composant Carte Simple déplacé à l'extérieur
 const SelectionCard = ({ label, image, onClick }) => (
@@ -465,15 +487,6 @@ export default function LibraryPage() {
                           <div style={{ background: "#f8fafc", padding: "16px", borderRadius: "8px" }}>
                             <strong style={{ color: "#334155", display: "block", marginBottom: "8px" }}>Cause probable</strong>
                             <div style={{ color: "#475569" }}>{selectedFailure.cause}</div>
-                          </div>
-                          
-                          <div style={{ background: "#f8fafc", padding: "16px", borderRadius: "8px" }}>
-                            <strong style={{ color: "#334155", display: "block", marginBottom: "8px" }}>❓ Questions à poser</strong>
-                            <ul style={{ margin: 0, paddingLeft: "20px", color: "#475569", fontSize: '14px' }}>
-                              {selectedFailure.questions.map((q, i) => (
-                                <li key={i} style={{ marginBottom: "4px" }}>{q}</li>
-                              ))}
-                            </ul>
                           </div>
                         </div>
                   </div>
