@@ -25,7 +25,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 40px;
+    margin-bottom: 40px; 
     padding-bottom: 20px;
     border-bottom: 1px solid #e2e8f0;
 }
@@ -222,28 +222,28 @@ body {
         name: "Aérosol",
         models: [
           { id: "airforce-max", name: "Airforce Max", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale.", "Vérifier que l'interrupteur est bien sur 'I'."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
           ] },
           { id: "innospire-elegance", name: "Innospire Elegance", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
           ] },
           { id: "innospire-mini", name: "Innospire Mini", failures: [
-              { title: "L'appareil ne démarre pas / charge pas", causes: ["Batterie", "Chargeur", "Carte"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 30 min minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
+              { title: "L'appareil ne démarre pas / charge pas", causes: ["Batterie", "Chargeur", "Carte"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
           ] },
           { id: "inspiration-elite", name: "Inspiration Elite", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Nettoyer le kit de nébulisation (buse).", "Vérifier que le tuyau n'est pas plié.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
           ] },
           { id: "pariboy-pro", name: "PariBoy Pro", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
           ] },
           { id: "pariboy-sx", name: "PariBoy SX", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Vérifier le branchement du cordon secteur.", "Tester sur une autre prise murale."], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Démonter et nettoyer le nébuliseur.", "Vérifier le tuyau d'air.", "Remplacer le filtre à air."], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+              { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
           ] }
         ]
       },
@@ -272,18 +272,18 @@ body {
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "vacuaide-7325", name: "Vacu-Aid 7325", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal et du couvercle.", "Remplacer le filtre antibactérien.", "Vérifier que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
-              { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Si vous posez l'appareil par terre ou sur une table stable, est-ce qu'il fait moins de bruit ?"], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "aidal-v7-ac", name: "V7+ AC", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] }
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] }
           ] },
           { id: "aidal-v7-ac-batt", name: "V7+ AC-B", failures: [
-              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Vérifier le branchement secteur.", "Laisser charger 1h minimum.", "Vérifier le voyant de charge."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Vérifier que le régulateur de pression est réglé sur 500 mbar.", "Vérifier l'étanchéité du bocal.", "Remplacer le filtre.", "Vérifier que le tuyau n'est pas pincé."], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] }
         ]
@@ -315,8 +315,39 @@ body {
         subTypes: [
           {
             id: "bouteille-o2",
-            name: "Bouteille d'O₂",
-            brands: [] 
+            name: "Bouteilles d'O₂",
+            models: [
+              {
+                id: "b15", name: "Bouteille B15", failures: [
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+                ]
+              },
+              {
+                id: "b2", name: "Bouteille B2", failures: [
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+                ]
+              },
+              {
+                id: "b5", name: "Bouteille B5", failures: [
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+                ]
+              },
+              {
+                id: "oxalys", name: "Oxalys", failures: [
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+                ]
+              },
+              {
+                id: "ifill", name: "Bouteille IFILL", failures: [
+                  { title: "Fuite bouteille ou robinet", cause: "Serrage incorrect.", solutionsPatient: ["La bouteille semble-t-elle bien serrée ?", "Pouvez-vous la resserrer légèrement ?"], solutionsTech: ["Contrôler le serrage."] },
+                  { title: "Fuite (joint)", cause: "Joint défectueux.", solutionsPatient: ["Entendez-vous de l'air s'échapper malgré un bon serrage ?"], solutionsTech: ["Remplacer le joint."] }
+                ]
+              }
+            ]
           },
           {
             id: "concentrateur",
@@ -325,32 +356,160 @@ body {
               {
                 id: "fixe",
                 name: "Fixe",
-                brands: [
-                  { id: "lowenstein", name: "Lowenstein", models: [{ id: "conc-lowenstein", name: "Concentrateur 5L", failures: [] }] },
-                  { id: "philips", name: "Philips", models: [{ id: "everflo", name: "EverFlo", failures: [] }] },
-                  { id: "resmed", name: "ResMed", models: [{ id: "conc-resmed", name: "Concentrateur O2", failures: [] }] },
-                  { id: "sefam", name: "Sefam", models: [{ id: "conc-sefam", name: "Sefam O2", failures: [] }] }
+                models: [
+                    { id: "1025ks", name: "Concentrateur 10L (GCE / 1025KS)", failures: [
+                        { title: "Débit faible", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?"], solutionsTech: ["Nettoyage filtre."] },
+                        { title: "Bruit moteur", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] }
+                    ] },
+                    { id: "525ks", name: "Concentrateur 5L (525KS)", failures: [
+                        { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
+                        { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                    ] },
+                    { id: "8f-5a", name: "Concentrateur 5L (8F-5A)", failures: [
+                        { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
+                        { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                    ] },
+                    { id: "everflo", name: "Concentrateur EverFlo", failures: [
+                        { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
+                        { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                    ] },
+                    { id: "everflo-pediatrique", name: "Concentrateur EverFlo Pédiatrique", failures: [
+                        { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
+                        { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                    ] },
+                    { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
+                         { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
+                         { title: "Arrêt soudain", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] }
+                    ] }
                 ]
               },
               {
                 id: "portable",
                 name: "Portable",
-                brands: [
-                  { id: "breas", name: "Breas", models: [{ id: "conc-breas", name: "Concentrateur Portable", failures: [] }] },
-                  { id: "philips", name: "Philips", models: [{ id: "simplygo", name: "SimplyGo", failures: [] }] }
+                models: [
+                    { id: "inogen-g3", name: "Inogen One G3", failures: [
+                        { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    ] },
+                    { id: "inogen-g4", name: "Inogen One G4", failures: [
+                        { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    ] },
+                    { id: "inogen-g5", name: "Inogen One G5", failures: [
+                        { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    ] },
+                    { id: "inogen-rove", name: "Inogen Rove 6", failures: [
+                        { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    ] },
+                    { id: "simplygo-mini", name: "SimplyGo Mini", failures: [
+                        { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                        { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    ] },
+                    { id: "simplygo-mini-ld", name: "SimplyGo Mini (Longue Durée)", failures: [
+                        { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                        { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    ] },
+                    { id: "zen-o-lite", name: "Zen-O Lite", failures: [
+                        { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["L'appareil fait-il un bruit anormal ?"], solutionsTech: ["Maintenance pompe."] },
+                        { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                    ] },
+                    { id: "freestyle", name: "FreeStyle Comfort", failures: [
+                        { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien clipsé ?"], solutionsTech: ["Vérifier connexions."] },
+                        { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur sur l'écran ?"], solutionsTech: ["Remplacer joint."] }
+                    ] }
                 ]
               },
               {
                 id: "transportable",
                 name: "Transportable",
-                brands: []
+                models: [
+                    { id: "eclipse-3", name: "Eclipse 3", failures: [
+                        { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    ] },
+                    { id: "eclipse-5", name: "Eclipse 5", failures: [
+                        { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                        { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["L'appareil est-il bien ventilé ?", "Rien ne bouche les entrées d'air ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    ] },
+                    { id: "simplygo", name: "SimplyGo (Standard)", failures: [
+                        { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["Sentez-vous moins d'air sortir ?"], solutionsTech: ["Maintenance pompe."] },
+                        { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                    ] },
+                    { id: "zen-o", name: "Zen-O (Double batterie)", failures: [
+                        { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien branché ?"], solutionsTech: ["Vérifier connexions."] },
+                        { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur ?"], solutionsTech: ["Remplacer joint."] }
+                    ] }
+                ] 
               }
             ]
           },
           { 
             id: "o2-liquide", 
             name: "O₂ Liquide", 
-            brands: [] 
+            models: [
+                  { id: "companion-1000", name: "Portable Companion 1000", failures: [
+                      { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                      { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+                  ] },
+                  { id: "companion-t", name: "Portable Companion 1000T", failures: [
+                      { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                      { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+                  ] },
+                  { id: "companion-500", name: "Portable Companion 500", failures: [
+                      { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                      { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+                  ] },
+                  { id: "sprint", name: "Companion Sprint", failures: [
+                      { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
+                  ] },
+                  { id: "stroller", name: "Companion Stroller", failures: [
+                      { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
+                  ] },
+                  { id: "freelox-05", name: "Freelox 0.5L", failures: [
+                      { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+                  ] },
+                  { id: "freelox-12", name: "Freelox 1.2L", failures: [
+                      { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+                  ] },
+                  { id: "joggy", name: "Joggy", failures: [
+                      { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+                  ] },
+                  { id: "helios-h300", name: "Helios H300", failures: [
+                      { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
+                  ] },
+                  { id: "helios-marathon", name: "Helios Marathon 850", failures: [
+                      { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
+                  ] },
+                  { id: "hi-flow-stroller", name: "Hi Flow Stroller", failures: [
+                      { title: "Débit insuffisant", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
+                      { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
+                  ] },
+                  { id: "cuve-companion-41", name: "Cuve Companion 41L", failures: [
+                      { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
+                      { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
+                  ] },
+                  { id: "cuve-companion-45", name: "Cuve Companion 45L", failures: [
+                      { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
+                      { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
+                  ] },
+                  { id: "cuve-freelox-32", name: "Cuve Freelox 32L", failures: [
+                      { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
+                      { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
+                  ] },
+                  { id: "cuve-freelox-44", name: "Cuve Freelox 44L (+ Embase)", failures: [
+                      { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
+                      { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
+                  ] }
+            ] 
           }
         ]
       },
@@ -365,9 +524,9 @@ body {
             models: [
               {
                 id: "prisma-smart", name: "Prisma Smart", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
                 ]
               }
             ] 
@@ -378,15 +537,15 @@ body {
             models: [
               {
                 id: "dreamstation-1", name: "DreamStation 1", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Dégradation mousse PE-PUR (Rappel)", causes: ["Vieillissement matériau"], solutionsPatient: ["Cessez immédiatement d'utiliser l'appareil.", "Contactez votre prestataire de santé pour un remplacement."], solutionsTech: ["Remplacer l'appareil complet selon la procédure de rappel du fabricant"] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Dégradation mousse PE-PUR (Rappel)", causes: ["Vieillissement matériau"], solutionsPatient: ["Avez-vous bien arrêté d'utiliser la machine comme demandé par le rappel de sécurité ?", "Avez-vous contacté votre prestataire pour l'échange ?"], solutionsTech: ["Remplacer l'appareil complet selon la procédure de rappel du fabricant"] }
                 ]
               },
               {
                 id: "dreamstation-2", name: "DreamStation 2", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
-                  { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
+                  { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous débrancher la prise, attendre 10 secondes et rebrancher ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                 ]
               }
             ] 
@@ -397,18 +556,18 @@ body {
             models: [
               {
                 id: "s10", name: "S10", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur le bouton, l'écran s'allume-t-il ?", "Est-ce que la prise est bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
                   { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
-                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Remplacer le filtre à air.", "Vérifier la stabilité."], solutionsTech: ["Remplacer la turbine."] }
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
+                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Le filtre à air sur le côté, il est propre ?", "Est-ce que l'appareil est bien à plat sur la table de nuit ?"], solutionsTech: ["Remplacer la turbine."] }
                 ]
               },
               {
                 id: "s11", name: "S11", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
-                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Remplacer le filtre à air.", "Vérifier la stabilité."], solutionsTech: ["Remplacer la turbine."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur le bouton, l'écran s'allume-t-il ?", "Est-ce que la prise est bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] },
+                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Le filtre à air sur le côté, il est propre ?", "Est-ce que l'appareil est bien à plat sur la table de nuit ?"], solutionsTech: ["Remplacer la turbine."] }
                 ]
               }
             ] 
@@ -419,9 +578,9 @@ body {
             models: [
               {
                 id: "nea", name: "NÉA", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Remplacer le filtre à air.", "Vérifier la stabilité."], solutionsTech: ["Remplacer la turbine."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur le bouton, l'écran s'allume-t-il ?", "Est-ce que la prise est bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Bruit anormal", causes: ["Filtre", "Turbine"], solutionsPatient: ["Le filtre à air à l'arrière, il est propre ?", "Est-ce que l'appareil est bien à plat ?"], solutionsTech: ["Remplacer la turbine."] }
                 ]
               }
             ] 
@@ -439,9 +598,9 @@ body {
             models: [
               {
                 id: "prisma-cr", name: "Prisma CR", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
                 ]
               }
             ] 
@@ -452,8 +611,8 @@ body {
             models: [
               {
                 id: "bipap-auto-sv", name: "BiPAP Auto SV", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous débrancher la prise, attendre 10 secondes et rebrancher ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                 ]
               }
             ] 
@@ -464,9 +623,9 @@ body {
             models: [
               {
                 id: "aircurve-10-pacewave", name: "AirCurve 10 PaceWave", failures: [
-                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
+                  { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur le bouton, l'écran s'allume-t-il ?", "Est-ce que la prise est bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                  { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Le coussin en silicone du masque, il est vieux ou récent ?", "L'air fuit quand vous êtes sur le côté ou sur le dos ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                  { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
                 ]
               }
             ] 
@@ -483,22 +642,22 @@ body {
                 id: "niv-i", name: "NIV I", brands: [
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "prisma-30st", name: "Prisma 30ST", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous débrancher la prise, attendre 10 secondes et rebrancher ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "avaps", name: "AVAPS", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce que l'écran s'éclaire ?", "La prise est-elle bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "lumis-150", name: "Lumis 150", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Vérifier le branchement complet (mur + appareil).", "Tester sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Vérifier l'insertion du bac.", "Vérifier qu'il n'y a pas de calcaire."], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Connectique", "Carte"], solutionsPatient: ["Quand vous appuyez sur le bouton, l'écran s'allume-t-il ?", "Est-ce que la prise est bien enfoncée des deux côtés ?"], solutionsTech: ["Tester le bloc d'alimentation.", "Remplacer la carte électronique."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Problème Humidificateur", causes: ["Bac", "Plaque chauffante"], solutionsPatient: ["Est-ce que le bac à eau est bien poussé au fond ?", "Voyez-vous du calcaire au fond du bac ?"], solutionsTech: ["Tester la chauffe.", "Remplacer l'humidificateur."] }
                         ]}
                     ]}
                 ] 
@@ -507,35 +666,35 @@ body {
                 id: "niv-ii", name: "NIV II", brands: [
                     { id: "breas", name: "Breas", models: [
                         { id: "vivo-3", name: "Vivo 3", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Mettre en charge sur secteur.", "Vérifier le voyant de charge."], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Le voyant de charge s'allume-t-il quand vous branchez ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
                         ]},
                         { id: "vivo-45", name: "Vivo 45", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]},
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "vent-40", name: "Vent 40", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Mettre en charge sur secteur.", "Vérifier le voyant de charge."], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Le voyant de charge s'allume-t-il quand vous branchez ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "bipap-a40", name: "BiPAP A40", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "stellar-150", name: "Stellar 150", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]}
                 ] 
@@ -544,40 +703,40 @@ body {
                 id: "niv-iii", name: "NIV III", brands: [
                     { id: "breas", name: "Breas", models: [
                         { id: "vivo-45-ls", name: "Vivo 45 LS", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Mettre en charge sur secteur.", "Vérifier le voyant de charge."], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Le voyant de charge s'allume-t-il quand vous branchez ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
                         ]}
                     ]},
                     { id: "lowenstein", name: "Löwenstein", models: [
                         { id: "luisa", name: "Luisa", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]},
                     { id: "philips", name: "Philips", models: [
                         { id: "eove-150", name: "EOVE 150", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]},
                         { id: "trilogy-100", name: "Trilogy 100", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]},
                         { id: "trilogy-evo", name: "Trilogy Evo", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Débrancher et rebrancher l'appareil (Reset)."], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Erreur Système", causes: ["Logiciel", "Carte"], solutionsPatient: ["Pouvez-vous l'éteindre complètement et le rallumer ?", "Quel est le message affiché ?"], solutionsTech: ["Consulter le code erreur.", "Remplacer la carte principale."] }
                         ]}
                     ]},
                     { id: "resmed", name: "ResMed", models: [
                         { id: "astral-150", name: "Astral 150", failures: [
-                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur.", "Vérifier voyant charge.", "Tester autre prise."], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
-                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Ajuster le masque.", "Vérifier les connexions du tuyau.", "Remplacer le filtre à air."], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
-                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Mettre en charge sur secteur.", "Vérifier le voyant de charge."], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
+                            { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Si vous le branchez sur le secteur, est-ce qu'il démarre ?", "Le voyant de charge est-il allumé ?"], solutionsTech: ["Tester l'alimentation.", "Remplacer la batterie.", "Remplacer la carte."] },
+                            { title: "Pression instable / Fuites", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Est-ce que le masque est bien mis sur le visage ?", "Le tuyau n'est pas décroché ou percé ?", "Le filtre est-il propre ?"], solutionsTech: ["Vérifier la calibration.", "Rechercher une fuite interne.", "Remplacer la turbine."] },
+                            { title: "Problème Batterie", causes: ["Batterie usée", "Chargeur"], solutionsPatient: ["Le voyant de charge s'allume-t-il quand vous branchez ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester la capacité batterie.", "Remplacer la batterie."] }
                         ]}
                     ]}
                 ] 
@@ -825,7 +984,9 @@ body {
         } else {
             // Vue : Détail du problème (causes et solutions)
             const failure = state.failure;
-            const causesHtml = failure.causes.map((cause, idx) => `
+            // Gestion de la compatibilité entre 'causes' (tableau) et 'cause' (chaîne unique)
+            const causesList = Array.isArray(failure.causes) ? failure.causes : (failure.cause ? [failure.cause] : []);
+            const causesHtml = causesList.map((cause, idx) => `
                 <div class="solution-item">
                     <input type="checkbox" id="cause-${idx}">
                     <label for="cause-${idx}">${cause}</label>

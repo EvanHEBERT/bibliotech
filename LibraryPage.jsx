@@ -28,7 +28,7 @@ const LIBRARY_DATA = [
           { id: "lumis-150", name: "Lumis 150", failures: [{
             title: "L'appareil ne détecte pas la respiration (pas de trigger)",
             cause: "Masque mal ajusté, fuites, ou mauvais réglage de la sensibilité du trigger.",
-            solutionsPatient: [
+             solutionsPatient: [
               "Si vous forcez un peu l'inspiration, est-ce que la machine se déclenche ?",
               "C'est arrivé juste après avoir changé de masque ou touché un bouton ?"
             ],
@@ -170,6 +170,210 @@ const LIBRARY_DATA = [
             ] 
           }
         ]
+      }
+    ]
+  },
+  {
+    id: "o2",
+    name: "O₂",
+    subTypes: [
+      {
+        id: "bouteille-o2",
+        name: "Bouteilles d'O₂",
+        models: [
+          {
+            id: "b15", name: "Bouteille B15", failures: [
+              { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+              { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+            ]
+          },
+          {
+            id: "b2", name: "Bouteille B2", failures: [
+              { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+              { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+            ]
+          },
+          {
+            id: "b5", name: "Bouteille B5", failures: [
+              { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+              { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+            ]
+          },
+          {
+            id: "oxalys", name: "Oxalys", failures: [
+              { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+              { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
+            ]
+          },
+          {
+            id: "ifill", name: "Bouteille IFILL", failures: [
+              { title: "Fuite bouteille ou robinet", cause: "Serrage incorrect.", solutionsPatient: ["La bouteille semble-t-elle bien serrée ?", "Pouvez-vous la resserrer légèrement ?"], solutionsTech: ["Contrôler le serrage."] },
+              { title: "Fuite (joint)", cause: "Joint défectueux.", solutionsPatient: ["Entendez-vous de l'air s'échapper malgré un bon serrage ?"], solutionsTech: ["Remplacer le joint."] }
+            ]
+          }
+        ]
+      },
+      {
+        id: "concentrateur",
+        name: "Concentrateur",
+        subTypes: [
+          {
+            id: "fixe",
+            name: "Fixe",
+            models: [
+                { id: "1025ks", name: "Concentrateur 10L (GCE / 1025KS)", failures: [
+                    { title: "Débit faible", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?"], solutionsTech: ["Nettoyage filtre."] },
+                    { title: "Bruit moteur", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] }
+                ] },
+                { id: "525ks", name: "Concentrateur 5L (525KS)", failures: [
+                    { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
+                    { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                ] },
+                { id: "8f-5a", name: "Concentrateur 5L (8F-5A)", failures: [
+                    { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
+                    { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                ] },
+                { id: "everflo", name: "Concentrateur EverFlo", failures: [
+                    { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
+                    { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                ] },
+                { id: "everflo-pediatrique", name: "Concentrateur EverFlo Pédiatrique", failures: [
+                    { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
+                    { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                ] },
+                { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
+                     { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
+                     { title: "Arrêt soudain", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] }
+                ] }
+            ]
+          },
+          {
+            id: "portable",
+            name: "Portable",
+            models: [
+                { id: "inogen-g3", name: "Inogen One G3", failures: [
+                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                ] },
+                { id: "inogen-g4", name: "Inogen One G4", failures: [
+                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                ] },
+                { id: "inogen-g5", name: "Inogen One G5", failures: [
+                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                ] },
+                { id: "inogen-rove", name: "Inogen Rove 6", failures: [
+                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                ] },
+                { id: "simplygo-mini", name: "SimplyGo Mini", failures: [
+                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                ] },
+                { id: "simplygo-mini-ld", name: "SimplyGo Mini (Longue Durée)", failures: [
+                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                ] },
+                { id: "zen-o-lite", name: "Zen-O Lite", failures: [
+                    { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["L'appareil fait-il un bruit anormal ?"], solutionsTech: ["Maintenance pompe."] },
+                    { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                ] },
+                { id: "freestyle", name: "FreeStyle Comfort", failures: [
+                    { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien clipsé ?"], solutionsTech: ["Vérifier connexions."] },
+                    { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur sur l'écran ?"], solutionsTech: ["Remplacer joint."] }
+                ] }
+            ]
+          },
+          {
+            id: "transportable",
+            name: "Transportable",
+            models: [
+                { id: "eclipse-3", name: "Eclipse 3", failures: [
+                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                ] },
+                { id: "eclipse-5", name: "Eclipse 5", failures: [
+                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["L'appareil est-il bien ventilé ?", "Rien ne bouche les entrées d'air ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                ] },
+                { id: "simplygo", name: "SimplyGo (Standard)", failures: [
+                    { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["Sentez-vous moins d'air sortir ?"], solutionsTech: ["Maintenance pompe."] },
+                    { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                ] },
+                { id: "zen-o", name: "Zen-O (Double batterie)", failures: [
+                    { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien branché ?"], solutionsTech: ["Vérifier connexions."] },
+                    { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur ?"], solutionsTech: ["Remplacer joint."] }
+                ] }
+            ] 
+          }
+        ]
+      },
+      { 
+        id: "o2-liquide", 
+        name: "O₂ Liquide", 
+        models: [
+              { id: "companion-1000", name: "Portable Companion 1000", failures: [
+                  { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                  { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+              ] },
+              { id: "companion-t", name: "Portable Companion 1000T", failures: [
+                  { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                  { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+              ] },
+              { id: "companion-500", name: "Portable Companion 500", failures: [
+                  { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
+                  { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
+              ] },
+              { id: "sprint", name: "Companion Sprint", failures: [
+                  { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                  { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
+              ] },
+              { id: "stroller", name: "Companion Stroller", failures: [
+                  { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                  { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
+              ] },
+              { id: "freelox-05", name: "Freelox 0.5L", failures: [
+                  { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                  { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+              ] },
+              { id: "freelox-12", name: "Freelox 1.2L", failures: [
+                  { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                  { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+              ] },
+              { id: "joggy", name: "Joggy", failures: [
+                  { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
+                  { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
+              ] },
+              { id: "helios-h300", name: "Helios H300", failures: [
+                  { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                  { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
+              ] },
+              { id: "helios-marathon", name: "Helios Marathon 850", failures: [
+                  { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                  { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
+              ] },
+              { id: "hi-flow-stroller", name: "Hi Flow Stroller", failures: [
+                  { title: "Débit insuffisant", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
+                  { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
+              ] },
+              { id: "cuve-companion-41", name: "Cuve Companion 41L", failures: [
+                  { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
+                  { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
+              ] },
+              { id: "cuve-companion-45", name: "Cuve Companion 45L", failures: [
+                  { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
+                  { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
+              ] },
+              { id: "cuve-freelox-32", name: "Cuve Freelox 32L", failures: [
+                  { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
+                  { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
+              ] },
+              { id: "cuve-freelox-44", name: "Cuve Freelox 44L (+ Embase)", failures: [
+                  { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
+                  { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
+              ] }
+        ] 
       }
     ]
   }
@@ -485,8 +689,14 @@ export default function LibraryPage() {
                       <h3 style={{marginTop: 0, color: '#1e40af'}}>Avant de commencer : Diagnostic</h3>
                       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px", marginTop: "16px" }}>
                           <div style={{ background: "#f8fafc", padding: "16px", borderRadius: "8px" }}>
-                            <strong style={{ color: "#334155", display: "block", marginBottom: "8px" }}>Cause probable</strong>
-                            <div style={{ color: "#475569" }}>{selectedFailure.cause}</div>
+                            <strong style={{ color: "#334155", display: "block", marginBottom: "8px" }}>Causes probables</strong>
+                            <div style={{ color: "#475569" }}>
+                              {selectedFailure.causes ? (
+                                <ul style={{ margin: 0, paddingLeft: "20px" }}>
+                                  {selectedFailure.causes.map((c, i) => <li key={i}>{c}</li>)}
+                                </ul>
+                              ) : selectedFailure.cause}
+                            </div>
                           </div>
                         </div>
                   </div>
