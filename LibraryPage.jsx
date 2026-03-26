@@ -222,28 +222,40 @@ const LIBRARY_DATA = [
             name: "Fixe",
             models: [
                 { id: "1025ks", name: "Concentrateur 10L (GCE / 1025KS)", failures: [
-                    { title: "Débit faible", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?"], solutionsTech: ["Nettoyage filtre."] },
-                    { title: "Bruit moteur", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement des tamis."] },
+                    { title: "Bruit anormal", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] },
+                    { title: "Alarme O₂ faible", cause: "Concentration insuffisante", solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne."] },
+                    { title: "Alarme (Surchauffe / Échappement)", causes: ["Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche la grille à l'arrière ?"], solutionsTech: ["Nettoyer les grilles d'aération.", "Dégager la sortie d'air (exhaust)."] }
                 ] },
                 { id: "525ks", name: "Concentrateur 5L (525KS)", failures: [
-                    { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
-                    { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                    { title: "Alarme (O₂ faible / Surchauffe)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Échappement bloqué"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil est-il collé contre un mur ou un rideau ?", "La sortie d'air est-elle dégagée ?"], solutionsTech: ["Analyse de pureté O2.", "Nettoyer ventilation.", "Dégager l'échappement."] },
+                    { title: "Arrêt inopiné", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis."] }
                 ] },
                 { id: "8f-5a", name: "Concentrateur 5L (8F-5A)", failures: [
-                    { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] },
-                    { title: "Arrêt automatique", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                    { title: "Alarme (O₂ faible / Surchauffe)", causes: ["Concentration insuffisante", "Ventilation obstruée"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer ventilation."] },
+                    { title: "Arrêt inopiné", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis."] }
                 ] },
                 { id: "everflo", name: "Concentrateur EverFlo", failures: [
-                    { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
-                    { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Compresseur usé", "Tamis moléculaire usé"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis."] },
+                    { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
+                    { title: "Alarme (O₂ faible / Surchauffe / Échappement)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il chaud ?", "Voyez-vous une alarme oxygène ?", "La grille à l'arrière est-elle libre ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer grilles.", "Dégager sortie air."] }
                 ] },
                 { id: "everflo-pediatrique", name: "Concentrateur EverFlo Pédiatrique", failures: [
-                    { title: "Débit irrégulier", cause: "Compresseur usé.", solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur."] },
-                    { title: "Bruit pompe", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Compresseur usé", "Tamis moléculaire usé"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis."] },
+                    { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
+                    { title: "Alarme (O₂ faible / Surchauffe / Échappement)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il chaud ?", "Voyez-vous une alarme oxygène ?", "La grille à l'arrière est-elle libre ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer grilles.", "Dégager sortie air."] }
                 ] },
                 { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
+                     { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                      { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
-                     { title: "Arrêt soudain", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] }
+                     { title: "Arrêt inopiné", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] }
                 ] }
             ]
           },
@@ -252,36 +264,49 @@ const LIBRARY_DATA = [
             name: "Portable",
             models: [
                 { id: "inogen-g3", name: "Inogen One G3", failures: [
-                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
-                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                    { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                 ] },
                 { id: "inogen-g4", name: "Inogen One G4", failures: [
-                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
-                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                    { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                 ] },
                 { id: "inogen-g5", name: "Inogen One G5", failures: [
-                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
-                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                    { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                 ] },
                 { id: "inogen-rove", name: "Inogen Rove 6", failures: [
-                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
-                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                    { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                 ] },
                 { id: "simplygo-mini", name: "SimplyGo Mini", failures: [
-                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
-                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Alarme (Température / Système)", causes: ["Filtre sale", "Environnement chaud", "Capteur HS"], solutionsPatient: ["Le filtre est-il propre ?", "Fait-il très chaud là où vous êtes ?", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée.", "Maintenance technique."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air."] }
                 ] },
                 { id: "simplygo-mini-ld", name: "SimplyGo Mini (Longue Durée)", failures: [
-                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
-                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Alarme (Température / Système)", causes: ["Filtre sale", "Environnement chaud"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce qu'il fait chaud dehors ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air."] }
                 ] },
                 { id: "zen-o-lite", name: "Zen-O Lite", failures: [
-                    { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["L'appareil fait-il un bruit anormal ?"], solutionsTech: ["Maintenance pompe."] },
-                    { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Débit faible ou irrégulier", causes: ["Pompe défectueuse", "Airflow bloqué"], solutionsPatient: ["L'appareil fait-il un bruit anormal ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Maintenance pompe.", "Dégager aérations."] },
+                    { title: "Bruit anormal", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Alarme (Température / Système)", causes: ["Environnement chaud", "Capteur défectueux"], solutionsPatient: ["Fait-il très chaud ?", "Y a-t-il une alarme système sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                 ] },
                 { id: "freestyle", name: "FreeStyle Comfort", failures: [
-                    { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien clipsé ?"], solutionsTech: ["Vérifier connexions."] },
-                    { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur sur l'écran ?"], solutionsTech: ["Remplacer joint."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Fuite d’air", causes: ["Connectique mal serrée", "Airflow bloqué"], solutionsPatient: ["Le tuyau est-il bien clipsé ?", "Rien ne bouche les trous d'air ?"], solutionsTech: ["Vérifier connexions.", "Dégager aérations."] },
+                    { title: "Alarme (Température / Système)", causes: ["Joint usé", "Zone chaude", "Capteur HS"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?"], solutionsTech: ["Remplacer joint.", "Zone ventilée.", "Maintenance technique."] }
                 ] }
             ]
           },
@@ -290,20 +315,24 @@ const LIBRARY_DATA = [
             name: "Transportable",
             models: [
                 { id: "eclipse-3", name: "Eclipse 3", failures: [
-                    { title: "Batterie faible", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
-                    { title: "Débit irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie / Autonomie", cause: "Batterie vieillissante.", solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                    { title: "Débit faible ou irrégulier", cause: "Filtre bouché.", solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyer filtre."] }
                 ] },
                 { id: "eclipse-5", name: "Eclipse 5", failures: [
-                    { title: "Alarme surchauffe", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
-                    { title: "Perte débit", cause: "Ventilation insuffisante.", solutionsPatient: ["L'appareil est-il bien ventilé ?", "Rien ne bouche les entrées d'air ?"], solutionsTech: ["Ne pas obstruer aérations."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Alarme", cause: "Filtre sale.", solutionsPatient: ["Le filtre à air est-il propre ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Nettoyage filtre."] },
+                    { title: "Débit faible ou irrégulier", cause: "Ventilation insuffisante.", solutionsPatient: ["L'appareil est-il bien ventilé ?", "Rien ne bouche les entrées d'air ?"], solutionsTech: ["Ne pas obstruer aérations."] }
                 ] },
                 { id: "simplygo", name: "SimplyGo (Standard)", failures: [
-                    { title: "Débit faible", cause: "Pompe défectueuse.", solutionsPatient: ["Sentez-vous moins d'air sortir ?"], solutionsTech: ["Maintenance pompe."] },
-                    { title: "Bruit pompe", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Débit faible ou irrégulier", cause: "Pompe défectueuse.", solutionsPatient: ["Sentez-vous moins d'air sortir ?"], solutionsTech: ["Maintenance pompe."] },
+                    { title: "Bruit anormal", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] }
                 ] },
                 { id: "zen-o", name: "Zen-O (Double batterie)", failures: [
+                    { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                     { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien branché ?"], solutionsTech: ["Vérifier connexions."] },
-                    { title: "Alarme système", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur ?"], solutionsTech: ["Remplacer joint."] }
+                    { title: "Alarme", cause: "Joint usé.", solutionsPatient: ["Voyez-vous un message d'erreur ?"], solutionsTech: ["Remplacer joint."] }
                 ] }
             ] 
           }
