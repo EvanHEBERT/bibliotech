@@ -134,7 +134,7 @@ body {
 }
 
 .solution-item {
-      display: flex;
+    display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 8px;
@@ -223,27 +223,27 @@ body {
         models: [
           { id: "airforce-max", name: "Airforce Max", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
           ] },
           { id: "innospire-elegance", name: "Innospire Elegance", failures: [
                { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
           ] },
           { id: "innospire-mini", name: "Innospire Mini", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Batterie", "Chargeur", "Carte"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
+              { title: "L'appareil ne démarre pas / charge pas", causes: ["Batterie", "Chargeur", "Carte"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
           ] },
           { id: "inspiration-elite", name: "Inspiration Elite", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
           ] },
           { id: "pariboy-pro", name: "PariBoy Pro", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
           ] },
           { id: "pariboy-sx", name: "PariBoy SX", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+              { title: "Nébulisation faible ou inexistante", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
           ] }
         ]
       },
@@ -253,37 +253,37 @@ body {
         models: [
           { id: "aidal", name: "AIDAL", failures: [
               { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce qu'il est tombé ou a aspiré du liquide récemment ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le cordon.", "Vérifier l'interrupteur et le fusible.", "Remplacer la carte."] },
-              { title: "Débit faible ou inexistant", causes: ["Appareil noyé", "Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier les fuites internes."] }
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier les fuites internes."] }
           ] },
           { id: "clario-medela", name: "Clario Medela", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
               { 
-                title: "Débit faible ou inexistant", 
+                title: "Aspiration faible ou inexistante", 
                 causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], 
                 solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], 
                 solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."],
               },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
-          { id: "aidal-v7-ac", name: "V7+ AC", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] }
-          ] },
-          { id: "aidal-v7-ac-batt", name: "V7+ AC-B", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-              { title: "Débit faible ou inexistant", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
-              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
-          ] },
           { id: "vacuaide-7314", name: "Vacu-Aid 7314", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Débit faible ou inexistant", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce qu'l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Poser l'appareil sur une surface stable."], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] },
           { id: "vacuaide-7325", name: "Vacu-Aid 7325", failures: [
-              { title: "L'appareil ne démarre pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
-              { title: "Débit faible ou inexistant", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce qu'l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Fusible"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Vérifier fusible et carte."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal mal fermé", "Filtre saturé", "Tuyau", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester l'étanchéité du circuit interne.", "Mesurer la dépression max.", "Remplacer la pompe."] },
               { title: "Bruit anormal", causes: ["Pompe", "Fixations", "Vibrations"], solutionsPatient: ["Si vous posez l'appareil par terre ou sur une table stable, est-ce qu'il fait moins de bruit ?"], solutionsTech: ["Resserrer les fixations moteur.", "Remplacer la pompe."] },
+              { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
+          ] },
+          { id: "aidal-v7-ac", name: "V7+ AC", failures: [
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] }
+          ] },
+          { id: "aidal-v7-ac-batt", name: "V7+ AC-B", failures: [
+              { title: "L'appareil ne démarre pas / ne charge pas", causes: ["Appareil noyé", "Batterie", "Alimentation", "Carte"], solutionsPatient: ["Quand vous le branchez, est-ce qu'une petite lumière s'allume ?", "Ça fait longtemps qu'il n'a pas servi ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester le chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+              { title: "Aspiration faible ou inexistante", causes: ["Appareil noyé", "Bocal", "Filtre", "Pompe", "Réglage"], solutionsPatient: ["Sur votre machine il y a un manomètre, est-ce que l'aiguille va sur la gauche ?", "Quand la machine tourne, est-ce que vous entendez de l'air s'échapper (un pshhhh) ?", "Est-ce que le petit filtre est devenu gris ou sale ?"], solutionsTech: ["Vérifier l'absence de liquide dans le compartiment moteur (appareil noyé).", "Tester la pompe.", "Vérifier l'étanchéité interne."] },
               { title: "Problème de batterie", causes: ["Batterie usée", "Chargeur", "Connectique"], solutionsPatient: ["Vérifier le branchement du chargeur.", "Laisser charger 2h minimum.", "Nettoyer les contacts de charge.", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie."] }
           ] }
         ]
@@ -297,50 +297,11 @@ body {
         id: "humidificateur", 
         name: "Humidificateur", 
         models: [
-          { id: "dreamstation-hum", name: "DreamStation", failures: [
-              { title: "Niveau d'eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac.", "Remplissez le réservoir jusqu'au repère."], solutionsTech: ["Vérifier le capteur de niveau d'eau."] },
-              { title: "Fuite d’eau", causes: ["Réservoir mal fermé"], solutionsPatient: ["Vérifiez que le couvercle du réservoir est bien clipsé.", "Vérifiez que le réservoir est correctement inséré."], solutionsTech: ["Remplacer le joint du réservoir."] }
-          ] },
-          { id: "h41", name: "H41", failures: [
-              { title: "Pas de chauffage", causes: ["Plaque chauffante HS"], solutionsPatient: ["Vérifiez que l'humidificateur est bien connecté à la PPC.", "Vérifiez si l'option humidification est activée dans le menu."], solutionsTech: ["Remplacement de la plaque chauffante."] },
-              { title: "Condensation", causes: ["Mauvais réglage humidité"], solutionsPatient: ["Baissez le niveau d'humidité dans les réglages.", "Utilisez un circuit chauffant si disponible."], solutionsTech: ["Ajuster les paramètres de confort."] }
-          ] },
-          { id: "hc150", name: "HC150", failures: [
-              { title: "Pas d’humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Tournez le bouton de réglage sur une valeur plus élevée.", "Attendez 10 minutes que l'eau chauffe."], solutionsTech: ["Vérifier la tension aux bornes de la résistance."] },
-              { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez si le joint du bac est bien en place.", "Vérifiez l'absence de fissures sur le bac."], solutionsTech: ["Remplacer le joint d'étanchéité."] }
-          ] },
           { id: "humidair", name: "HumidAir", failures: [] },
-          { id: "hum-bipap-a40", name: "Humidificateur BIPAP A40", failures: [
-              { title: "Pas de chauffage", causes: ["Mauvaise connexion avec machine"], solutionsPatient: ["Retirez l'humidificateur et rebranchez-le fermement à la machine.", "Vérifiez que les connecteurs métalliques sont propres."], solutionsTech: ["Contrôler la continuité entre la machine et l'humidificateur."] },
-              { title: "Erreur système", causes: ["Défaut électronique"], solutionsPatient: ["Débranchez et rebranchez l'appareil.", "Si l'alarme persiste, utilisez l'appareil sans humidification."], solutionsTech: ["Retour en SAV pour diagnostic."] }
-          ] },
-          { id: "hum-breas", name: "Humidificateur Chauffant (Breas)", failures: [] },
+          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [] },
+          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [] },
           { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
-          { id: "mr810-mr820", name: "MR810 / MR820", failures: [
-              { title: "Pas de chauffage", causes: ["Appareil mal branché", "Résistance HS"], solutionsPatient: ["Vérifiez que le cordon d'alimentation est bien enfoncé.", "Vérifiez que le voyant orange s'allume."], solutionsTech: ["Vérifier l'alimentation secteur.", "Remplacer la base chauffante."] },
-              { title: "Condensation", causes: ["Température ambiante basse"], solutionsPatient: ["Augmentez la température de la pièce.", "Utilisez une housse isolante pour le tuyau."], solutionsTech: ["Ajuster la température ou installer un circuit chauffant."] }
-          ] },
-          { id: "my-airvo-2", name: "MY AIRVO 2", failures: [
-              { title: "Pas de chauffage", causes: ["Résistance chauffante défectueuse", "Mauvais réglage température"], solutionsPatient: ["Vérifiez le réglage de la température sur l'écran.", "Vérifiez que le circuit est bien branché."], solutionsTech: ["Remplacement de la base chauffante.", "Ajuster les réglages via le menu technicien."] },
-              { title: "Alarme température", causes: ["Sonde température HS"], solutionsPatient: ["Éteignez l'appareil et laissez-le refroidir.", "Vérifiez que rien n'obstrue les grilles."], solutionsTech: ["Remplacer la sonde de température."] },
-              { title: "Pas de débit d’air", causes: ["Circuit obstrué"], solutionsPatient: ["Vérifiez que la canule nasale n'est pas bouchée.", "Vérifiez que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'intégrité de la tubulure."] }
-          ] },
-          { id: "nea-hum", name: "NEA", failures: [
-              { title: "Pas d’humidification", causes: ["Réglage trop bas"], solutionsPatient: ["Augmentez le niveau d'humidification dans le menu."], solutionsTech: ["Vérifier la calibration de la sonde."] },
-              { title: "Bruit anormal", causes: ["Encrassement"], solutionsPatient: ["Nettoyez le réservoir avec de l'eau vinaigrée pour enlever le calcaire."], solutionsTech: ["Nettoyage complet du conduit d'air."] }
-          ] },
-          { id: "prisma-aqua", name: "PrismaAQUA", failures: [
-              { title: "Fuite d’eau", causes: ["Réservoir fissuré"], solutionsPatient: ["Vérifiez si de l'eau coule sous l'appareil.", "Inspectez le bac à la lumière pour voir des fissures."], solutionsTech: ["Remplacer le réservoir."] },
-              { title: "Pas de chauffage", causes: ["Défaut résistance"], solutionsPatient: ["Vérifiez que le bac est bien enfoncé jusqu'au clic.", "Vérifiez que le symbole de chauffe apparaît."], solutionsTech: ["Maintenance interne de la base."] }
-          ] },
-          { id: "hum-sbox", name: "S.Box", failures: [
-              { title: "Pas d’humidification", causes: ["Mauvaise connexion"], solutionsPatient: ["Retirez le bac et remettez-le en place.", "Vérifiez qu'il y a assez d'eau."], solutionsTech: ["Vérifier le branchement interne."] },
-              { title: "Alarme", causes: ["Défaut capteur"], solutionsPatient: ["Nettoyez les contacts à l'arrière du réservoir.", "Redémarrez la machine."], solutionsTech: ["Retour SAV pour remplacement capteur."] }
-          ] },
-          { id: "vhb10a", name: "VHB10A", failures: [
-              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifiez que l'appareil est allumé (interrupteur).", "Vérifiez le branchement secteur."], solutionsTech: ["Remplacement de la résistance."] },
-              { title: "Arrêt brusque", causes: ["Surchauffe"], solutionsPatient: ["Laissez l'appareil refroidir.", "Vérifiez que les grilles de ventilation ne sont pas bouchées."], solutionsTech: ["Vérifier le circuit de ventilation."] }
-          ] }
+          { id: "prisma-aqua", name: "PrismaAQUA", failures: [] }
         ] 
       },
       {
@@ -358,32 +319,32 @@ body {
             models: [
               {
                 id: "b15", name: "Bouteille B15", failures: [
-                  { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
                   { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
                 ]
               },
               {
                 id: "b2", name: "Bouteille B2", failures: [
-                  { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
                   { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
                 ]
               },
               {
                 id: "b5", name: "Bouteille B5", failures: [
-                  { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
                   { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
                 ]
               },
               {
                 id: "oxalys", name: "Oxalys", failures: [
-                  { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
+                  { title: "Débit irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton du régulateur est-il dur à tourner ou coincé ?"], solutionsTech: ["Nettoyer ou remplacer le régulateur."] },
                   { title: "Fuite", cause: "Joint valve usé.", solutionsPatient: ["Entendez-vous un sifflement (pshhh) au niveau de la valve ?", "Sentez-vous de l'air sortir ?"], solutionsTech: ["Remplacer le joint."] }
                 ]
               },
               {
                 id: "ifill", name: "Bouteille IFILL", failures: [
-                  { title: "Fuite", cause: "Serrage incorrect.", solutionsPatient: ["La bouteille semble-t-elle bien serrée ?", "Pouvez-vous la resserrer légèrement ?"], solutionsTech: ["Contrôler le serrage."] },
-                  { title: "Fuite", cause: "Joint défectueux.", solutionsPatient: ["Entendez-vous de l'air s'échapper malgré un bon serrage ?"], solutionsTech: ["Remplacer le joint."] }
+                  { title: "Fuite bouteille ou robinet", cause: "Serrage incorrect.", solutionsPatient: ["La bouteille semble-t-elle bien serrée ?", "Pouvez-vous la resserrer légèrement ?"], solutionsTech: ["Contrôler le serrage."] },
+                  { title: "Fuite (joint)", cause: "Joint défectueux.", solutionsPatient: ["Entendez-vous de l'air s'échapper malgré un bon serrage ?"], solutionsTech: ["Remplacer le joint."] }
                 ]
               }
             ]
@@ -398,68 +359,39 @@ body {
                 models: [
                     { id: "1025ks", name: "Concentrateur 10L (GCE / 1025KS)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement des tamis.", "Vérifier ou remplacer tubulure/canule."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement des tamis."] },
                         { title: "Bruit anormal", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] },
-                        { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Remplacement tamis.", "Vérifier la pureté à l'analyseur.", "Maintenance interne."] },
-                        { title: "Alarme (Surchauffe)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                        { title: "Alarme (Échappement bloqué)", cause: "Sortie d’air obstruée", solutionsPatient: ["Est-ce que quelque chose bouche la grille à l'arrière (sortie d'air) ?"], solutionsTech: ["Dégager la sortie d’air."] },
-                        { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                        { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
-                        { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
+                        { title: "Alarme O₂ faible", cause: "Concentration insuffisante", solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne."] },
+                        { title: "Alarme (Surchauffe / Échappement)", causes: ["Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche la grille à l'arrière ?"], solutionsTech: ["Nettoyer les grilles d'aération.", "Dégager la sortie d'air (exhaust)."] }
                     ] },
                     { id: "525ks", name: "Concentrateur 5L (525KS)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule."] },
-                        { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Vérifier pureté.", "Maintenance interne."] },
-                        { title: "Alarme (Surchauffe)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                        { title: "Alarme (Échappement bloqué)", cause: "Sortie d’air obstruée", solutionsPatient: ["La sortie d'air est-elle dégagée ?"], solutionsTech: ["Dégager la sortie d'air."] },
-                        { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                        { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
-                        { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
+                        { title: "Alarme (O₂ faible / Surchauffe)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Échappement bloqué"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil est-il collé contre un mur ou un rideau ?", "La sortie d'air est-elle dégagée ?"], solutionsTech: ["Analyse de pureté O2.", "Nettoyer ventilation.", "Dégager l'échappement."] },
+                        { title: "Arrêt inopiné", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis."] }
                     ] },
                     { id: "8f-5a", name: "Concentrateur 5L (8F-5A)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
-                        { title: "Le concentrateur fonctionne mais pas de débit", causes: ["Tuyau interne débranché", "Canule bouchée"], solutionsPatient: ["Testez avec une autre canule.", "Inspectez les sorties d'air à l'arrière de l'appareil."], solutionsTech: ["Vérifier les connexions pneumatiques internes."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule."] },
-                        { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Vérifier pureté.", "Maintenance interne."] },
-                        { title: "Alarme (Surchauffe)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                        { title: "Alarme (Échappement bloqué)", cause: "Sortie d’air obstruée", solutionsPatient: ["La sortie d'air est-elle dégagée ?"], solutionsTech: ["Dégager la sortie d'air."] },
-                        { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                        { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
+                        { title: "Alarme (O₂ faible / Surchauffe)", causes: ["Concentration insuffisante", "Ventilation obstruée"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "Les grilles d'aération sont-elles propres ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer ventilation."] },
+                        { title: "Arrêt inopiné", cause: "Capteurs HS.", solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?"], solutionsTech: ["Remplacer capteurs."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre sale", "Tamis moléculaire usé"], solutionsPatient: ["Le filtre à air est-il propre ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis."] }
                     ] },
                     { id: "everflo", name: "Concentrateur EverFlo", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
-                        { title: "Alarme O₂ faible", causes: ["Accumulation de poussière sur le filtre d'entrée"], solutionsPatient: ["Nettoyez le filtre externe.", "Dégagez bien l'espace tout autour de l'appareil (ne pas coller au mur)."], solutionsTech: ["Remplacer le filtre d'entrée interne.", "Vérifier la pureté."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Compresseur usé", "Tamis moléculaire usé"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis."] },
                         { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
-                        { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne."] },
-                        { title: "Alarme température", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il chaud ?", "La grille à l'arrière est-elle libre ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
-                        { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] }
+                        { title: "Alarme (O₂ faible / Surchauffe / Échappement)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il chaud ?", "Voyez-vous une alarme oxygène ?", "La grille à l'arrière est-elle libre ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer grilles.", "Dégager sortie air."] }
                     ] },
-                    { id: "platinum-9", name: "Invacare Platinum 9", failures: [
-                        { title: "Débit faible ou irrégulier", causes: ["Débitmètre réglé à moins de 1 L/min", "Tubulure de 15 m pliée"], solutionsPatient: ["Augmentez le débit au-dessus de 1 L/min.", "Redressez la tubulure pour éviter les coudes."], solutionsTech: ["Vérifier l'étanchéité du circuit interne."] },
-                        { title: "Arrêt brusque", causes: ["Surchauffe", "Pression trop haute"], solutionsPatient: ["Éteignez l'appareil pendant 30 min pour le laisser refroidir avant de réessayer."], solutionsTech: ["Nettoyer les filtres.", "Vérifier le ventilateur et le compresseur."] }
-                    ] },
-                    { id: "perfecto2-v", name: "Invacare Perfecto2 V", failures: [
-                        { title: "Sifflement à l'humidificateur", causes: ["Le bocal est mal vissé"], solutionsPatient: ["Revissez correctement le bocal pour assurer l'étanchéité."], solutionsTech: ["Vérifier le joint du bocal."] }
-                    ] },
-                    { id: "homefill", name: "Invacare HomeFill (Compresseur)", failures: [
-                        { title: "Voyant rouge 'ATTENTION'", causes: ["Débit du concentrateur compagnon supérieur à 3 L/min"], solutionsPatient: ["Réduisez le débit du concentrateur (celui qui est à côté du compresseur).", "Attendez que le voyant repasse au vert."], solutionsTech: ["Vérifier la pression de couplage."] },
-                        { title: "Fuite au raccord de la bouteille", causes: ["Mauvaise connexion", "Joint sale"], solutionsPatient: ["Nettoyez le connecteur avec un chiffon sec.", "Reconnectez fermement la bouteille jusqu'au clic."], solutionsTech: ["Remplacer le joint de l'embase."] }
-                    ] },
-                    { id: "ultrafill", name: "Philips UltraFill", failures: [
-                        { title: "La bouteille ne se remplit pas", causes: ["Concentrateur éteint", "Débit trop haut"], solutionsPatient: ["Assurez-vous que le concentrateur compagnon est allumé.", "Réglez le débit selon les instructions spécifiques de remplissage."], solutionsTech: ["Vérifier la valve de couplage."] }
+                    { id: "everflo-pediatrique", name: "Concentrateur EverFlo Pédiatrique", failures: [
+                        { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Compresseur usé", "Tamis moléculaire usé"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis."] },
+                        { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
+                        { title: "Alarme (O₂ faible / Surchauffe / Échappement)", causes: ["Concentration insuffisante", "Ventilation obstruée", "Sortie d’air bloquée"], solutionsPatient: ["L'appareil est-il chaud ?", "Voyez-vous une alarme oxygène ?", "La grille à l'arrière est-elle libre ?"], solutionsTech: ["Vérifier pureté.", "Nettoyer grilles.", "Dégager sortie air."] }
                     ] },
                     { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
                          { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                          { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
-                         { title: "Arrêt inopiné", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] },
-                         { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne."] },
-                         { title: "Alarme (Surchauffe)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
-                         { title: "Alarme (Échappement bloqué)", cause: "Sortie d’air obstruée", solutionsPatient: ["Est-ce que quelque chose bouche la grille à l'arrière (sortie d'air) ?"], solutionsTech: ["Dégager la sortie d’air."] },
-                         { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                         { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
-                         { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
+                         { title: "Arrêt inopiné", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] }
                     ] }
                 ]
               },
@@ -469,40 +401,49 @@ body {
                 models: [
                     { id: "inogen-g3", name: "Inogen One G3", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                        { title: "Aucun souffle détecté", causes: ["Canule mal placée", "Respiration buccale"], solutionsPatient: ["Repositionnez la canule dans vos narines.", "Efforcez-vous de respirer uniquement par le nez."], solutionsTech: ["Vérifier la sensibilité du trigger."] },
-                        { title: "Alarme température", causes: ["Surchauffe interne", "Filtres à particules obstrués"], solutionsPatient: ["Nettoyez les filtres d'entrée.", "Déplacez l'appareil dans un endroit frais et aéré."], solutionsTech: ["Vérifier le ventilateur interne."] }
+                        { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                        { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                     ] },
                     { id: "inogen-g4", name: "Inogen One G4", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                        { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                     ] },
                     { id: "inogen-g5", name: "Inogen One G5", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                        { title: "Alarme O₂ faible", causes: ["Concentration d'oxygène < 82 %"], solutionsPatient: ["La concentration est trop basse.", "Contactez votre prestataire pour remplacer les colonnes (tamis)."], solutionsTech: ["Remplacer les colonnes."] },
-                        { title: "Alarme Service Required", causes: ["Maintenance technique"], solutionsPatient: ["L'appareil nécessite une maintenance technique.", "Contactez votre prestataire de soins."], solutionsTech: ["Diagnostic via logiciel constructeur."] },
-                        { title: "Problème de batterie", causes: ["Température extrême", "Mauvais branchement"], solutionsPatient: ["Laissez la batterie revenir à température ambiante.", "Vérifiez que le câble est bien enfoncé."], solutionsTech: ["Vérifier le circuit de charge."] }
+                        { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                        { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                     ] },
                     { id: "inogen-rove", name: "Inogen Rove 6", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                        { title: "Alarme Service Required", causes: ["Tamis moléculaires en fin de vie"], solutionsPatient: ["Les colonnes de tamis moléculaires sont en fin de vie.", "Remplacez les colonnes en suivant le manuel."], solutionsTech: ["Réinitialiser le compteur."] },
-                        { title: "Problème de batterie", causes: ["Batterie déchargée", "Batterie non verrouillée"], solutionsPatient: ["Branchez sur secteur.", "Vérifiez que la batterie est bien clipsée (entendre le clic)."], solutionsTech: ["Vérifier le connecteur batterie."] }
-                    ] },
-                    { id: "xpo2", name: "Invacare XPO2", failures: [
-                        { title: "Aucun souffle détecté", causes: ["Tubulure trop longue (> 10m)"], solutionsPatient: ["Utilisez une canule de longueur standard (2 mètres)."], solutionsTech: ["Vérifier la valve de pulsion."] }
+                        { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] },
+                        { title: "Alarme (Température / Système)", causes: ["Zone trop chaude", "Capteur défectueux"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Qu'est-ce qui est écrit sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                     ] },
                     { id: "simplygo-mini", name: "SimplyGo Mini", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                        { title: "Alarme 'Fréquence respiratoire élevée'", causes: ["Utilisateur respire trop vite"], solutionsPatient: ["Calmez votre respiration.", "Réduisez votre effort physique immédiat."], solutionsTech: ["Vérifier les paramètres de trigger."] },
-                        { title: "Écran tactile bloqué", causes: ["Bug d'affichage"], solutionsPatient: ["Branchez l'alimentation externe pour forcer la réactivation de l'écran."], solutionsTech: ["Mise à jour firmware."] }
+                        { title: "Alarme (Température / Système)", causes: ["Filtre sale", "Environnement chaud", "Capteur HS"], solutionsPatient: ["Le filtre est-il propre ?", "Fait-il très chaud là où vous êtes ?", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée.", "Maintenance technique."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air."] }
                     ] },
-                    { id: "simplygo-mini-ld", name: "SimplyGo Mini Longue Durée", failures: [
+                    { id: "simplygo-mini-ld", name: "SimplyGo Mini (Longue Durée)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                        { title: "Alarme température", causes: ["Filtre sale", "Environnement chaud"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce qu'il fait chaud dehors ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée."] },
+                        { title: "Alarme (Température / Système)", causes: ["Filtre sale", "Environnement chaud"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce qu'il fait chaud dehors ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée."] },
                         { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air."] }
                     ] },
                     { id: "zen-o-lite", name: "Zen-O Lite", failures: [
-                        { title: "Aucun souffle détecté", causes: ["Inspiration non détectée depuis 2 min"], solutionsPatient: ["Vérifiez que la canule est bien branchée à l'appareil.", "Vérifiez le positionnement des narines."], solutionsTech: ["Tester le capteur de pression."] },
-                        { title: "Alarme O₂ faible", causes: ["Chute de la pureté"], solutionsPatient: ["Vérifiez que les entrées d'air sont libres.", "Si l'alarme persiste, contactez le SAV."], solutionsTech: ["Vérifier les colonnes."] }
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Pompe défectueuse", "Airflow bloqué"], solutionsPatient: ["L'appareil fait-il un bruit anormal ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Maintenance pompe.", "Dégager aérations."] },
+                        { title: "Bruit anormal", cause: "Batterie faible.", solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Alarme (Température / Système)", causes: ["Environnement chaud", "Capteur défectueux"], solutionsPatient: ["Fait-il très chaud ?", "Y a-t-il une alarme système sur l'écran ?"], solutionsTech: ["Utiliser en zone ventilée.", "Maintenance technique."] }
                     ] },
+                    { id: "freestyle", name: "FreeStyle Comfort", failures: [
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Fuite d’air", causes: ["Connectique mal serrée", "Airflow bloqué"], solutionsPatient: ["Le tuyau est-il bien clipsé ?", "Rien ne bouche les trous d'air ?"], solutionsTech: ["Vérifier connexions.", "Dégager aérations."] },
+                        { title: "Alarme (Température / Système)", causes: ["Joint usé", "Zone chaude", "Capteur HS"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?"], solutionsTech: ["Remplacer joint.", "Zone ventilée.", "Maintenance technique."] }
+                    ] }
                 ]
               },
               {
@@ -510,23 +451,26 @@ body {
                 name: "Transportable",
                 models: [
                     { id: "eclipse-3", name: "Eclipse 3", failures: [
-                        { title: "Problème de batterie", causes: ["Autonomie < 10 %"], solutionsPatient: ["La batterie est presque vide.", "Branchez sur secteur ou sur l'allume-cigare immédiatement."], solutionsTech: ["Vérifier la capacité de charge."] }
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Problème de batterie / Autonomie", causes: ["Batterie vieillissante", "Batterie usée"], solutionsPatient: ["La batterie tient-elle la charge ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué"], solutionsPatient: ["Le filtre à air est-il propre ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Nettoyer filtre.", "Dégager aérations."] }
                     ] },
                     { id: "eclipse-5", name: "Eclipse 5", failures: [
-                        { title: "Débit faible ou irrégulier", causes: ["Obstruction du circuit"], solutionsPatient: ["Vérifiez l'absence de nœuds dans la canule."], solutionsTech: ["Vérifier le débitmètre interne."] },
-                        { title: "Problème de batterie", causes: ["Batterie mal insérée"], solutionsPatient: ["Retirez et réinsérez la batterie fermement jusqu'à entendre le clic."], solutionsTech: ["Vérifier les contacts."] }
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Alarme (Température / Système)", causes: ["Filtre sale", "Environnement chaud"], solutionsPatient: ["Le filtre à air est-il propre ?", "Fait-il chaud là où l'appareil est posé ?"], solutionsTech: ["Nettoyage filtre.", "Zone ventilée."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué"], solutionsPatient: ["L'appareil est-il bien ventilé ?", "Rien ne bouche les entrées d'air ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager les grilles."] }
                     ] },
-                    { id: "solo2", name: "Invacare SOLO2", failures: [
-                        { title: "Alarme température", causes: ["Obstruction des grilles"], solutionsPatient: ["Éloignez l'appareil des murs et rideaux."], solutionsTech: ["Nettoyer le filtre interne."] }
+                    { id: "simplygo", name: "SimplyGo (Standard)", failures: [
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Pompe défectueuse", "Airflow bloqué"], solutionsPatient: ["Sentez-vous moins d'air sortir ?", "Les grilles sont-elles dégagées ?"], solutionsTech: ["Maintenance pompe.", "Dégager aérations."] },
+                        { title: "Bruit anormal", causes: ["Batterie faible", "Environnement chaud"], solutionsPatient: ["La batterie est-elle bien chargée ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Remplacer batterie.", "Zone ventilée."] }
                     ] },
-                    { id: "simplygo", name: "SimplyGo", failures: [
-                        { title: "Erreur système", causes: ["Dysfonctionnement électronique"], solutionsPatient: ["Effectuez un 'reset' : retirez la batterie et le cordon secteur pendant 30 secondes."], solutionsTech: ["Analyse du code erreur."] },
-                        { title: "Alarme température", causes: ["Sacoche mal aérée"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Laissez-le refroidir dans un endroit ventilé."], solutionsTech: ["Vérifier le ventilateur."] }
-                    ] },
-                    { id: "zen-o", name: "Zen-O", failures: [
-                        { title: "Alarme sonore toutes les 15 secondes", causes: ["Aucun souffle détecté"], solutionsPatient: ["Vérifiez votre canule.", "Passez en mode continu si vous n'arrivez pas à déclencher l'appareil."], solutionsTech: ["Vérifier la sensibilité du trigger."] }
+                    { id: "zen-o", name: "Zen-O (Double batterie)", failures: [
+                        { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                        { title: "Fuite d’air", cause: "Connectique mal serrée.", solutionsPatient: ["Le tuyau est-il bien branché ?"], solutionsTech: ["Vérifier connexions."] },
+                        { title: "Alarme (Température / Système)", causes: ["Joint usé", "Environnement chaud", "Capteur HS"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?"], solutionsTech: ["Remplacer joint.", "Zone ventilée.", "Maintenance technique."] }
                     ] }
-                ]
+                ] 
               }
             ]
           },
@@ -534,76 +478,63 @@ body {
             id: "o2-liquide", 
             name: "O₂ Liquide", 
             models: [
-                  { id: "companion-1000", name: "Companion 1000", failures: [
+                  { id: "companion-1000", name: "Portable Companion 1000", failures: [
                       { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
                       { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
                   ] },
-                  { id: "companion-t", name: "Companion 1000T", failures: [
+                  { id: "companion-t", name: "Portable Companion 1000T", failures: [
                       { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
                       { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
                   ] },
-                  { id: "companion-500", name: "Companion 500", failures: [
+                  { id: "companion-500", name: "Portable Companion 500", failures: [
                       { title: "Pas de débit", causes: ["Thermostat défectueux", "Valve gelée"], solutionsPatient: ["Sentez-vous de l'air sortir ?", "Voyez-vous du givre sur la valve ?"], solutionsTech: ["Remplacer thermostat.", "Décongélation valve."] },
                       { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
                   ] },
                   { id: "sprint", name: "Companion Sprint", failures: [
-                      { title: "Fuite de liquide", causes: ["Joint usé"], solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
-                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] },
-                      { title: "Givre important", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure après usage pour permettre à l'humidité de s'évaporer."], solutionsTech: ["Vérifier l'isolation interne."] },
-                      { title: "Le bouton de remplissage ne s'enclenche pas", causes: ["Le mécanisme est resté en position fermée"], solutionsPatient: ["Tirez sur le bouton jusqu'à ce qu'il s'enclenche en position 'ouvert' avant de retenter la connexion."], solutionsTech: ["Vérifier le ressort de rappel."] },
-                      { title: "Fuite de vapeur (nuage blanc) pendant le remplissage", causes: ["Phénomène normal d'évaporation de l'oxygène liquide"], solutionsPatient: ["Maintenez une position droite et assurez-vous que les connecteurs sont bien alignés ; la fuite doit cesser une fois le remplissage terminé."], solutionsTech: ["Information patient sur le cycle normal."] }
+                      { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
                   ] },
                   { id: "stroller", name: "Companion Stroller", failures: [
-                      { title: "Fuite de liquide", causes: ["Joint usé"], solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
-                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] },
-                      { title: "Givre important", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure après usage."], solutionsTech: ["Vérifier isolation."] },
-                      { title: "Le bouton de remplissage ne s'enclenche pas", causes: ["Mécanisme en position fermée"], solutionsPatient: ["Tirez sur le bouton jusqu'à ce qu'il s'enclenche en position 'ouvert' avant de retenter la connexion."], solutionsTech: ["Vérifier mécanisme."] }
+                      { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
+                      { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] }
                   ] },
                   { id: "freelox-05", name: "Freelox 0.5L", failures: [
                       { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
-                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] },
-                      { title: "Le réservoir portable ne se remplit pas", causes: ["La valve de remplissage est peut-être gelée ou mal connectée"], solutionsPatient: ["Vérifiez la connexion et, si du givre bloque la valve, attendez qu'elle dégèle naturellement avant de réessayer."], solutionsTech: ["Vérifier la valve de remplissage."] },
-                      { title: "Givre important", causes: ["Fuite légère ou utilisation intensive dans un milieu humide"], solutionsPatient: ["Essuyez délicatement le givre avec un chiffon sec et vérifiez que le sélecteur de débit est bien sur une position précise."], solutionsTech: ["Rechercher fuite."] }
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
                   ] },
                   { id: "freelox-12", name: "Freelox 1.2L", failures: [
                       { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
-                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] },
-                      { title: "Le réservoir portable ne se remplit pas", causes: ["Valve gelée ou mal connectée"], solutionsPatient: ["Vérifiez la connexion et attendez le dégel naturel si nécessaire."], solutionsTech: ["Vérifier valve."] }
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
                   ] },
                   { id: "joggy", name: "Joggy", failures: [
                       { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
-                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] },
-                      { title: "Le réservoir portable ne se remplit pas", causes: ["Valve gelée"], solutionsPatient: ["Vérifiez la connexion et laissez dégeler si besoin."], solutionsTech: ["Vérifier valve."] }
+                      { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale et stockage recommandé."] }
                   ] },
                   { id: "helios-h300", name: "Helios H300", failures: [
-                      { title: "Débit faible ou irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
-                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] },
-                      { title: "Pas de débit", causes: ["Le réservoir est vide ou la canule est débranchée/obstruée"], solutionsPatient: ["Vérifiez le niveau d'oxygène sur l'indicateur et assurez-vous que la canule est correctement fixée."], solutionsTech: ["Vérifier le trigger pneumatique."] },
-                      { title: "Difficulté lors du désaccouplement après remplissage", causes: ["Formation de glace sur les valves de remplissage due à l'humidité"], solutionsPatient: ["N'utilisez jamais de force. Laissez la glace fondre jusqu'à ce que les unités se séparent facilement."], solutionsTech: ["Sécher les valves."] },
-                      { title: "Panne (Indicateur)", causes: ["Pile interne épuisée ou mauvaise manipulation"], solutionsPatient: ["Appuyez fermement sur le bouton bleu de test. Si rien ne s'affiche, la pile doit être remplacée par un technicien."], solutionsTech: ["Remplacer pile interne."] }
+                      { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
                   ] },
                   { id: "helios-marathon", name: "Helios Marathon 850", failures: [
-                      { title: "Débit faible ou irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
-                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] },
-                      { title: "Pas de débit", causes: ["Réservoir vide ou canule obstruée"], solutionsPatient: ["Vérifiez le niveau d'oxygène et le branchement de la canule."], solutionsTech: ["Vérifier débitmètre."] }
+                      { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
+                      { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] }
                   ] },
                   { id: "hi-flow-stroller", name: "Hi Flow Stroller", failures: [
-                      { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
-                      { title: "Alarme température", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
+                      { title: "Débit insuffisant", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
+                      { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
                   ] },
                   { id: "cuve-companion-41", name: "Cuve Companion 41L", failures: [
                       { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                       { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
                   ] },
                   { id: "cuve-companion-45", name: "Cuve Companion 45L", failures: [
-                      { title: "Fuite de liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
+                      { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                       { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
                   ] },
                   { id: "cuve-freelox-32", name: "Cuve Freelox 32L", failures: [
                       { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
                       { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
                   ] },
-                  { id: "cuve-freelox-44", name: "Cuve Freelox 44L", failures: [
+                  { id: "cuve-freelox-44", name: "Cuve Freelox 44L (+ Embase)", failures: [
                       { title: "Alarme température", cause: "Surcharge de cuve", solutionsPatient: ["L'alarme sonne-t-elle en continu ?"], solutionsTech: ["Respecter capacité max."] },
                       { title: "Fuite vapeur", cause: "Capteurs HS", solutionsPatient: ["Voyez-vous de la vapeur s'échapper anormalement ?"], solutionsTech: ["Remplacement capteurs."] }
                   ] }
