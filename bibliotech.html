@@ -191,6 +191,35 @@ body {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #fee2e2;
+    color: #ef4444;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.card:hover .delete-btn {
+    opacity: 1;
+}
+
+.delete-btn:hover {
+    background: #ef4444;
+    color: white;
+}
 </style>
 </head>
 <body>
@@ -208,6 +237,7 @@ body {
         <div style="flex-grow: 1; margin: 0 20px 0 40px;">
             <input type="search" id="global-search" placeholder="Rechercher un appareil, une marque..." style="width: 100%; padding: 10px 15px; font-size: 15px; border-radius: 8px; border: 1px solid #e2e8f0; background-color: white;">
         </div>
+        <button onclick="addItem()" style="padding: 10px 20px; border-radius: 8px; border: none; background: #0284c7; color: white; cursor: pointer; font-weight: 600; white-space: nowrap;">➕ Ajouter</button>
     </div>
 
     <!-- Zone d'affichage dynamique -->
@@ -396,7 +426,7 @@ body {
                 id: "fixe",
                 name: "Fixe",
                 models: [
-                    { id: "1025ks", name: "Concentrateur 10L (GCE / 1025KS)", failures: [
+                    { id: "1025ks", name: "10L (GCE / 1025KS)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                         { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement des tamis.", "Vérifier ou remplacer tubulure/canule."] },
                         { title: "Bruit anormal", cause: "Compresseur fatigué.", solutionsPatient: ["L'appareil fait-il un bruit de claquement ou inhabituel ?"], solutionsTech: ["Maintenance moteur."] },
@@ -407,7 +437,7 @@ body {
                         { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                         { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
                     ] },
-                    { id: "525ks", name: "Concentrateur 5L (525KS)", failures: [
+                    { id: "525ks", name: "5L (525KS)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                         { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule."] },
                         { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Vérifier pureté.", "Maintenance interne."] },
@@ -417,7 +447,7 @@ body {
                         { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                         { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
                     ] },
-                    { id: "8f-5a", name: "Concentrateur 5L (8F-5A)", failures: [
+                    { id: "8f-5a", name: "5L (8F-5A)", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                         { title: "Le concentrateur fonctionne mais pas de débit", causes: ["Tuyau interne débranché", "Canule bouchée"], solutionsPatient: ["Testez avec une autre canule.", "Inspectez les sorties d'air à l'arrière de l'appareil."], solutionsTech: ["Vérifier les connexions pneumatiques internes."] },
                         { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule."] },
@@ -427,7 +457,7 @@ body {
                         { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
                         { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
                     ] },
-                    { id: "everflo", name: "Concentrateur EverFlo", failures: [
+                    { id: "everflo", name: "EverFlo", failures: [
                         { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                         { title: "Alarme O₂ faible", causes: ["Accumulation de poussière sur le filtre d'entrée"], solutionsPatient: ["Nettoyez le filtre externe.", "Dégagez bien l'espace tout autour de l'appareil (ne pas coller au mur)."], solutionsTech: ["Remplacer le filtre d'entrée interne.", "Vérifier la pureté."] },
                         { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
@@ -450,7 +480,7 @@ body {
                     { id: "ultrafill", name: "Philips UltraFill", failures: [
                         { title: "La bouteille ne se remplit pas", causes: ["Concentrateur éteint", "Débit trop haut"], solutionsPatient: ["Assurez-vous que le concentrateur compagnon est allumé.", "Réglez le débit selon les instructions spécifiques de remplissage."], solutionsTech: ["Vérifier la valve de couplage."] }
                     ] },
-                    { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
+                    { id: "igo2-fixe", name:"iGo 2 (Mode Fixe)", failures: [
                          { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                          { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
                          { title: "Arrêt inopiné", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] },
@@ -962,6 +992,71 @@ body {
         render();
     }
 
+    function addItem() {
+        if (!state.type) {
+            const name = prompt("Nom de la nouvelle catégorie (ex: Ventilateur) :");
+            if (name) {
+                LIBRARY_DATA.push({ id: Date.now().toString(), name, models: [] });
+            }
+        } else if (state.type && !state.brand && (state.type.brands || ['ppc', 'vni', 'vaa', 'aspiration'].includes(state.type.id))) {
+            const name = prompt("Nom de la nouvelle marque pour " + state.type.name + " :");
+            if (name) {
+                if (!state.type.brands) state.type.brands = [];
+                state.type.brands.push({ id: Date.now().toString(), name, models: [] });
+            }
+        } else if (state.type && !state.model) {
+            const name = prompt("Nom du nouveau modèle pour " + state.type.name + " :");
+            if (name) {
+                const target = state.brand || state.subSubType || state.subType || state.type;
+                if (!target.models) target.models = [];
+                target.models.push({ id: Date.now().toString(), name, failures: [] });
+            }
+        } else if (state.model) {
+            const title = prompt("Titre du problème :");
+            if (!title) return;
+            const cause = prompt("Cause probable :");
+            const solP = prompt("Solutions Patient (séparées par des points-virgules ';') :");
+            const solT = prompt("Solutions Technicien (séparées par des points-virgules ';') :");
+            
+            if (!state.model.failures) state.model.failures = [];
+            state.model.failures.push({
+                title,
+                causes: cause ? [cause] : [],
+                solutionsPatient: solP ? solP.split(';').map(s => s.trim()) : [],
+                solutionsTech: solT ? solT.split(';').map(s => s.trim()) : []
+            });
+        }
+        render();
+    }
+
+    function deleteItem(event, type) {
+        event.stopPropagation();
+        if (!confirm("Voulez-vous vraiment supprimer cet élément ?")) return;
+
+        const dataset = event.currentTarget.dataset;
+        
+        if (type === 'category') {
+            const idx = LIBRARY_DATA.findIndex(t => t.id === dataset.id);
+            LIBRARY_DATA.splice(idx, 1);
+            state.type = null;
+        } else if (type === 'brand') {
+            const source = state.subSubType || state.subType || state.type;
+            const idx = source.brands.findIndex(b => b.id === dataset.id);
+            source.brands.splice(idx, 1);
+            state.brand = null;
+        } else if (type === 'model') {
+            const source = state.brand || state.subSubType || state.subType || state.type;
+            const idx = source.models.findIndex(m => m.id === dataset.id);
+            source.models.splice(idx, 1);
+            state.model = null;
+        } else if (type === 'failure') {
+            state.model.failures.splice(parseInt(dataset.index), 1);
+            state.failure = null;
+        }
+        
+        render();
+    }
+
     // --- RENDU (Render) ---
     function render() {
         const app = document.getElementById('app-content');
@@ -1023,7 +1118,11 @@ body {
         else if (!state.type) {
             html += `<h2>Sélectionnez le type d'équipement</h2><div class="card-grid">`;
             LIBRARY_DATA.forEach(type => {
-                html += `<div class="card" data-action="select-type" data-id="${type.id}"><div style="font-size: 18px; font-weight: bold;">${type.name}</div></div>`;
+                html += `
+                    <div class="card" data-action="select-type" data-id="${type.id}">
+                        <button class="delete-btn" onclick="deleteItem(event, 'category')" data-id="${type.id}">&times;</button>
+                        <div style="font-size: 18px; font-weight: bold;">${type.name}</div>
+                    </div>`;
             });
             html += `</div>`;
         } else if (state.type.subTypes && !state.subType) {
@@ -1050,7 +1149,11 @@ body {
             } else {
                 source.brands.forEach(brand => {
                     const imgTag = brand.logo ? `<img src="${brand.logo}" alt="${brand.name}" onerror="this.style.display='none'">` : '';
-                    html += `<div class="card" data-action="select-brand" data-id="${brand.id}">${imgTag}<div style="font-size: 18px; font-weight: bold;">${brand.name}</div></div>`;
+                    html += `
+                        <div class="card" data-action="select-brand" data-id="${brand.id}">
+                            <button class="delete-btn" onclick="deleteItem(event, 'brand')" data-id="${brand.id}">&times;</button>
+                            ${imgTag}<div style="font-size: 18px; font-weight: bold;">${brand.name}</div>
+                        </div>`;
                 });
             }
             html += `</div>`;
@@ -1063,7 +1166,11 @@ body {
                 html += `<p>Aucun modèle répertorié.</p>`;
             } else {
                 source.models.forEach(model => {
-                    html += `<div class="card" data-action="select-model" data-id="${model.id}"><div style="font-size: 18px; font-weight: bold;">${model.name}</div></div>`;
+                    html += `
+                        <div class="card" data-action="select-model" data-id="${model.id}">
+                            <button class="delete-btn" onclick="deleteItem(event, 'model')" data-id="${model.id}">&times;</button>
+                            <div style="font-size: 18px; font-weight: bold;">${model.name}</div>
+                        </div>`;
                 });
             }
             html += `</div>`;
@@ -1075,7 +1182,11 @@ body {
             } else {
                 html += `<div class="card-grid">`;
                 state.model.failures.forEach((failure, index) => {
-                    html += `<div class="card" data-action="select-failure" data-index="${index}"><div style="font-size: 18px; font-weight: bold;">${failure.title}</div></div>`;
+                    html += `
+                        <div class="card" data-action="select-failure" data-index="${index}">
+                            <button class="delete-btn" onclick="deleteItem(event, 'failure')" data-index="${index}">&times;</button>
+                            <div style="font-size: 18px; font-weight: bold;">${failure.title}</div>
+                        </div>`;
                 });
                 html += `</div>`;
             }

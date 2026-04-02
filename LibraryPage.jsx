@@ -13,6 +13,7 @@ const LIBRARY_DATA = [
         logo: "/logos/resmed.png",
         models: [
           { id: "aircurve-10", name: "AirCurve 10", failures: [{
+            title: "Pression instable / Fuites",
             title: "Alarme 'Pression faible' ou 'Pression basse'",
             cause: "Fuite importante dans le circuit, masque mal ajusté, ou problème de la turbine.",
             solutionsPatient: [
@@ -26,6 +27,7 @@ const LIBRARY_DATA = [
             ]
           }] },
           { id: "lumis-150", name: "Lumis 150", failures: [{
+            title: "Aucun souffle détecté",
             title: "L'appareil ne détecte pas la respiration (pas de trigger)",
             cause: "Masque mal ajusté, fuites, ou mauvais réglage de la sensibilité du trigger.",
              solutionsPatient: [
@@ -48,6 +50,7 @@ const LIBRARY_DATA = [
           id: "trilogy-evo",
           name: "Trilogy Evo",
           failures: [{
+            title: "L'appareil ne démarre pas",
             title: "L'appareil ne s'allume pas",
             cause: "Problème d'alimentation externe, batterie déchargée/défectueuse, ou panne matérielle interne.",
             solutionsPatient: [
@@ -106,6 +109,7 @@ const LIBRARY_DATA = [
             name: "AirSense 10", 
             failures: [
               {
+                title: "Pression instable / Fuites",
                 title: "Fuites de masque importantes",
                 cause: "Mauvais ajustement du masque, coussin usé, ou mauvaise taille de masque.",
                 solutionsPatient: [
@@ -138,6 +142,7 @@ const LIBRARY_DATA = [
             name: "LCSU 4", 
             failures: [
               {
+                title: "Débit faible ou inexistant",
                 title: "Faible aspiration ou pas d'aspiration",
                 cause: "Manomètre mal réglé, tuyauterie bouchée ou mal connectée, bocal plein, batterie faible.",
                 solutionsPatient: [
@@ -178,48 +183,92 @@ const LIBRARY_DATA = [
     name: "Humidificateur",
     models: [
       { id: "dreamstation-hum", name: "DreamStation", failures: [
-          { title: "Niveau d'eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac.", "Remplissez le réservoir jusqu'au repère."], solutionsTech: ["Vérifier le capteur de niveau d'eau."] },
-          { title: "Fuite d’eau", causes: ["Réservoir mal fermé"], solutionsPatient: ["Vérifiez que le couvercle du réservoir est bien clipsé.", "Vérifiez que le réservoir est correctement inséré."], solutionsTech: ["Remplacer le joint du réservoir."] }
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac.", "Remplissez le réservoir jusqu'au repère."], solutionsTech: ["Vérifier le capteur de niveau d'eau."] },
+          { title: "Fuite d’eau", causes: ["Réservoir mal fermé", "Joint usé"], solutionsPatient: ["Vérifiez que le couvercle du réservoir est bien clipsé.", "Vérifiez que le réservoir est correctement inséré."], solutionsTech: ["Remplacer le joint du réservoir."] },
+          { title: "Pas de chauffage", causes: ["Plaque chauffante défectueuse"], solutionsPatient: ["Vérifiez que l'humidificateur est bien connecté à la machine.", "Vérifiez si l'option est activée dans le menu."], solutionsTech: ["Remplacement de la plaque chauffante."] },
+          { title: "Condensation (Glouglou)", causes: ["Humidité trop haute", "Pièce trop froide"], solutionsPatient: ["Baissez le niveau d'humidité.", "Placez la machine plus bas que le lit.", "Utilisez une housse pour le tuyau."], solutionsTech: ["Vérifier le réglage du circuit chauffant."] },
+          { title: "Odeur de renfermé", causes: ["Entretien insuffisant", "Eau stagnante"], solutionsPatient: ["Nettoyez le bac avec un mélange eau/vinaigre blanc.", "Changez l'eau tous les jours."], solutionsTech: ["Vérifier l'état des filtres de la machine."] }
       ] },
       { id: "h41", name: "H41", failures: [
           { title: "Pas de chauffage", causes: ["Plaque chauffante HS"], solutionsPatient: ["Vérifiez que l'humidificateur est bien connecté à la PPC.", "Vérifiez si l'option humidification est activée dans le menu."], solutionsTech: ["Remplacement de la plaque chauffante."] },
-          { title: "Condensation", causes: ["Mauvais réglage humidité"], solutionsPatient: ["Baissez le niveau d'humidité dans les réglages.", "Utilisez un circuit chauffant si disponible."], solutionsTech: ["Ajuster les paramètres de confort."] }
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac.", "Remplissez le réservoir jusqu'au repère."], solutionsTech: ["Vérifier le capteur de niveau d'eau."] },
+          { title: "Fuite d’eau", causes: ["Réservoir mal fermé", "Joint usé"], solutionsPatient: ["Vérifiez que le couvercle est bien clipsé.", "Vérifiez l'étanchéité du bac."], solutionsTech: ["Remplacer le joint."] },
+          { title: "Condensation", causes: ["Mauvais réglage humidité"], solutionsPatient: ["Baissez le niveau d'humidité dans les réglages.", "Utilisez un circuit chauffant si disponible."], solutionsTech: ["Ajuster les paramètres de confort."] },
+          { title: "Dépôts de calcaire", causes: ["Utilisation d'eau du robinet"], solutionsPatient: ["Utilisez de l'eau déminéralisée ou distillée.", "Faites tremper le bac dans du vinaigre."], solutionsTech: ["Remplacement du bac si trop entartré."] }
       ] },
       { id: "hc150", name: "HC150", failures: [
-          { title: "Pas d’humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Tournez le bouton de réglage sur une valeur plus élevée.", "Attendez 10 minutes que l'eau chauffe."], solutionsTech: ["Vérifier la tension aux bornes de la résistance."] },
-          { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez si le joint du bac est bien en place.", "Vérifiez l'absence de fissures sur le bac."], solutionsTech: ["Remplacer le joint d'étanchéité."] }
+          { title: "Pas de chauffage", causes: ["Mauvais réglage", "Résistance HS"], solutionsPatient: ["Tournez le bouton de réglage sur une valeur plus élevée.", "Attendez 10 minutes que l'eau chauffe."], solutionsTech: ["Vérifier la tension aux bornes de la résistance."] },
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac."], solutionsTech: ["Contrôle visuel."] },
+          { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez si le joint du bac est bien en place.", "Vérifiez l'absence de fissures sur le bac."], solutionsTech: ["Remplacer le joint d'étanchéité."] },
+          { title: "Condensation dans le tuyau", causes: ["Différence de température"], solutionsPatient: ["Réduisez le réglage sur le bouton rotatif.", "Isolez le tuyau avec une gaine."], solutionsTech: ["Vérifier la sonde de température ambiante."] }
       ] },
-      { id: "humidair", name: "HumidAir", failures: [] },
-      { id: "hum-bipap-a40", name: "Humidificateur BIPAP A40", failures: [
-          { title: "Pas de chauffage", causes: ["Mauvaise connexion avec machine"], solutionsPatient: ["Retirez l'humidificateur et rebranchez-le fermement à la machine.", "Vérifiez que les connecteurs métalliques sont propres."], solutionsTech: ["Contrôler la continuité entre la machine et l'humidificateur."] },
-          { title: "Erreur système", causes: ["Défaut électronique"], solutionsPatient: ["Débranchez et rebranchez l'appareil.", "Si l'alarme persiste, utilisez l'appareil sans humidification."], solutionsTech: ["Retour en SAV pour diagnostic."] }
+      { id: "humidair", name: "HumidAir", failures: [
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Remplissez le réservoir."], solutionsTech: ["Vérifier capteur."] },
+          { title: "Fuite d’eau", causes: ["Bac mal inséré"], solutionsPatient: ["Réinsérez le bac jusqu'au clic."], solutionsTech: ["Remplacer joint."] },
+          { title: "Pas de chauffage", causes: ["Connecteur sale"], solutionsPatient: ["Nettoyez les contacts au dos du réservoir."], solutionsTech: ["Vérifier continuité."] },
+          { title: "Condensation / Rainout", causes: ["Humidité trop élevée"], solutionsPatient: ["Passez le Climate Control en mode 'Auto'.", "Utilisez un tuyau ClimateLine."], solutionsTech: ["Tester le tuyau chauffant."] },
+          { title: "Odeur de plastique", causes: ["Appareil neuf", "Bac non nettoyé"], solutionsPatient: ["Lavez le bac avant première utilisation.", "Laissez l'appareil tourner à vide 30 min."], solutionsTech: ["Remplacement du bac."] }
       ] },
-      { id: "hum-breas", name: "Humidificateur Chauffant (Breas)", failures: [] },
-      { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
+      { id: "hum-bipap-a40", name: "BIPAP A40", failures: [
+          { title: "Pas de chauffage", causes: ["Mauvaise connexion avec machine"], solutionsPatient: ["Retirez l'humidificateur et rebranchez-le fermement.", "Vérifiez que les connecteurs sont propres."], solutionsTech: ["Contrôler la continuité."] },
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau."], solutionsTech: ["Vérifier sonde."] },
+          { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez le joint du réservoir."], solutionsTech: ["Remplacer joint."] },
+          { title: "Erreur système", causes: ["Défaut électronique"], solutionsPatient: ["Débranchez et rebranchez l'appareil.", "Si l'alarme persiste, utilisez l'appareil sans humidification."], solutionsTech: ["Retour en SAV pour diagnostic."] },
+          { title: "Bruit de glouglou", causes: ["Eau dans le circuit"], solutionsPatient: ["Videz l'eau du tuyau.", "Baissez le réglage d'humidité."], solutionsTech: ["Vérifier inclinaison de l'appareil."] }
+      ] },
+      { id: "hum-breas", name: "Chauffant (Breas)", failures: [
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Remplissez le bac."], solutionsTech: ["Check capteur."] },
+          { title: "Fuite d’eau", causes: ["Bac mal fermé"], solutionsPatient: ["Vérifiez la fermeture."], solutionsTech: ["Remplacer joint."] },
+          { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Vérifiez l'activation dans le menu."], solutionsTech: ["Remplacer plaque."] },
+          { title: "Condensation", causes: ["Menu confort mal réglé"], solutionsPatient: ["Baissez le niveau de chauffe dans le menu."], solutionsTech: ["Ajuster paramètres."] }
+      ] },
+      { id: "hum-sys1", name: "System One", failures: [
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Remplissez le bac."], solutionsTech: ["Check capteur."] },
+          { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez l'état du joint."], solutionsTech: ["Remplacer joint."] },
+          { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Vérifiez la connexion."], solutionsTech: ["Remplacer plaque."] },
+          { title: "Eau dans le masque", causes: ["Condensation"], solutionsPatient: ["Baissez le réglage de 1 ou 2 crans.", "Utilisez un tuyau chauffant System One."], solutionsTech: ["Contrôle du circuit."] }
+      ] },
       { id: "mr810-mr820", name: "MR810 / MR820", failures: [
-          { title: "Eau ne chauffe pas", causes: ["Appareil mal branché", "Résistance HS"], solutionsPatient: ["Vérifiez que le cordon d'alimentation est bien enfoncé.", "Vérifiez que le voyant orange s'allume."], solutionsTech: ["Vérifier l'alimentation secteur.", "Remplacer la base chauffante."] },
-          { title: "Condensation dans le circuit", causes: ["Température ambiante basse"], solutionsPatient: ["Augmentez la température de la pièce.", "Utilisez une housse isolante pour le tuyau."], solutionsTech: ["Ajuster la température ou installer un circuit chauffant."] }
+          { title: "Pas de chauffage", causes: ["Appareil mal branché", "Résistance HS"], solutionsPatient: ["Vérifiez que le cordon d'alimentation est bien enfoncé.", "Vérifiez que le voyant orange s'allume."], solutionsTech: ["Vérifier l'alimentation secteur.", "Remplacer la base chauffante."] },
+          { title: "Niveau d’eau faible", causes: ["Chambre d'humidification vide"], solutionsPatient: ["Vérifiez la poche d'eau stérile et le kit de transfert."], solutionsTech: ["Vérifier le flotteur."] },
+          { title: "Fuite d’eau", causes: ["Chambre mal percée ou joint"], solutionsPatient: ["Vérifiez les connexions des tuyaux sur la chambre."], solutionsTech: ["Changer chambre."] },
+          { title: "Condensation dans le circuit", causes: ["Température ambiante basse"], solutionsPatient: ["Augmentez la température de la pièce.", "Utilisez une housse isolante pour le tuyau."], solutionsTech: ["Ajuster la température ou installer un circuit chauffant."] },
+          { title: "Bruit de sifflement", causes: ["Mauvaise insertion des tuyaux"], solutionsPatient: ["Vérifiez que les tuyaux sont bien enfoncés sur les ports de la chambre."], solutionsTech: ["Remplacer joints."] }
       ] },
       { id: "my-airvo-2", name: "MY AIRVO 2", failures: [
           { title: "Pas de chauffage", causes: ["Résistance chauffante défectueuse", "Mauvais réglage température"], solutionsPatient: ["Vérifiez le réglage de la température sur l'écran.", "Vérifiez que le circuit est bien branché."], solutionsTech: ["Remplacement de la base chauffante.", "Ajuster les réglages via le menu technicien."] },
-          { title: "Alarme température", causes: ["Sonde température HS"], solutionsPatient: ["Éteignez l'appareil et laissez-le refroidir.", "Vérifiez que rien n'obstrue les grilles."], solutionsTech: ["Remplacer la sonde de température."] },
-          { title: "Pas de débit d’air", causes: ["Circuit obstrué"], solutionsPatient: ["Vérifiez que la canule nasale n'est pas bouchée.", "Vérifiez que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'intégrité de la tubulure."] }
+          { title: "Niveau d’eau faible", causes: ["Poche d'eau vide"], solutionsPatient: ["Remplacez la poche d'eau."], solutionsTech: ["Vérifier capteur optique."] },
+          { title: "Fuite d’eau", causes: ["Chambre mal insérée"], solutionsPatient: ["Poussez la chambre jusqu'au bout."], solutionsTech: ["Remplacer joint de base."] },
+          { title: "Alarme température", causes: ["Sonde température HS", "Filtre sale"], solutionsPatient: ["Laissez refroidir.", "Vérifiez le filtre à air à l'arrière."], solutionsTech: ["Remplacer sonde."] },
+          { title: "Pas de débit d’air", causes: ["Circuit obstrué"], solutionsPatient: ["Vérifiez la canule.", "Vérifiez le tuyau."], solutionsTech: ["Vérifier turbine."] },
+          { title: "Condensation excessive", causes: ["Pièce trop froide"], solutionsPatient: ["Augmentez la température de la pièce.", "Vérifiez que le circuit chauffant est activé."], solutionsTech: ["Vérifier continuité circuit chauffant."] }
       ] },
       { id: "nea-hum", name: "NEA", failures: [
-          { title: "Humidification insuffisante", causes: ["Réglage trop bas"], solutionsPatient: ["Augmentez le niveau d'humidification dans le menu."], solutionsTech: ["Vérifier la calibration de la sonde."] },
-          { title: "Bruit anormal", causes: ["Encrassement"], solutionsPatient: ["Nettoyez le réservoir avec de l'eau vinaigrée pour enlever le calcaire."], solutionsTech: ["Nettoyage complet du conduit d'air."] }
+          { title: "Pas de chauffage", causes: ["Plaque HS", "Menu"], solutionsPatient: ["Activez l'humidification dans le menu confort."], solutionsTech: ["Remplacer plaque."] },
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Remplissez le réservoir."], solutionsTech: ["Vérifier capteur."] },
+          { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez le joint sous le bac."], solutionsTech: ["Remplacer joint."] },
+          { title: "Bruit anormal", causes: ["Encrassement"], solutionsPatient: ["Nettoyez le réservoir avec de l'eau vinaigrée pour enlever le calcaire."], solutionsTech: ["Nettoyage complet du conduit d'air."] },
+          { title: "Gouttelettes dans le masque", causes: ["Humidité trop forte"], solutionsPatient: ["Baissez le réglage d'un niveau.", "Isolez le tuyau."], solutionsTech: ["Calibration sonde."] }
       ] },
       { id: "prisma-aqua", name: "PrismaAQUA", failures: [
           { title: "Fuite d’eau", causes: ["Réservoir fissuré"], solutionsPatient: ["Vérifiez si de l'eau coule sous l'appareil.", "Inspectez le bac à la lumière pour voir des fissures."], solutionsTech: ["Remplacer le réservoir."] },
-          { title: "Pas de chauffage", causes: ["Défaut résistance"], solutionsPatient: ["Vérifiez que le bac est bien enfoncé jusqu'au clic.", "Vérifiez que le symbole de chauffe apparaît."], solutionsTech: ["Maintenance interne de la base."] }
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Remplissez le bac."], solutionsTech: ["Vérifier capteur."] },
+          { title: "Pas de chauffage", causes: ["Défaut résistance"], solutionsPatient: ["Vérifiez que le bac est bien enfoncé jusqu'au clic.", "Vérifiez que le symbole de chauffe apparaît."], solutionsTech: ["Maintenance interne de la base."] },
+          { title: "Condensation", causes: ["Réglage humidité trop haut"], solutionsPatient: ["Baissez l'humidité (niveau 1 à 5).", "Vérifiez que la pièce n'est pas trop froide."], solutionsTech: ["Ajuster paramètres."] }
       ] },
       { id: "hum-sbox", name: "S.Box", failures: [
-          { title: "Pas d’humidification", causes: ["Mauvaise connexion"], solutionsPatient: ["Retirez le bac et remettez-le en place.", "Vérifiez qu'il y a assez d'eau."], solutionsTech: ["Vérifier le branchement interne."] },
-          { title: "Alarme", causes: ["Défaut capteur"], solutionsPatient: ["Nettoyez les contacts à l'arrière du réservoir.", "Redémarrez la machine."], solutionsTech: ["Retour SAV pour remplacement capteur."] }
+          { title: "Pas de chauffage", causes: ["Mauvaise connexion"], solutionsPatient: ["Retirez le bac et remettez-le en place.", "Vérifiez qu'il y a assez d'eau."], solutionsTech: ["Vérifier le branchement interne."] },
+          { title: "Niveau d’eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau."], solutionsTech: ["Check capteur."] },
+          { title: "Fuite d’eau", causes: ["Joint déformé"], solutionsPatient: ["Vérifiez le joint à l'arrière du bac."], solutionsTech: ["Changer joint."] },
+          { title: "Alarme", causes: ["Défaut capteur"], solutionsPatient: ["Nettoyez les contacts à l'arrière du réservoir.", "Redémarrez la machine."], solutionsTech: ["Retour SAV pour remplacement capteur."] },
+          { title: "Condensation", causes: ["Pièce froide"], solutionsPatient: ["Baissez l'humidité.", "Utilisez le circuit chauffant S.Box."], solutionsTech: ["Vérifier connexion circuit."] }
       ] },
       { id: "vhb10a", name: "VHB10A", failures: [
-          { title: "Eau ne chauffe pas", causes: ["Résistance HS"], solutionsPatient: ["Vérifiez que l'appareil est allumé (interrupteur).", "Vérifiez le branchement secteur."], solutionsTech: ["Remplacement de la résistance."] },
-          { title: "Arrêt brusque", causes: ["Surchauffe"], solutionsPatient: ["Laissez l'appareil refroidir.", "Vérifiez que les grilles de ventilation ne sont pas bouchées."], solutionsTech: ["Vérifier le circuit de ventilation."] }
+          { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifiez que l'appareil est allumé (interrupteur).", "Vérifiez le branchement secteur."], solutionsTech: ["Remplacement de la résistance."] },
+          { title: "Niveau d’eau faible", causes: ["Chambre vide"], solutionsPatient: ["Vérifiez l'alimentation en eau."], solutionsTech: ["Check flotteur."] },
+          { title: "Fuite d’eau", causes: ["Raccords mal serrés"], solutionsPatient: ["Vérifiez les tuyaux."], solutionsTech: ["Vérifier étanchéité."] },
+          { title: "Arrêt brusque", causes: ["Surchauffe"], solutionsPatient: ["Laissez l'appareil refroidir.", "Vérifiez que les grilles de ventilation ne sont pas bouchées."], solutionsTech: ["Vérifier le circuit de ventilation."] },
+          { title: "Condensation", causes: ["Manque d'isolation"], solutionsPatient: ["Isolez le circuit.", "Vérifiez le branchement du fil chauffant."], solutionsTech: ["Vérifier fil chauffant."] }
       ] }
     ]
   },
@@ -271,7 +320,7 @@ const LIBRARY_DATA = [
             id: "fixe",
             name: "Fixe",
             models: [
-          { id: "1025ks", name: "Concentrateur 10L", failures: [
+          { id: "1025ks", name: "10L", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Problème alimentation", "Coupure de courant", "Câble mal branché"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?", "Y a-t-il eu une coupure de courant ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur.", "Vérifier le secteur / basculer sur secours."] },
               { title: "Alarme O₂ faible", causes: ["Concentration entre 75 % et 82 %"], solutionsPatient: ["La pureté de l'oxygène a baissé.", "Contactez votre prestataire pour un entretien."], solutionsTech: ["Analyse de pureté.", "Remplacer tamis."] },
               { title: "Arrêt brusque", causes: ["Disjoncteur thermique (surcharge)"], solutionsPatient: ["Appuyez sur le bouton du disjoncteur pour réinitialiser."], solutionsTech: ["Contrôle température."] },
@@ -282,7 +331,7 @@ const LIBRARY_DATA = [
                     { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                     { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
                 ] },
-          { id: "525ks", name: "Concentrateur 5L", failures: [
+          { id: "525ks", name: "5L", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                     { title: "Voyant rouge d'alerte allumé", causes: ["Débitmètre bloqué", "Obstruction interne"], solutionsPatient: ["Vérifiez que le débitmètre n'est pas sur 0.", "Vérifiez que la tubulure n'est pas pliée."], solutionsTech: ["Vérifier circuit interne."] },
                     { title: "Alarme sonore continue", causes: ["Coupure électrique"], solutionsPatient: ["Vérifiez le branchement et le disjoncteur."], solutionsTech: ["Tester tension."] },
@@ -291,7 +340,7 @@ const LIBRARY_DATA = [
                     { title: "Alarme No Flow (pas de débit)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
                     { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
                 ] },
-          { id: "8f-5a", name: "Concentrateur 5L", failures: [
+          { id: "8f-5a", name: "5L", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule."] },
                     { title: "Alarme O₂ faible", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?"], solutionsTech: ["Vérifier pureté.", "Maintenance interne."] },
@@ -301,7 +350,7 @@ const LIBRARY_DATA = [
                     { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                     { title: "Alarme Service Required", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?"], solutionsTech: ["Remplacer capteurs.", "Maintenance technique / SAV."] }
                 ] },
-                { id: "everflo", name: "Concentrateur EverFlo", failures: [
+                { id: "everflo", name: "EverFlo", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
                     { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
@@ -312,7 +361,7 @@ const LIBRARY_DATA = [
                     { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                     { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
                 ] },
-                { id: "everflo-pediatrique", name: "Concentrateur EverFlo Pédiatrique", failures: [
+                { id: "everflo-pediatrique", name: "EverFlo Pédiatrique", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?"], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
                     { title: "Bruit anormal", cause: "Humidité.", solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?"], solutionsTech: ["Déshumidificateur si nécessaire."] },
@@ -323,7 +372,7 @@ const LIBRARY_DATA = [
                     { title: "Alarme pression (High/Low Pressure)", cause: "Défaut compresseur", solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur)."] },
                     { title: "Alarme Service Required", cause: "Panne interne (compresseur, capteur, carte)", solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV."] }
                 ] },
-                { id: "igo2-fixe", name: "Concentrateur iGo 2 (Mode Fixe)", failures: [
+                { id: "igo2-fixe", name: "iGo 2 (Mode Fixe)", failures: [
                      { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                      { title: "Alarme", cause: "Batterie faible.", solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?"], solutionsTech: ["Remplacer batterie."] },
                      { title: "Arrêt inopiné", cause: "Surchauffe.", solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?"], solutionsTech: ["Vérifier ventilation."] },
@@ -432,15 +481,19 @@ const LIBRARY_DATA = [
                         { title: "Alarme débit (LED rouge/jaune)", causes: ["Obstruction"], solutionsPatient: ["Vérifiez les nœuds dans la canule."], solutionsTech: ["Check débit."] },
                         { title: "Ne bascule pas sur batterie", causes: ["Mauvaise insertion"], solutionsPatient: ["Réinsérez la batterie jusqu'au clic."], solutionsTech: ["Check contacts."] }
                 ] },
+          { id: "simplygo", name: "SimplyGo", failures: [
                 { id: "simplygo", name: "SimplyGo (Standard)", failures: [
                     { title: "L'appareil ne démarre pas", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                         { title: "Message 'Erreur système'", causes: ["Bug électronique"], solutionsPatient: ["Retirez batterie et secteur 30 sec."], solutionsTech: ["Code erreur."] },
+              { title: "Alarme température", causes: ["Sacoche non aérée"], solutionsPatient: ["Sortez de la sacoche."], solutionsTech: ["Check ventilo."] }
                         { title: "Surchauffe", causes: ["Sacoche non aérée"], solutionsPatient: ["Sortez de la sacoche."], solutionsTech: ["Check ventilo."] }
                     ] },
                     { id: "zen-o", name: "Zen-O", failures: [
+              { title: "Alarme sonore toutes les 15 s", causes: ["Aucun souffle détecté"], solutionsPatient: ["Vérifiez canule ou passez en continu."], solutionsTech: ["Check trigger."] }
                         { title: "Alarme sonore toutes les 15 s", causes: ["Pas de respiration décelée"], solutionsPatient: ["Vérifiez canule ou passez en continu."], solutionsTech: ["Check trigger."] }
                     ] },
                     { id: "solo2", name: "Invacare SOLO2", failures: [
+              { title: "Alarme température", causes: ["Obstruction grilles"], solutionsPatient: ["Éloignez des rideaux."], solutionsTech: ["Check filtres."] }
                         { title: "Alarme de température", causes: ["Obstruction grilles"], solutionsPatient: ["Éloignez des rideaux."], solutionsTech: ["Check filtres."] }
                     ] }
             ] 
@@ -464,21 +517,26 @@ const LIBRARY_DATA = [
                   { title: "Panne (Indicateur)", cause: "Capteur HS", solutionsPatient: ["L'indicateur de niveau fonctionne-t-il ?"], solutionsTech: ["Remplacement capteur."] }
               ] },
               { id: "sprint", name: "Companion Sprint", failures: [
+                  { title: "Fuite de liquide", causes: ["Joint usé"], solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
                   { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
                   { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] },
+                  { title: "Givre important", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure après usage."], solutionsTech: ["Vérifier isolation."] },
                   { title: "Formation de givre importante sur le boîtier", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure après usage."], solutionsTech: ["Vérifier isolation."] },
                   { title: "Le bouton de remplissage ne s'enclenche pas", causes: ["Le mécanisme est resté en position fermée"], solutionsPatient: ["Tirez sur le bouton jusqu'à ce qu'il s'enclenche en position 'ouvert' avant de retenter la connexion."], solutionsTech: ["Actionner le mécanisme manuellement."] },
                   { title: "Fuite de vapeur (nuage blanc) pendant le remplissage", causes: ["Phénomène normal d'évaporation"], solutionsPatient: ["Maintenez une position droite et assurez-vous que les connecteurs sont alignés ; la fuite cesse après le remplissage."], solutionsTech: ["Conseil d'utilisation."] }
               ] },
               { id: "stroller", name: "Companion Stroller", failures: [
+                  { title: "Fuite de liquide", causes: ["Joint usé"], solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
                   { title: "Fuite de liquide", cause: "Joint usé.", solutionsPatient: ["Voyez-vous du liquide couler ?"], solutionsTech: ["Vérifier et remplacer joint."] },
                   { title: "Faible autonomie", cause: "Remplissage incorrect.", solutionsPatient: ["Remplissez-vous bien jusqu'à saturation (crachement) ?"], solutionsTech: ["Former utilisateur.", "Corriger remplissage."] },
+                  { title: "Givre important", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure."], solutionsTech: ["Check isolation."] }
                   { title: "Formation de givre importante sur le boîtier", causes: ["Utilisation continue à des débits élevés"], solutionsPatient: ["Laissez l'appareil au repos pendant au moins 1 heure."], solutionsTech: ["Check isolation."] }
               ] },
               { id: "freelox-05", name: "Freelox 0.5L", failures: [
                   { title: "Blocage de vapeur", cause: "Tube de vapeur bouché.", solutionsPatient: ["Le tube est-il plié ?"], solutionsTech: ["Nettoyage tube de vapeur."] },
                   { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale."] },
                   { title: "Le réservoir portable ne se remplit pas", causes: ["Valve de remplissage gelée ou mal connectée"], solutionsPatient: ["Vérifiez la connexion et, si du givre bloque la valve, attendez qu'elle dégèle naturellement."], solutionsTech: ["Vérifier valve mâle."] },
+                  { title: "Givre important", causes: ["Fuite légère ou utilisation intensive"], solutionsPatient: ["Essuyez délicatement le givre avec un chiffon sec et vérifiez le sélecteur de débit."], solutionsTech: ["Test étanchéité."] }
                   { title: "Présence excessive de givre sur le portable", causes: ["Fuite légère ou utilisation intensive"], solutionsPatient: ["Essuyez délicatement le givre avec un chiffon sec et vérifiez le sélecteur de débit."], solutionsTech: ["Test étanchéité."] }
               ] },
               { id: "freelox-12", name: "Freelox 1.2L", failures: [
@@ -491,26 +549,35 @@ const LIBRARY_DATA = [
                   { title: "Alarme température", cause: "Stockage inadapté.", solutionsPatient: ["Le portable est-il bien stocké à la verticale ?"], solutionsTech: ["Respecter position verticale."] }
               ] },
               { id: "helios-h300", name: "Helios H300", failures: [
+                  { title: "Débit faible ou irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
                   { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
                   { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] },
+                  { title: "Pas de débit", causes: ["Le réservoir est vide ou la canule est débranchée/obstruée"], solutionsPatient: ["Vérifiez le niveau d'oxygène sur l'indicateur et assurez-vous que la canule est fixée."], solutionsTech: ["Vérifier limiteur."] },
                   { title: "Le portable ne délivre pas d'oxygène", causes: ["Le réservoir est vide ou la canule est débranchée/obstruée"], solutionsPatient: ["Vérifiez le niveau d'oxygène sur l'indicateur et assurez-vous que la canule est fixée."], solutionsTech: ["Vérifier limiteur."] },
                   { title: "Difficulté lors du désaccouplement après remplissage", causes: ["Formation de glace sur les valves"], solutionsPatient: ["N'utilisez jamais de force. Laissez la glace fondre jusqu'à séparation facile."], solutionsTech: ["Sécher valves."] },
+                  { title: "Panne (Indicateur)", causes: ["Pile interne épuisée ou mauvaise manipulation"], solutionsPatient: ["Appuyez fermement sur le bouton bleu de test. Si rien ne s'affiche, la pile est HS."], solutionsTech: ["Remplacer pile."] }
                   { title: "L'indicateur de contenu ne fonctionne pas", causes: ["Pile interne épuisée ou mauvaise manipulation"], solutionsPatient: ["Appuyez fermement sur le bouton bleu de test. Si rien ne s'affiche, la pile est HS."], solutionsTech: ["Remplacer pile."] }
               ] },
               { id: "helios-marathon", name: "Helios Marathon 850", failures: [
+                  { title: "Débit faible ou irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
                   { title: "Débit irrégulier", causes: ["Pompe usée", "Bulles dans liquide"], solutionsPatient: ["Entendez-vous un bruit irrégulier ?", "Avez-vous secoué l'appareil ?"], solutionsTech: ["Remplacer pompe.", "Purger système."] },
                   { title: "Bruit pompe", cause: "Bulles dans liquide.", solutionsPatient: ["Entendez-vous un bruit de pompe inhabituel ?"], solutionsTech: ["Purger système."] },
+                  { title: "Pas de débit", causes: ["Réservoir vide ou canule obstruée"], solutionsPatient: ["Vérifiez le niveau et la canule."], solutionsTech: ["Vérifier débit."] }
                   { title: "Le portable ne délivre pas d'oxygène", causes: ["Réservoir vide ou canule obstruée"], solutionsPatient: ["Vérifiez le niveau et la canule."], solutionsTech: ["Vérifier débit."] }
               ] },
               { id: "hi-flow-stroller", name: "Hi Flow Stroller", failures: [
+                  { title: "Débit faible ou irrégulier", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
+                  { title: "Alarme température", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
                   { title: "Débit insuffisant", cause: "Régulateur bloqué.", solutionsPatient: ["Le bouton de réglage tourne-t-il bien ?"], solutionsTech: ["Remplacer régulateur."] },
                   { title: "Alarme surchauffe", cause: "Ventilation obstruée.", solutionsPatient: ["Les aérations sont-elles propres ?"], solutionsTech: ["Nettoyer ventilation."] }
               ] },
               { id: "cuve-companion-41", name: "Cuve Companion 41L", failures: [
+                  { title: "Fuite de liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                   { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                   { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
               ] },
               { id: "cuve-companion-45", name: "Cuve Companion 45L", failures: [
+                  { title: "Fuite de liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                   { title: "Fuite liquide", cause: "Joint détérioré", solutionsPatient: ["Entendez-vous une fuite continue ?"], solutionsTech: ["Remplacer joint."] },
                   { title: "Perte pression", cause: "Remplissage trop rapide", solutionsPatient: ["Avez-vous rempli le portable très vite récemment ?"], solutionsTech: ["Remplissage lent et contrôlé."] }
               ] },
@@ -627,7 +694,7 @@ const baseGuideButtonStyle = {
 const typesWithBrandsStep = ['vni', 'vaa', 'ppc', 'aspiration'];
 
 // Composant Carte Simple déplacé à l'extérieur
-const SelectionCard = ({ label, image, onClick }) => (
+const SelectionCard = ({ label, image, onClick, onDelete }) => (
   <div 
     style={cardStyle} 
     onClick={onClick}
@@ -635,13 +702,25 @@ const SelectionCard = ({ label, image, onClick }) => (
       e.currentTarget.style.transform = "translateY(-4px)";
       e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(0, 0, 0, 0.1)";
       e.currentTarget.style.borderColor = "#bae6fd";
+      if (onDelete) e.currentTarget.querySelector('.del-btn').style.opacity = "1";
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.transform = "translateY(0)";
       e.currentTarget.style.boxShadow = "0 4px 6px -1px rgba(0, 0, 0, 0.1)";
       e.currentTarget.style.borderColor = "#f1f5f9";
+      if (onDelete) e.currentTarget.querySelector('.del-btn').style.opacity = "0";
     }}
+    position="relative"
   >
+    {onDelete && (
+      <button 
+        className="del-btn"
+        onClick={(e) => { e.stopPropagation(); onDelete(); }}
+        style={{ position: 'absolute', top: '8px', right: '8px', border: 'none', background: '#fee2e2', color: '#ef4444', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer', opacity: 0, transition: 'opacity 0.2s', fontWeight: 'bold' }}
+      >
+        ×
+      </button>
+    )}
     {/* Affichage du logo s'il existe */}
     {image && (
       <img src={image} alt={label} style={{ maxHeight: "50px", maxWidth: "80%", marginBottom: "16px", objectFit: "contain" }} />
@@ -652,6 +731,7 @@ const SelectionCard = ({ label, image, onClick }) => (
 
 export default function LibraryPage() {
   const navigate = useNavigate();
+  const [data, setData] = useState(LIBRARY_DATA);
   const [selectedType, setSelectedType] = useState(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
@@ -672,11 +752,102 @@ export default function LibraryPage() {
     setShowTech(false);
   };
 
+  const addItem = () => {
+    if (!selectedType) {
+      const name = prompt("Nom de la nouvelle catégorie :");
+      if (name) setData([...data, { id: Date.now().toString(), name, models: [] }]);
+    } else if (selectedType && typesWithBrandsStep.includes(selectedType.id) && !selectedBrand) {
+      const name = prompt(`Nouvelle marque pour ${selectedType.name} :`);
+      if (name) {
+        const newData = data.map(t => {
+          if (t.id === selectedType.id) {
+            if (!t.brands) t.brands = [];
+            t.brands = [...t.brands, { id: Date.now().toString(), name, models: [] }];
+          }
+          return t;
+        });
+        setData(newData);
+      }
+    } else if (selectedType && !selectedModel) {
+      const name = prompt(`Nouveau modèle pour ${selectedType.name} :`);
+      if (name) {
+        const newData = data.map(t => {
+          if (t.id === selectedType.id) {
+            const target = selectedBrand || t;
+            const newModel = { id: Date.now().toString(), name, failures: [] };
+            if (selectedBrand) {
+               target.models = [...(target.models || []), newModel];
+            } else {
+               t.models = [...(t.models || []), newModel];
+            }
+          }
+          return t;
+        });
+        setData(newData);
+      }
+    } else if (selectedModel) {
+      const title = prompt("Titre du problème :");
+      if (!title) return;
+      const cause = prompt("Cause probable :");
+      const solP = prompt("Solutions Patient (séparées par ';') :");
+      const solT = prompt("Solutions Tech (séparées par ';') :");
+      
+      const newFailure = {
+        title,
+        causes: cause ? [cause] : [],
+        solutionsPatient: solP ? solP.split(';').map(s => s.trim()) : [],
+        solutionsTech: solT ? solT.split(';').map(s => s.trim()) : []
+      };
+
+      const updatedModel = { ...selectedModel, failures: [...selectedModel.failures, newFailure] };
+      setSelectedModel(updatedModel);
+      alert("Problème ajouté au modèle actuel.");
+    }
+  };
+
+  const removeItem = (type, id, index) => {
+    if (!window.confirm("Supprimer cet élément ?")) return;
+
+    if (type === 'category') {
+      setData(data.filter(t => t.id !== id));
+      setSelectedType(null);
+    } else if (type === 'brand') {
+      const newData = data.map(t => {
+        if (t.id === selectedType.id) {
+          return { ...t, brands: t.brands.filter(b => b.id !== id) };
+        }
+        return t;
+      });
+      setData(newData);
+      setSelectedBrand(null);
+    } else if (type === 'model') {
+      const newData = data.map(t => {
+        if (t.id === selectedType.id) {
+          if (selectedBrand) {
+            const newBrands = t.brands.map(b => b.id === selectedBrand.id ? { ...b, models: b.models.filter(m => m.id !== id) } : b);
+            return { ...t, brands: newBrands };
+          }
+          return { ...t, models: t.models.filter(m => m.id !== id) };
+        }
+        return t;
+      });
+      setData(newData);
+      setSelectedModel(null);
+    } else if (type === 'failure') {
+      const newFailures = selectedModel.failures.filter((_, i) => i !== index);
+      setSelectedModel({ ...selectedModel, failures: newFailures });
+    }
+  };
+
   const problemSolved = () => {
     resetToModel();
   };
 
   const nextStep = () => setCurrentStep(s => s + 1);
+
+  // Helper pour décider si on affiche le nom du type entre parenthèses
+  const shouldHideNameInTitle = (name) => 
+    !name || ["concentrateur", "fixe", "portable", "transportable"].some(term => name.toLowerCase().includes(term));
 
   return (
     <div style={{ minHeight: "100vh", background: "#f8fafc" }}>
@@ -693,12 +864,20 @@ export default function LibraryPage() {
               <span style={{ fontSize: "12px", color: "#64748b" }}>Bibliothèque technique</span>
             </div>
           </div>
-          <button 
-            onClick={goHome}
-            style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid #cbd5e1", background: "white", cursor: "pointer", fontWeight: 600 }}
-          >
-            Fermer
-          </button>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button 
+              onClick={addItem}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "none", background: "#0284c7", color: "white", cursor: "pointer", fontWeight: 600 }}
+            >
+              ➕ Ajouter
+            </button>
+            <button 
+              onClick={goHome}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid #cbd5e1", background: "white", cursor: "pointer", fontWeight: 600 }}
+            >
+              Fermer
+            </button>
+          </div>
         </div>
 
         {/* Fil d'ariane (Breadcrumbs) */}
@@ -744,18 +923,22 @@ export default function LibraryPage() {
             <>
               <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Sélectionnez le type d'équipement</h2>
               <div style={cardGridStyle}>
-                {LIBRARY_DATA.map((type) => (
-                  <SelectionCard key={type.id} label={type.name} onClick={() => setSelectedType(type)} />
+                {data.map((type) => (
+                  <SelectionCard 
+                    key={type.id} 
+                    label={type.name} 
+                    onClick={() => setSelectedType(type)} 
+                    onDelete={() => removeItem('category', type.id)}
+                  />
                 ))}
               </div>
             </>
           )}
-
           {selectedType && !selectedBrand && (
             <>
               {typesWithBrandsStep.includes(selectedType.id) ? (
                 <>
-                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Marque de l'appareil ({selectedType.name})</h2>
+                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Marque de l'appareil {!shouldHideNameInTitle(selectedType.name) ? `(${selectedType.name})` : ""}</h2>
                   <div style={cardGridStyle}>
                     {selectedType.brands.map((brand) => (
                       <SelectionCard 
@@ -763,6 +946,7 @@ export default function LibraryPage() {
                         label={brand.name} 
                         image={brand.logo}
                         onClick={() => setSelectedBrand(brand)} 
+                        onDelete={() => removeItem('brand', brand.id)}
                       />
                     ))}
                     {selectedType.brands.length === 0 && <p>Aucune marque répertoriée pour ce type d'équipement.</p>}
@@ -770,16 +954,15 @@ export default function LibraryPage() {
                 </>
               ) : (
                 <>
-                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle ({selectedType.name})</h2>
+                  <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle {!shouldHideNameInTitle(selectedType.name) ? `(${selectedType.name})` : ""}</h2>
                   <div style={cardGridStyle}>
                     {/* Supporte à la fois la structure 'models' directe et l'ancienne structure 'brands' aplatie */}
-                    {(selectedType.models || selectedType.brands?.flatMap(brand => brand.models) || []).map((model) => (
+                    {(selectedType.models || selectedType.subTypes || selectedType.brands?.flatMap(brand => brand.models) || []).map((item) => (
                       <SelectionCard 
-                        key={model.id} 
-                        label={model.name} 
-                        onClick={() => {
-                          setSelectedModel(model);
-                        }} 
+                        key={item.id} 
+                        label={item.name} 
+                        onClick={() => item.subTypes ? setSelectedType(item) : setSelectedModel(item)}
+                        onDelete={() => removeItem('model', item.id)}
                       />
                     ))}
                     {(selectedType.models || selectedType.brands?.flatMap(b => b.models) || []).length === 0 && <p>Aucun modèle répertorié pour ce type d'équipement.</p>}
@@ -791,10 +974,15 @@ export default function LibraryPage() {
 
           {selectedBrand && !selectedModel && typesWithBrandsStep.includes(selectedType.id) && (
             <>
-              <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle ({selectedBrand.name})</h2>
+              <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Modèle {!shouldHideNameInTitle(selectedBrand.name) ? `(${selectedBrand.name})` : ""}</h2>
               <div style={cardGridStyle}>
                 {selectedBrand.models.map((model) => (
-                  <SelectionCard key={model.id} label={model.name} onClick={() => setSelectedModel(model)} />
+                  <SelectionCard 
+                    key={model.id} 
+                    label={model.name} 
+                    onClick={() => setSelectedModel(model)} 
+                    onDelete={() => removeItem('model', model.id)}
+                  />
                 ))}
                 {selectedBrand.models.length === 0 && <p>Aucun modèle répertorié.</p>}
               </div>
@@ -809,7 +997,12 @@ export default function LibraryPage() {
               ) : (
                 <div style={cardGridStyle}>
                   {selectedModel.failures.map((failure, index) => (
-                    <SelectionCard key={index} label={failure.title} onClick={() => handleSelectFailure(failure)} />
+                    <SelectionCard 
+                      key={index} 
+                      label={failure.title} 
+                      onClick={() => handleSelectFailure(failure)} 
+                      onDelete={() => removeItem('failure', null, index)}
+                    />
                   ))}
                 </div>
               )}
