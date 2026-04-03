@@ -220,6 +220,32 @@ body {
     background: #ef4444;
     color: white;
 }
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 20px;
+}
+.history-table th, .history-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top; /* Align content to the top */
+    white-space: normal; /* Allow text to wrap */
+}
+
+.history-table th { background: #f1f5f9; font-weight: 600; }
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.status-success { background: #dcfce7; color: #166534; }
+.status-fail { background: #fee2e2; color: #991b1b; }
 </style>
 </head>
 <body>
@@ -237,6 +263,8 @@ body {
         <div style="flex-grow: 1; margin: 0 20px 0 40px;">
             <input type="search" id="global-search" placeholder="Rechercher un appareil, une marque..." style="width: 100%; padding: 10px 15px; font-size: 15px; border-radius: 8px; border: 1px solid #e2e8f0; background-color: white;">
         </div>
+        <button onclick="toggleFailuresView()" id="toggle-failures-btn" style="margin-right: 10px; padding: 10px 20px; border-radius: 8px; border: 1px solid #0284c7; background: white; color: #0284c7; cursor: pointer; font-weight: 600; white-space: nowrap;">📂 Catalogue</button>
+        <button onclick="toggleView()" id="toggle-history-btn" style="margin-right: 10px; padding: 10px 20px; border-radius: 8px; border: 1px solid #0284c7; background: white; color: #0284c7; cursor: pointer; font-weight: 600; white-space: nowrap;">📋 Journal</button>
         <button onclick="addItem()" style="padding: 10px 20px; border-radius: 8px; border: none; background: #0284c7; color: white; cursor: pointer; font-weight: 600; white-space: nowrap;">➕ Ajouter</button>
     </div>
 
@@ -874,12 +902,18 @@ body {
     ];
 
     // --- ÉTAT (State) ---
-    let state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] };
+    let state = { 
+        view: 'library', // 'library', 'history', 'failures'
+        type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] 
+    };
+    let HISTORY = JSON.parse(localStorage.getItem('failure_history') || '[]');
 
     // --- FONCTIONS DE NAVIGATION ---
     function performSearch(query) {
-        if (!query || query.length < 2) {
+        if (!query || query.length < 2 || state.view === 'history') {
             state.searchResults = [];
+            // Clear search input if not in library view or query is too short
+            if (document.getElementById('global-search')) document.getElementById('global-search').value = '';
             return;
         }
         const lowerQuery = query.toLowerCase();
@@ -921,33 +955,39 @@ body {
 
     function selectType(typeId) {
         state.type = LIBRARY_DATA.find(t => t.id === typeId);
+        state.view = 'library';
         state.subType = null; state.subSubType = null; state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectSubType(subTypeId) {
         state.subType = state.type.subTypes.find(s => s.id === subTypeId);
+        state.view = 'library';
         state.subSubType = null; state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectSubSubType(subSubTypeId) {
         state.subSubType = state.subType.subTypes.find(s => s.id === subSubTypeId);
+        state.view = 'library';
         state.brand = null; state.model = null; state.failure = null;
         render();
     }
     function selectBrand(brandId) {
         const source = state.subSubType || state.subType || state.type;
         state.brand = source.brands.find(b => b.id === brandId);
+        state.view = 'library';
         state.model = null; state.failure = null;
         render();
     }
     function selectModel(modelId) {
         const source = state.brand || state.subSubType || state.subType || state.type;
         state.model = source.models.find(m => m.id === modelId);
+        state.view = 'library';
         state.failure = null;
         render();
     }
     function selectFailure(failureIndex) {
         state.failure = state.model.failures[failureIndex];
+        state.view = 'library';
         state.showTech = false;
         state.stepIndex = 0;
         render();
@@ -971,7 +1011,7 @@ body {
     }
     
     function resetAll() { 
-        state = { type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] }; 
+        state = { view: 'library', type: null, subType: null, subSubType: null, brand: null, model: null, failure: null, showTech: false, stepIndex: 0, searchQuery: '', searchResults: [] }; 
         const searchInput = document.getElementById('global-search');
         if (searchInput) searchInput.value = '';
         render(); 
@@ -982,8 +1022,96 @@ body {
     function resetToBrand() { state.model = null; state.failure = null; state.showTech = false; state.stepIndex = 0; render(); }
     function resetToModel() { state.failure = null; state.showTech = false; state.stepIndex = 0; render(); }
 
+    function toggleView() {
+        state.view = state.view === 'library' ? 'history' : 'library';
+        render();
+    }
+
+    function toggleFailuresView() {
+        state.view = state.view === 'failures' ? 'library' : 'failures';
+        render();
+    }
+
+    function logIntervention(status) {
+        const otherCause = document.getElementById('cause-other-input')?.value || '';
+        const entry = {
+            id: Date.now(),
+            date: new Date().toLocaleString('fr-FR'),
+            device: `${state.type?.name}${state.brand ? ` (${state.brand.name})` : ''} > ${state.model?.name}`,
+            failure: state.failure?.title,
+            status: status, // 'Succès' or 'Échec'
+            comment: otherCause,
+            // Ajout des causes et solutions à l'entrée d'historique
+            causes: state.failure?.causes || (state.failure?.cause ? [state.failure.cause] : []),
+            solutionsPatient: state.failure?.solutionsPatient || [],
+            solutionsTech: state.failure?.solutionsTech || []
+        };
+        HISTORY.unshift(entry);
+        localStorage.setItem('failure_history', JSON.stringify(HISTORY));
+        resetToModel();
+    }
+
+    function clearHistory() {
+        if (confirm("Voulez-vous vider le journal ?")) {
+            HISTORY = [];
+            localStorage.removeItem('failure_history');
+            render();
+        }
+    }
+
+    function deleteHistoryItem(id) {
+        if (confirm("Supprimer cette intervention du journal ?")) {
+            HISTORY = HISTORY.filter(item => item.id !== id);
+            localStorage.setItem('failure_history', JSON.stringify(HISTORY));
+            render();
+        }
+    }
+
+    function downloadHistoryPDF() {
+        if (HISTORY.length === 0) {
+            alert("Le journal est vide.");
+            return;
+        }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('l', 'mm', 'a4'); // Mode paysage pour avoir plus de place
+        
+        doc.setFontSize(18);
+        doc.text("Journal des Interventions - Bibliotech", 14, 15);
+        doc.setFontSize(10);
+        doc.text(`Généré le ${new Date().toLocaleString()}`, 14, 22);
+
+        const tableRows = HISTORY.map(item => [
+            item.date,
+            item.device,
+            item.failure,
+            (item.causes || []).join(', '),
+            (item.solutionsPatient || []).join(', '),
+            (item.solutionsTech || []).join(', '),
+            item.status,
+            item.comment || '-'
+        ]);
+
+        // Vérifier si le plugin autoTable est bien chargé
+        if (typeof doc.autoTable === 'undefined') {
+            console.error("Erreur: Le plugin jsPDF-AutoTable n'a pas pu être chargé. Vérifiez les liens CDN et la console du navigateur.");
+            alert("Impossible de générer le PDF. Le plugin de tableau est manquant. Vérifiez la console pour plus de détails.");
+            return;
+        }
+
+        doc.autoTable({
+            head: [['Date', 'Appareil', 'Problème', 'Causes', 'Sol. Patient', 'Sol. Tech', 'Statut', 'Notes']],
+            body: tableRows,
+            startY: 28,
+            styles: { fontSize: 8, cellPadding: 2 },
+            headStyles: { fillColor: [2, 132, 199] } // Bleu #0284c7
+        });
+
+        doc.save(`historique_interventions_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.pdf`);
+    }
+
     function goBack() {
-        if (state.failure) state.failure = null;
+        if (state.view !== 'library') state.view = 'library';
+        else if (state.failure) state.failure = null;
         else if (state.model) state.model = null;
         else if (state.brand) state.brand = null;
         else if (state.subSubType) state.subSubType = null;
@@ -1061,13 +1189,31 @@ body {
     function render() {
         const app = document.getElementById('app-content');
         let html = '';
+        
+        const toggleBtn = document.getElementById('toggle-history-btn');
+        if (toggleBtn) {
+            toggleBtn.style.background = state.view === 'history' ? '#0284c7' : 'white';
+            toggleBtn.style.color = state.view === 'history' ? 'white' : '#0284c7';
+        }
+        const failuresBtn = document.getElementById('toggle-failures-btn');
+        if (failuresBtn) {
+            failuresBtn.style.background = state.view === 'failures' ? '#0284c7' : 'white';
+            failuresBtn.style.color = state.view === 'failures' ? 'white' : '#0284c7';
+        }
 
         // --- Top bar with breadcrumb and buttons ---
+        // The breadcrumb and navigation buttons are now part of the dynamic content
         html += `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">`;
 
         // 1. Fil d'ariane
         html += `<div class="breadcrumb" style="margin-bottom: 0;">
-            <span class="breadcrumb-item ${state.type ? 'breadcrumb-active' : ''}" data-action="reset-all">Accueil</span>`;
+            <span class="breadcrumb-item ${state.type || state.view !== 'library' ? 'breadcrumb-active' : ''}" data-action="reset-all">Accueil</span>`;
+            if (state.view === 'history') {
+                html += `<span>/</span><span class="breadcrumb-item">Journal</span>`;
+            }
+            if (state.view === 'failures') {
+                html += `<span>/</span><span class="breadcrumb-item">Catalogue</span>`;
+            }
             if (state.type) {
                 html += `<span>/</span><span class="breadcrumb-item ${state.subType || state.brand ? 'breadcrumb-active' : ''}" data-action="reset-to-type">${state.type.name}</span>`;
             }
@@ -1097,9 +1243,101 @@ body {
         html += `</div>`;
 
         html += `</div>`; // End of top bar
-
+        
         // 2. Contenu
-        if (state.searchQuery.length > 1) {
+        if (state.view === 'history') {
+            html += `<h2 style="margin-bottom: 20px;">Journal des Interventions</h2>`;
+            html += `<div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                        <button onclick="downloadHistoryPDF()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #0284c7; background: #0284c7; color: white; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">📥 Télécharger PDF</button>
+                        <button onclick="clearHistory()" style="padding: 8px 16px; border-radius: 8px; border: 1px solid #ef4444; background: white; color: #ef4444; cursor: pointer; font-weight: 600;">Effacer tout le journal</button>
+                    </div>`;
+
+            if (HISTORY.length === 0) {
+                html += `<p style="color: #64748b; font-style: italic;">Aucune intervention enregistrée.</p>`;
+            } else {
+                html += `
+                    <div style="overflow-x: auto;">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Appareil</th>
+                                    <th>Problème</th>
+                                    <th>Causes</th>
+                                    <th>Solutions Patient</th>
+                                    <th>Solutions Tech</th>
+                                    <th>Statut</th>
+                                    <th>Notes</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
+                HISTORY.forEach(item => {
+                    const statusClass = item.status === 'Succès' ? 'status-success' : 'status-fail';
+                    const causesDisplay = (item.causes && item.causes.length > 0) ? item.causes.join('<br/>') : '-';
+                    const solutionsPatientDisplay = (item.solutionsPatient && item.solutionsPatient.length > 0) ? item.solutionsPatient.join('<br/>') : '-';
+                    const solutionsTechDisplay = (item.solutionsTech && item.solutionsTech.length > 0) ? item.solutionsTech.join('<br/>') : '-';
+
+                    html += `
+                                <tr>
+                                    <td>${item.date}</td>
+                                    <td>${item.device}</td>
+                                    <td>${item.failure}</td>
+                                    <td>${causesDisplay}</td>
+                                    <td>${solutionsPatientDisplay}</td>
+                                    <td>${solutionsTechDisplay}</td>
+                                    <td><span class="status-badge ${statusClass}">${item.status}</span></td>
+                                    <td>${item.comment || '-'}</td>
+                                    <td style="text-align: center;">
+                                        <button onclick="deleteHistoryItem(${item.id})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 18px; font-weight: bold; padding: 0 5px;">&times;</button>
+                                    </td>
+                                </tr>`;
+                });
+                html += `
+                            </tbody>
+                        </table>
+                    </div>`;
+            }
+        }
+        else if (state.view === 'failures') {
+            // Catalogue des pannes
+            const allFailures = [];
+            const traverse = (items, path = "") => {
+                items.forEach(item => {
+                    const currentPath = path ? `${path} > ${item.name}` : item.name;
+                    if (item.failures) {
+                        item.failures.forEach(f => {
+                            allFailures.push({ ...f, model: item, path: currentPath });
+                        });
+                    }
+                    if (item.subTypes) traverse(item.subTypes, currentPath);
+                    if (item.brands) traverse(item.brands, currentPath);
+                    if (item.models) traverse(item.models, currentPath);
+                });
+            };
+            traverse(LIBRARY_DATA);
+
+            html += `<h2 style="margin-bottom: 20px;">Catalogue Complet des Pannes</h2>`;
+            if (allFailures.length === 0) {
+                html += `<p style="color: #64748b; font-style: italic;">Aucune panne répertoriée.</p>`;
+            } else {
+                html += `<div style="display: grid; grid-template-columns: 1fr; gap: 10px;">`;
+                allFailures.forEach((f, idx) => {
+                    html += `
+                        <div 
+                            class="card" 
+                            style="text-align: left; align-items: flex-start; padding: 16px; min-height: unset;"
+                            onclick="openFailureFromCatalogue('${f.model.id}', ${f.model.failures.indexOf(f)})"
+                        >
+                            <div style="font-weight: bold; color: #ef4444;">⚠️ ${f.title}</div>
+                            <div style="font-size: 12px; color: #64748b; margin-top: 4px;">${f.path}</div>
+                            <span style="color: #0284c7; font-weight: bold; margin-top: 8px;">Voir le guide →</span>
+                        </div>`;
+                });
+                html += `</div>`;
+            }
+        }
+        else if (state.searchQuery.length > 1) {
             html += `<h2 style="margin-bottom: 20px;">Résultats de recherche pour "${state.searchQuery}"</h2>`;
             if (state.searchResults.length > 0) {
                 html += `<div class="card-grid">`;
@@ -1200,7 +1438,13 @@ body {
                     <input type="checkbox" id="cause-${idx}">
                     <label for="cause-${idx}">${cause}</label>
                 </div>
-            `).join('');
+            `).join('') + `
+                <div class="solution-item" style="margin-top: 10px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
+                    <input type="checkbox" id="cause-other">
+                    <label for="cause-other" style="white-space: nowrap; font-weight: 500;">Autre :</label>
+                    <input type="text" id="cause-other-input" placeholder="Précisez la cause..." style="flex-grow: 1; padding: 5px 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+                </div>
+            `;
 
             // Logique du guide étape par étape
             const patientSteps = failure.solutionsPatient || [];
@@ -1217,7 +1461,7 @@ body {
                         <div class="step-instruction">${patientSteps[state.stepIndex]}</div>
                         <div class="step-actions">
                             ${state.stepIndex > 0 ? `<button class="btn-action btn-no" data-action="previous-step">⬅️ Précédent</button>` : ''}
-                            <button class="btn-action btn-yes" data-action="reset-to-model">✅ Résolu</button>
+                            <button class="btn-action btn-yes" data-action="log-success">✅ Résolu</button>
                             <button class="btn-action btn-no" data-action="next-step">❌ Non résolu, étape suivante</button>
                         </div>
                     </div>
@@ -1251,7 +1495,7 @@ body {
                         ${techChecklistHtml}
                         <div class="step-actions" style="margin-top: 24px;">
                             <button class="btn-action btn-no" data-action="previous-step">⬅️ Précédent</button>
-                            <button class="btn-action btn-yes" data-action="reset-to-model">✅ Intervention terminée</button>
+                            <button class="btn-action btn-yes" data-action="log-success">✅ Intervention terminée</button>
                         </div>
                     </div>
                 `;
@@ -1263,7 +1507,7 @@ body {
                         <div class="step-instruction" style="color: #991b1b;">❌ Toutes les solutions ont été tentées.<br>Le problème persiste.</div>
                         <div style="margin-bottom: 20px; color: #7f1d1d;">Veuillez contacter le support niveau 2 ou procéder au remplacement de l'appareil.</div>
                         <div class="step-actions">
-                            <button class="btn-action btn-restart" data-action="reset-to-model">Terminer l'intervention</button>
+                            <button class="btn-action btn-restart" data-action="log-fail">Terminer l'intervention</button>
                         </div>
                     </div>
                 `;
@@ -1286,6 +1530,33 @@ body {
         app.innerHTML = html;
     }
     render();
+
+    // Fonction d'aide pour ouvrir une panne depuis le catalogue
+    window.openFailureFromCatalogue = function(modelId, failureIndex) {
+        // On cherche le modèle dans les données
+        const findModel = (items) => {
+            for (const item of items) {
+                if (item.models) {
+                    const m = item.models.find(mod => mod.id === modelId);
+                    if (m) return { model: m, type: item };
+                }
+                if (item.subTypes) {
+                    const found = findModel(item.subTypes);
+                    if (found) return found;
+                }
+                if (item.brands) {
+                    const found = findModel(item.brands);
+                    if (found) return found;
+                }
+            }
+            return null;
+        };
+        const res = findModel(LIBRARY_DATA);
+        if (res) {
+            state.type = res.type; state.model = res.model; state.view = 'library';
+            selectFailure(failureIndex);
+        }
+    };
 
     // --- GESTION DES INTERACTIONS ---
     function handleInteraction(event) {
@@ -1331,6 +1602,8 @@ body {
                 state.showTech = true;
                 render();
                 break;
+            case 'log-success': logIntervention('Succès'); break;
+            case 'log-fail': logIntervention('Échec'); break;
         }
     }
     document.addEventListener('click', handleInteraction);

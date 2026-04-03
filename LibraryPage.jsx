@@ -733,6 +733,11 @@ export default function LibraryPage() {
   const navigate = useNavigate();
   const [data, setData] = useState(LIBRARY_DATA);
   const [selectedType, setSelectedType] = useState(null);
+  const [history, setHistory] = useState(() => {
+    const saved = localStorage.getItem('failure_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [view, setView] = useState('library'); // 'library', 'history', 'failures'
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedFailure, setSelectedFailure] = useState(null);
@@ -741,13 +746,34 @@ export default function LibraryPage() {
 
   // Navigation handlers
   const goHome = () => navigate("/");
-  const resetType = () => { setSelectedType(null); setSelectedBrand(null); setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
-  const resetBrand = () => { setSelectedBrand(null); setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
-  const resetModel = () => { setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
-  const resetToModel = () => { setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
+  const resetType = () => { setView('library'); setSelectedType(null); setSelectedBrand(null); setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
+  const resetBrand = () => { setView('library'); setSelectedBrand(null); setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
+  const resetModel = () => { setView('library'); setSelectedModel(null); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
+  const resetToModel = () => { setView('library'); setSelectedFailure(null); setCurrentStep(0); setShowTech(false); };
+
+  // Extraction de toutes les pannes pour le catalogue
+  const getAllFailures = () => {
+    const results = [];
+    const traverse = (items, path = "") => {
+      items.forEach(item => {
+        const currentPath = path ? `${path} > ${item.name}` : item.name;
+        if (item.failures) {
+          item.failures.forEach(f => {
+            results.push({ ...f, model: item, path: currentPath });
+          });
+        }
+        if (item.subTypes) traverse(item.subTypes, currentPath);
+        if (item.brands) traverse(item.brands, currentPath);
+        if (item.models) traverse(item.models, currentPath);
+      });
+    };
+    traverse(data);
+    return results;
+  };
 
   const handleSelectFailure = (failure) => {
     setSelectedFailure(failure);
+    setView('library');
     setCurrentStep(0);
     setShowTech(false);
   };
@@ -839,8 +865,34 @@ export default function LibraryPage() {
     }
   };
 
-  const problemSolved = () => {
+  const logIntervention = (status) => {
+    const otherCause = document.getElementById('cause-other-input')?.value;
+    const entry = {
+      id: Date.now(),
+      date: new Date().toLocaleString('fr-FR'),
+      device: `${selectedType?.name}${selectedBrand ? ` (${selectedBrand.name})` : ''} > ${selectedModel?.name}`,
+      failure: selectedFailure?.title,
+      status: status, // 'Succès' ou 'Échec'
+      comment: otherCause || ''
+    };
+    const newHistory = [entry, ...history];
+    setHistory(newHistory);
+    localStorage.setItem('failure_history', JSON.stringify(newHistory));
     resetToModel();
+  };
+
+  const clearHistory = () => {
+    if (window.confirm("Vider l'historique ?")) {
+      setHistory([]);
+      localStorage.removeItem('failure_history');
+    }
+  };
+
+  const removeHistoryItem = (id) => {
+    if (!window.confirm("Supprimer cette ligne du journal ?")) return;
+    const newHistory = history.filter(item => item.id !== id);
+    setHistory(newHistory);
+    localStorage.setItem('failure_history', JSON.stringify(newHistory));
   };
 
   const nextStep = () => setCurrentStep(s => s + 1);
@@ -866,6 +918,18 @@ export default function LibraryPage() {
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <button 
+              onClick={() => setView(view === 'failures' ? 'library' : 'failures')}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid #0284c7", background: view === 'failures' ? "#0284c7" : "white", color: view === 'failures' ? "white" : "#0284c7", cursor: "pointer", fontWeight: 600 }}
+            >
+              📂 Toutes les pannes
+            </button>
+            <button 
+              onClick={() => setView(view === 'library' ? 'history' : 'library')}
+              style={{ padding: "8px 16px", borderRadius: "8px", border: "1px solid #0284c7", background: view === 'history' ? "#0284c7" : "white", color: view === 'history' ? "white" : "#0284c7", cursor: "pointer", fontWeight: 600 }}
+            >
+              {view === 'library' ? '📋 Journal' : '📚 Bibliothèque'}
+            </button>
+            <button 
               onClick={addItem}
               style={{ padding: "8px 16px", borderRadius: "8px", border: "none", background: "#0284c7", color: "white", cursor: "pointer", fontWeight: 600 }}
             >
@@ -882,8 +946,14 @@ export default function LibraryPage() {
 
         {/* Fil d'ariane (Breadcrumbs) */}
         <div style={breadcrumbStyle}>
-          <span style={{ ...breadcrumbItemStyle, color: "#0284c7" }} onClick={resetType}>Accueil</span>
-          {selectedType && (
+          <span style={{ ...breadcrumbItemStyle, color: (selectedType || view !== 'library') ? "#0284c7" : "#0f172a" }} onClick={resetType}>Accueil</span>
+          {view === 'history' && (
+             <><span>/</span><span style={{...breadcrumbItemStyle, color: '#0f172a'}}>Journal</span></>
+          )}
+          {view === 'failures' && (
+             <><span>/</span><span style={{...breadcrumbItemStyle, color: '#0f172a'}}>Catalogue des pannes</span></>
+          )}
+          {selectedType && view === 'library' && !selectedFailure && (
             <>
               <span>/</span>
               <span style={{ ...breadcrumbItemStyle, color: selectedBrand ? "#0284c7" : "#0f172a" }} onClick={resetBrand}>
@@ -918,8 +988,86 @@ export default function LibraryPage() {
         </div>
 
         {/* Contenu Dynamique */}
-        <div>
-          {!selectedType && (
+        {view === 'history' ? (
+          <div style={{ animation: "fadeIn 0.3s ease-in" }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ fontSize: "24px", margin: 0 }}>Journal des Interventions</h2>
+              <button onClick={clearHistory} style={{ padding: "6px 12px", borderRadius: "6px", border: "1px solid #ef4444", background: "white", color: "#ef4444", cursor: "pointer", fontSize: "14px" }}>Effacer tout</button>
+            </div>
+            {history.length === 0 ? (
+              <p style={{ color: "#64748b", fontStyle: "italic" }}>Aucune intervention enregistrée.</p>
+            ) : (
+              <div style={{ background: 'white', borderRadius: '12px', overflow: 'hidden', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
+                  <thead style={{ background: '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
+                    <tr>
+                      <th style={{ padding: '12px 16px' }}>Date</th>
+                      <th style={{ padding: '12px 16px' }}>Appareil</th>
+                      <th style={{ padding: '12px 16px' }}>Problème</th>
+                      <th style={{ padding: '12px 16px' }}>Statut</th>
+                      <th style={{ padding: '12px 16px' }}>Notes</th>
+                      <th style={{ padding: '12px 16px' }}></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {history.map(item => (
+                      <tr key={item.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                        <td style={{ padding: '12px 16px', whiteSpace: 'nowrap' }}>{item.date}</td>
+                        <td style={{ padding: '12px 16px' }}>{item.device}</td>
+                        <td style={{ padding: '12px 16px' }}>{item.failure}</td>
+                        <td style={{ padding: '12px 16px' }}>
+                          <span style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 600, background: item.status === 'Succès' ? '#dcfce7' : '#fee2e2', color: item.status === 'Succès' ? '#166534' : '#991b1b' }}>
+                            {item.status}
+                          </span>
+                        </td>
+                        <td style={{ padding: '12px 16px', color: '#64748b', fontStyle: 'italic' }}>
+                          {item.comment || "-"}
+                        </td>
+                        <td style={{ padding: '12px 16px', textAlign: 'center' }}>
+                          <button 
+                            onClick={() => removeHistoryItem(item.id)}
+                            style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', fontSize: '18px', fontWeight: 'bold' }}
+                          >
+                            ×
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        ) : view === 'failures' ? (
+          <div style={{ animation: "fadeIn 0.3s ease-in" }}>
+            <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>Catalogue Complet des Pannes</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '10px' }}>
+              {getAllFailures().map((f, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => {
+                    // On simule la sélection pour ouvrir le guide
+                    const findType = (path) => data.find(t => path.startsWith(t.name));
+                    setSelectedType(findType(f.path));
+                    setSelectedModel(f.model);
+                    handleSelectFailure(f);
+                  }}
+                  style={{ background: 'white', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'all 0.2s' }}
+                  onMouseEnter={(e) => e.currentTarget.style.borderColor = "#0284c7"}
+                  onMouseLeave={(e) => e.currentTarget.style.borderColor = "#e2e8f0"}
+                >
+                  <div>
+                    <div style={{ fontWeight: 'bold', color: '#ef4444' }}>⚠️ {f.title}</div>
+                    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '4px' }}>{f.path}</div>
+                  </div>
+                  <span style={{ color: '#0284c7', fontWeight: 'bold' }}>Voir le guide →</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            {!selectedType && (
             <>
               <h2 style={{ marginBottom: "20px", fontSize: "24px" }}>Sélectionnez le type d'équipement</h2>
               <div style={cardGridStyle}>
@@ -1037,7 +1185,19 @@ export default function LibraryPage() {
                                 <ul style={{ margin: 0, paddingLeft: "20px" }}>
                                   {selectedFailure.causes.map((c, i) => <li key={i}>{c}</li>)}
                                 </ul>
-                              ) : selectedFailure.cause}
+                              ) : (
+                                <div style={{ marginBottom: selectedFailure.cause ? "8px" : "0" }}>{selectedFailure.cause}</div>
+                              )}
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '12px', borderTop: '1px dashed #e2e8f0', paddingTop: '12px' }}>
+                                <input type="checkbox" id="cause-other" style={{ cursor: 'pointer' }} />
+                                <label htmlFor="cause-other" style={{ fontWeight: 500, cursor: 'pointer', whiteSpace: 'nowrap' }}>Autre :</label>
+                                <input 
+                                  type="text" 
+                                  id="cause-other-input"
+                                  placeholder="Précisez la cause..." 
+                                  style={{ flexGrow: 1, padding: '6px 10px', border: '1px solid #e2e8f0', borderRadius: '6px', fontSize: '14px' }} 
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1048,7 +1208,7 @@ export default function LibraryPage() {
                       <div style={{ color: "#64748b", fontSize: "14px", fontWeight: 500 }}>Étape Patient {currentStep + 1} / {totalPatientSteps}</div>
                       <p style={guideStepInstructionStyle}>{patientSteps[currentStep]}</p>
                       <div style={guideActionsStyle}>
-                        <button style={{...baseGuideButtonStyle, background: "#22c55e", color: "white"}} onClick={problemSolved}>✅ Résolu</button>
+                        <button style={{...baseGuideButtonStyle, background: "#22c55e", color: "white"}} onClick={() => logIntervention('Succès')}>✅ Résolu</button>
                         {!isLastPatientStep ? (
                           <button style={{...baseGuideButtonStyle, background: "#f1f5f9", color: "#334155"}} onClick={nextStep}>❌ Non résolu, étape suivante</button>
                         ) : (
@@ -1075,7 +1235,7 @@ export default function LibraryPage() {
                       <div style={{ color: "#d97706", fontSize: "14px", fontWeight: 500 }}>Étape Technicien {currentStep - totalPatientSteps + 1} / {techSteps.length}</div>
                       <p style={guideStepInstructionStyle}>{techSteps[currentStep - totalPatientSteps]}</p>
                       <div style={guideActionsStyle}>
-                        <button style={{...baseGuideButtonStyle, background: "#22c55e", color: "white"}} onClick={problemSolved}>✅ Résolu</button>
+                        <button style={{...baseGuideButtonStyle, background: "#22c55e", color: "white"}} onClick={() => logIntervention('Succès')}>✅ Résolu</button>
                         <button style={{...baseGuideButtonStyle, background: "#f1f5f9", color: "#334155"}} onClick={nextStep}>❌ Non résolu, étape suivante</button>
                       </div>
                     </>
@@ -1088,7 +1248,7 @@ export default function LibraryPage() {
                         Le problème persiste. Veuillez contacter le support niveau 2 ou procéder au remplacement de l'appareil.
                       </div>
                       <div style={guideActionsStyle}>
-                        <button style={{...baseGuideButtonStyle, background: "#64748b", color: "white"}} onClick={problemSolved}>Terminer l'intervention</button>
+                        <button style={{...baseGuideButtonStyle, background: "#64748b", color: "white"}} onClick={() => logIntervention('Échec')}>Terminer l'intervention</button>
                       </div>
                     </>
                   )}
@@ -1096,6 +1256,7 @@ export default function LibraryPage() {
               </div>
             )
           })()}
+        </div>
             </div>
           )}
         </div>
