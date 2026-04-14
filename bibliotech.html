@@ -347,64 +347,132 @@ body {
         ]
       },
       {
-        id: "cough-assist",
-        name: "Cough Assist",
-        brands: []
+        id: "desencombrement",
+        name: "Désencombrement",
+        subTypes: [
+          { id: "aide-a-la-toux", name: "Aide à la toux", models: [
+            { id: "biwaze", name: "BiWaze", failures: [
+              { title: "Inefficacité du désencombrement", causes: ["Pression mal réglée"], solutionsPatient: ["Est-ce que vous avez l'impression que le souffle est trop faible pour faire remonter les glaires ?"], solutionsTech: ["Vérifier et ajuster les paramètres de pression.", "S'assurer du bon fonctionnement de la turbine."] },
+              { title: "Fatigue importante", causes: ["Séances trop intensives"], solutionsPatient: ["Vous sentez-vous épuisé après vos exercices ?"], solutionsTech: ["Adapter la durée des cycles."] },
+              { title: "Mauvaise tolérance", causes: ["Pression trop élevée"], solutionsPatient: ["Est-ce que le souffle vous semble trop brutal ?"], solutionsTech: ["Augmenter progressivement les pressions."] }
+            ]},
+            { id: "clearway", name: "Clearway", failures: [
+              { title: "Fuite d’air", causes: ["Masque inadapté"], solutionsPatient: ["Sentez-vous de l'air passer près de vos yeux ?"], solutionsTech: ["Vérifier la taille du masque.", "Changer d'interface."] },
+              { title: "Manque d'efficacité", causes: ["Pression insuffisante"], solutionsPatient: ["Avez-vous toujours autant de mal à cracher ?"], solutionsTech: ["Augmenter la pression d'insufflation."] },
+              { title: "Inconfort", causes: ["Mauvaise utilisation"], solutionsPatient: ["Savez-vous à quel moment essayer de tousser avec la machine ?"], solutionsTech: ["Formation patient."] }
+            ]}
+          ] },
+          { id: "mixte", name: "Mixte", models: [
+            { id: "pegaso", name: "Pegaso A Cough", failures: [
+              { title: "Toux inefficace", causes: ["Pression insuffisante", "Sécrétions épaisses"], solutionsPatient: ["Est-ce que vos glaires vous semblent très épaisses ?"], solutionsTech: ["Augmenter la pression.", "Conseiller l'hydratation."] },
+              { title: "Mauvaise alternance", causes: ["Mauvais réglage des cycles"], solutionsPatient: ["Le changement de sens du souffle vous semble-t-il naturel ?"], solutionsTech: ["Ajuster les temps inspi/expi."] },
+              { title: "Intolérance", causes: ["Pressions trop fortes", "Anxiété"], solutionsPatient: ["L'appareil vous impressionne-t-il ?"], solutionsTech: ["Adaptation progressive."] }
+            ]},
+            { id: "clearway-2", name: "Clearway 2", failures: [
+              { title: "Désencombrement insuffisant", causes: ["Pression mal réglée", "Technique incorrecte"], solutionsPatient: ["Arrivez-vous à bien synchroniser votre toux ?"], solutionsTech: ["Ajuster les pressions."] },
+              { title: "Fuite d’air", causes: ["Masque mal ajusté"], solutionsPatient: ["Le masque est-il bien plaqué ?"], solutionsTech: ["Repositionner le masque."] },
+              { title: "Inconfort", causes: ["Pression trop élevée"], solutionsPatient: ["Le souffle est-il trop puissant pour vous ?"], solutionsTech: ["Diminuer la pression."] }
+            ]},
+            { id: "e70", name: "E70", failures: [
+              { title: "Sécrétions non mobilisées", causes: ["Pression insuffisante", "Sécrétions épaisses"], solutionsPatient: ["Sentez-vous que les glaires restent accrochées ?"], solutionsTech: ["Augmenter la pression."] },
+              { title: "Fatigue", causes: ["Séances trop longues"], solutionsPatient: ["Êtes-vous très essoufflé après l'usage ?"], solutionsTech: ["Fractionner les séances."] },
+              { title: "Inefficacité", causes: ["Mauvaise indication"], solutionsPatient: ["Avez-vous l'impression que cela ne vous aide plus ?"], solutionsTech: ["Réévaluation clinique."] }
+            ]},
+            { id: "eo70", name: "Station + Turbine EO-70", failures: [
+              { title: "Débit insuffisant", causes: ["Turbine défaillante"], solutionsPatient: ["Le moteur fait-il un bruit bizarre ?"], solutionsTech: ["Maintenance/Remplacement turbine."] },
+              { title: "Panne turbine", causes: ["Usure"], solutionsPatient: ["La machine refuse-t-elle de démarrer ?"], solutionsTech: ["Entretien régulier."] },
+              { title: "Mauvaise performance", causes: ["Mauvais réglages"], solutionsPatient: ["Le souffle est-il différent de d'habitude ?"], solutionsTech: ["Recalibrage capteurs."] }
+            ]},
+            { id: "comfort-cough", name: "Comfort Cough II", failures: [
+              { title: "Toux inefficace", causes: ["Mauvais timing inspi/expi"], solutionsPatient: ["La machine souffle-t-elle trop longtemps ?"], solutionsTech: ["Ajustement des cycles."] },
+              { title: "Désaturation", causes: ["Mauvaise tolérance"], solutionsPatient: ["Avez-vous la tête qui tourne pendant l'exercice ?"], solutionsTech: ["Surveillance SpO2.", "Temps de pause."] },
+              { title: "Mauvaise synchronisation", causes: ["Coordination difficile"], solutionsPatient: ["Avez-vous du mal à suivre le rythme ?"], solutionsTech: ["Entraînement patient."] }
+            ]}
+          ] },
+          { id: "ippb", name: "Relaxateur de pression (IPPB)", models: [
+            { id: "alpha-300", name: "VAEB Alpha 300", failures: [
+              { title: "Pression instable", causes: ["Mauvais réglage", "Fuite"], solutionsPatient: ["Est-ce que la force de l'air change tout d'un coup ?"], solutionsTech: ["Recalibrage.", "Test d'étanchéité."] },
+              { title: "Inconfort", causes: ["Pression trop élevée"], solutionsPatient: ["La machine vous envoie-t-elle trop d'air ?"], solutionsTech: ["Ajustement progressif."] },
+              { title: "Fuite au masque", causes: ["Taille inadaptée"], solutionsPatient: ["L'air s'échappe-t-il sur les côtés ?"], solutionsTech: ["Changement d'interface."] }
+            ]},
+            { id: "eo-300", name: "EO-300 IPPB", failures: [
+              { title: "Inefficacité", causes: ["Mauvais réglage"], solutionsPatient: ["L'appareil vous aide-t-il à respirer profondement ?"], solutionsTech: ["Ajustement paramètres."] },
+              { title: "Mauvaise synchronisation", causes: ["Trigger inadapté"], solutionsPatient: ["La machine se déclenche-t-elle au bon moment ?"], solutionsTech: ["Réglages personnalisés."] },
+              { title: "Débit insuffisant", causes: ["Obstruction circuit"], solutionsPatient: ["Vérifiez que le tuyau n'est pas plié."], solutionsTech: ["Vérification circuit."] }
+            ]}
+          ] }
+        ]
       },
       { 
         id: "humidificateur", 
         name: "Humidificateur", 
         models: [
           { id: "dreamstation-hum", name: "DreamStation", failures: [
-              { title: "Niveau d'eau faible", causes: ["Réservoir vide"], solutionsPatient: ["Vérifiez le niveau d'eau dans le bac.", "Remplissez le réservoir jusqu'au repère."], solutionsTech: ["Vérifier le capteur de niveau d'eau."] },
-              { title: "Fuite d’eau", causes: ["Réservoir mal fermé"], solutionsPatient: ["Vérifiez que le couvercle du réservoir est bien clipsé.", "Vérifiez que le réservoir est correctement inséré."], solutionsTech: ["Remplacer le joint du réservoir."] }
+              { title: "Pas de chauffage", causes: ["Plaque chauffante défectueuse"], solutionsPatient: ["Vérifiez branchement/menu."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint usé", "Mal fermé"], solutionsPatient: ["Vérifiez l'insertion du bac."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Baissez l'humidité / Housse tuyau."], solutionsTech: ["Vérifier circuit chauffant."] }
           ] },
           { id: "h41", name: "H41", failures: [
-              { title: "Pas de chauffage", causes: ["Plaque chauffante HS"], solutionsPatient: ["Vérifiez que l'humidificateur est bien connecté à la PPC.", "Vérifiez si l'option humidification est activée dans le menu."], solutionsTech: ["Remplacement de la plaque chauffante."] },
-              { title: "Condensation", causes: ["Mauvais réglage humidité"], solutionsPatient: ["Baissez le niveau d'humidité dans les réglages.", "Utilisez un circuit chauffant si disponible."], solutionsTech: ["Ajuster les paramètres de confort."] }
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Vérifiez activation menu."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez le bac."], solutionsTech: ["Changer joint."] },
+              { title: "Pas d'humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Ajuster paramètres confort."], solutionsTech: ["Check circuit chauffant."] }
           ] },
           { id: "hc150", name: "HC150", failures: [
-              { title: "Pas d’humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Tournez le bouton de réglage sur une valeur plus élevée.", "Attendez 10 minutes que l'eau chauffe."], solutionsTech: ["Vérifier la tension aux bornes de la résistance."] },
-              { title: "Fuite d’eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez si le joint du bac est bien en place.", "Vérifiez l'absence de fissures sur le bac."], solutionsTech: ["Remplacer le joint d'étanchéité."] }
+              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Augmentez le bouton rotatif."], solutionsTech: ["Vérifier tension résistance."] },
+              { title: "Fuite d'eau", causes: ["Fissure bac"], solutionsPatient: ["Vérifiez le joint du bac."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Pièce froide"], solutionsPatient: ["Isolez le tuyau."], solutionsTech: ["Check sonde température."] }
           ] },
-          { id: "humidair", name: "HumidAir", failures: [] },
+          { id: "humidair", name: "HumidAir", failures: [
+              { title: "Pas de chauffage", causes: ["Connecteur sale"], solutionsPatient: ["Nettoyez contacts au dos."], solutionsTech: ["Vérifier continuité."] },
+              { title: "Fuite d'eau", causes: ["Bac mal inséré"], solutionsPatient: ["Réinsérez jusqu'au clic."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Passez en mode Auto."], solutionsTech: ["Tester tuyau chauffant."] }
+          ] },
           { id: "hum-bipap-a40", name: "Humidificateur BIPAP A40", failures: [
-              { title: "Pas de chauffage", causes: ["Mauvaise connexion avec machine"], solutionsPatient: ["Retirez l'humidificateur et rebranchez-le fermement à la machine.", "Vérifiez que les connecteurs métalliques sont propres."], solutionsTech: ["Contrôler la continuité entre la machine et l'humidificateur."] },
-              { title: "Erreur système", causes: ["Défaut électronique"], solutionsPatient: ["Débranchez et rebranchez l'appareil.", "Si l'alarme persiste, utilisez l'appareil sans humidification."], solutionsTech: ["Retour en SAV pour diagnostic."] }
+              { title: "Pas de chauffage", causes: ["Connecteurs sales"], solutionsPatient: ["Nettoyer connecteurs métalliques."], solutionsTech: ["Contrôler continuité."] },
+              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifier joint réservoir."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Eau circuit"], solutionsPatient: ["Baissez humidité / Vider tuyau."], solutionsTech: ["Check inclinaison."] }
           ] },
-          { id: "hum-breas", name: "Humidificateur Chauffant (Breas)", failures: [] },
-          { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
+          { id: "hum-breas", name: "Humidificateur Chauffant (Breas)", failures: [
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Vérifier activation menu."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Bac mal fermé"], solutionsPatient: ["Vérifier fermeture."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Réglage confort"], solutionsPatient: ["Baissez niveau chauffe."], solutionsTech: ["Ajuster paramètres."] }
+          ] },
+          { id: "hum-sys1", name: "Humidificateur System One", failures: [
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Vérifier connexion."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifier état joint."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Condensation masque"], solutionsPatient: ["Baissez réglage de 1 ou 2 crans."], solutionsTech: ["Contrôle circuit."] }
+          ] },
           { id: "mr810-mr820", name: "MR810 / MR820", failures: [
-              { title: "Pas de chauffage", causes: ["Appareil mal branché", "Résistance HS"], solutionsPatient: ["Vérifiez que le cordon d'alimentation est bien enfoncé.", "Vérifiez que le voyant orange s'allume."], solutionsTech: ["Vérifier l'alimentation secteur.", "Remplacer la base chauffante."] },
-              { title: "Condensation", causes: ["Température ambiante basse"], solutionsPatient: ["Augmentez la température de la pièce.", "Utilisez une housse isolante pour le tuyau."], solutionsTech: ["Ajuster la température ou installer un circuit chauffant."] }
+              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifier voyant orange."], solutionsTech: ["Remplacer base chauffante."] },
+              { title: "Fuite d'eau", causes: ["Chambre mal percée"], solutionsPatient: ["Vérifiez les raccordements."], solutionsTech: ["Changer chambre."] },
+              { title: "Pas d'humidification", causes: ["Pièce froide"], solutionsPatient: ["Augmentez température pièce."], solutionsTech: ["Ajuster température."] }
           ] },
           { id: "my-airvo-2", name: "MY AIRVO 2", failures: [
-              { title: "Pas de chauffage", causes: ["Résistance chauffante défectueuse", "Mauvais réglage température"], solutionsPatient: ["Vérifiez le réglage de la température sur l'écran.", "Vérifiez que le circuit est bien branché."], solutionsTech: ["Remplacement de la base chauffante.", "Ajuster les réglages via le menu technicien."] },
-              { title: "Alarme température", causes: ["Sonde température HS"], solutionsPatient: ["Éteignez l'appareil et laissez-le refroidir.", "Vérifiez que rien n'obstrue les grilles."], solutionsTech: ["Remplacer la sonde de température."] },
-              { title: "Pas de débit d’air", causes: ["Circuit obstrué"], solutionsPatient: ["Vérifiez que la canule nasale n'est pas bouchée.", "Vérifiez que le tuyau n'est pas plié."], solutionsTech: ["Vérifier l'intégrité de la tubulure."] }
+              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifier réglage écran."], solutionsTech: ["Remplacer base."] },
+              { title: "Fuite d'eau", causes: ["Chambre mal insérée"], solutionsPatient: ["Poussez chambre au bout."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Pièce froide"], solutionsPatient: ["Augmentez température pièce."], solutionsTech: ["Check continuité circuit."] }
           ] },
           { id: "nea-hum", name: "NEA", failures: [
-              { title: "Pas d’humidification", causes: ["Réglage trop bas"], solutionsPatient: ["Augmentez le niveau d'humidification dans le menu."], solutionsTech: ["Vérifier la calibration de la sonde."] },
-              { title: "Bruit anormal", causes: ["Encrassement"], solutionsPatient: ["Nettoyez le réservoir avec de l'eau vinaigrée pour enlever le calcaire."], solutionsTech: ["Nettoyage complet du conduit d'air."] }
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Activez menu confort."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifiez joint sous bac."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Humidité trop forte"], solutionsPatient: ["Baissez réglage / Isoler tuyau."], solutionsTech: ["Calibration sonde."] }
           ] },
           { id: "prisma-aqua", name: "PrismaAQUA", failures: [
-              { title: "Fuite d’eau", causes: ["Réservoir fissuré"], solutionsPatient: ["Vérifiez si de l'eau coule sous l'appareil.", "Inspectez le bac à la lumière pour voir des fissures."], solutionsTech: ["Remplacer le réservoir."] },
-              { title: "Pas de chauffage", causes: ["Défaut résistance"], solutionsPatient: ["Vérifiez que le bac est bien enfoncé jusqu'au clic.", "Vérifiez que le symbole de chauffe apparaît."], solutionsTech: ["Maintenance interne de la base."] }
+              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifier symbole chauffe."], solutionsTech: ["Maintenance base."] },
+              { title: "Fuite d'eau", causes: ["Réservoir fissuré"], solutionsPatient: ["Vérifiez fissures bac."], solutionsTech: ["Remplacer réservoir."] },
+              { title: "Pas d'humidification", causes: ["Mauvais réglage"], solutionsPatient: ["Baissez l'humidité."], solutionsTech: ["Ajuster paramètres."] }
           ] },
           { id: "hum-sbox", name: "S.Box", failures: [
-              { title: "Pas d’humidification", causes: ["Mauvaise connexion"], solutionsPatient: ["Retirez le bac et remettez-le en place.", "Vérifiez qu'il y a assez d'eau."], solutionsTech: ["Vérifier le branchement interne."] },
-              { title: "Alarme", causes: ["Défaut capteur"], solutionsPatient: ["Nettoyez les contacts à l'arrière du réservoir.", "Redémarrez la machine."], solutionsTech: ["Retour SAV pour remplacement capteur."] }
+              { title: "Pas de chauffage", causes: ["Mauvaise connexion"], solutionsPatient: ["Remettre bac en place."], solutionsTech: ["Check branchement interne."] },
+              { title: "Fuite d'eau", causes: ["Joint déformé"], solutionsPatient: ["Vérifier joint arrière bac."], solutionsTech: ["Changer joint."] },
+              { title: "Pas d'humidification", causes: ["Pièce froide"], solutionsPatient: ["Baissez l'humidité."], solutionsTech: ["Vérifier connexion circuit."] }
           ] },
           { id: "vhb10a", name: "VHB10A", failures: [
-              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifiez que l'appareil est allumé (interrupteur).", "Vérifiez le branchement secteur."], solutionsTech: ["Remplacement de la résistance."] },
-              { title: "Arrêt brusque", causes: ["Surchauffe"], solutionsPatient: ["Laissez l'appareil refroidir.", "Vérifiez que les grilles de ventilation ne sont pas bouchées."], solutionsTech: ["Vérifier le circuit de ventilation."] }
+              { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Vérifiez interrupteur."], solutionsTech: ["Remplacer résistance."] },
+              { title: "Fuite d'eau", causes: ["Raccords desserrés"], solutionsPatient: ["Vérifier tuyaux d'eau."], solutionsTech: ["Check étanchéité."] },
+              { title: "Pas d'humidification", causes: ["Manque isolation"], solutionsPatient: ["Isolez circuit / Fil chauffant."], solutionsTech: ["Check fil chauffant."] }
           ] }
         ] 
-      },
-      {
-        id: "insufflateur-exsufflateur",
-        name: "Insufflateur-Exsufflateur Mécanique",
-        brands: []
       },
       {
         id: "o2",

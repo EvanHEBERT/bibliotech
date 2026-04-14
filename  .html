@@ -289,25 +289,92 @@ body {
         ]
       },
       {
-        id: "cough-assist",
-        name: "Cough Assist",
-        brands: []
+        id: "desencombrement",
+        name: "Désencombrement",
+        subTypes: [
+          { id: "aide-a-la-toux", name: "Aide à la toux", models: [
+            { id: "biwaze", name: "BiWaze", failures: [
+              { title: "Inefficacité", causes: ["Pression mal réglée"], solutionsPatient: ["Le souffle est-il trop faible pour tousser ?"], solutionsTech: ["Ajuster pressions."] },
+              { title: "Fatigue", causes: ["Séances trop intensives"], solutionsPatient: ["Êtes-vous épuisé après la séance ?"], solutionsTech: ["Adapter la durée."] },
+              { title: "Tolérance", causes: ["Pression élevée"], solutionsPatient: ["Le souffle est-il trop brutal ?"], solutionsTech: ["Augmentation progressive."] }
+            ]},
+            { id: "clearway", name: "Clearway", failures: [
+              { title: "Fuite", causes: ["Masque inadapté"], solutionsPatient: ["L'air passe-t-il dans vos yeux ?"], solutionsTech: ["Changer interface."] },
+              { title: "Inefficacité", causes: ["Pression insuffisante"], solutionsPatient: ["Avez-vous du mal à cracher ?"], solutionsTech: ["Augmenter pression."] },
+              { title: "Inconfort", causes: ["Mauvaise utilisation"], solutionsPatient: ["Maîtrisez-vous le moment pour tousser ?"], solutionsTech: ["Formation patient."] }
+            ]}
+          ] },
+          { id: "mixte", name: "Mixte", models: [
+            { id: "pegaso", name: "Pegaso A Cough", failures: [
+              { title: "Toux inefficace", causes: ["Pression faible", "Glaires épaisses"], solutionsPatient: ["Les glaires sont-elles épaisses ?"], solutionsTech: ["Augmenter pression."] },
+              { title: "Alternance", causes: ["Réglage cycles"], solutionsPatient: ["Le changement de sens vous gêne-t-il ?"], solutionsTech: ["Ajuster temps cycles."] },
+              { title: "Intolérance", causes: ["Pressions fortes"], solutionsPatient: ["L'appareil vous stresse-t-il ?"], solutionsTech: ["Adaptation progressive."] }
+            ]},
+            { id: "clearway-2", name: "Clearway 2", failures: [
+              { title: "Inefficacité", causes: ["Technique incorrecte"], solutionsPatient: ["Êtes-vous bien synchronisé ?"], solutionsTech: ["Revoir la technique."] },
+              { title: "Fuite", causes: ["Masque mal mis"], solutionsPatient: ["Le masque fuit-il ?"], solutionsTech: ["Repositionner."] },
+              { title: "Inconfort", causes: ["Pression haute"], solutionsPatient: ["C'est trop puissant ?"], solutionsTech: ["Diminuer pression."] }
+            ]},
+            { id: "e70", name: "E70", failures: [
+              { title: "Glaires bloquées", causes: ["Pression faible"], solutionsPatient: ["Rien ne remonte ?"], solutionsTech: ["Augmenter pression."] },
+              { title: "Fatigue", causes: ["Séances longues"], solutionsPatient: ["Êtes-vous essoufflé ?"], solutionsTech: ["Fractionner séances."] },
+              { title: "Inefficacité", causes: ["Mauvaise indication"], solutionsPatient: ["Cela vous aide-t-il encore ?"], solutionsTech: ["Réévaluer."] }
+            ]},
+            { id: "eo70", name: "EO-70", failures: [
+              { title: "Débit faible", causes: ["Turbine"], solutionsPatient: ["Bruit inhabituel ?"], solutionsTech: ["Maintenance turbine."] },
+              { title: "Panne", causes: ["Usure"], solutionsPatient: ["Refuse de démarrer ?"], solutionsTech: ["Entretien."] },
+              { title: "Performance", causes: ["Réglages"], solutionsPatient: ["Souffle différent ?"], solutionsTech: ["Recalibrage."] }
+            ]},
+            { id: "comfort-cough", name: "Comfort Cough II", failures: [
+              { title: "Toux inefficace", causes: ["Timing"], solutionsPatient: ["Souffle trop long ?"], solutionsTech: ["Ajuster cycles."] },
+              { title: "Désaturation", causes: ["Tolérance"], solutionsPatient: ["Tête qui tourne ?"], solutionsTech: ["Pauses.", "Suivi SpO2."] },
+              { title: "Synchronisation", causes: ["Coordination"], solutionsPatient: ["Suivez-vous le rythme ?"], solutionsTech: ["Entraînement."] }
+            ]}
+          ] },
+          { id: "ippb", name: "IPPB", models: [
+            { id: "alpha-300", name: "Alpha 300", failures: [
+              { title: "Pression instable", causes: ["Réglage", "Fuite"], solutionsPatient: ["L'air change-t-il de force ?"], solutionsTech: ["Maintenance."] },
+              { title: "Inconfort", causes: ["Pression haute"], solutionsPatient: ["Trop d'air d'un coup ?"], solutionsTech: ["Ajustement."] },
+              { title: "Fuite", causes: ["Masque"], solutionsPatient: ["L'air s'échappe ?"], solutionsTech: ["Ajuster masque."] }
+            ]},
+            { id: "eo-300", name: "EO-300", failures: [
+              { title: "Inefficacité", causes: ["Réglage"], solutionsPatient: ["Vous aide à respirer ?"], solutionsTech: ["Ajuster paramètres."] },
+              { title: "Synchronisation", causes: ["Trigger"], solutionsPatient: ["Se déclenche bien ?"], solutionsTech: ["Réglage trigger."] },
+              { title: "Débit faible", causes: ["Circuit"], solutionsPatient: ["Tuyau plié ?"], solutionsTech: ["Vérifier circuit."] }
+            ]}
+          ] }
+        ]
       },
       { 
         id: "humidificateur", 
         name: "Humidificateur", 
         models: [
-          { id: "humidair", name: "HumidAir", failures: [] },
-          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [] },
-          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [] },
-          { id: "hum-sys1", name: "Humidificateur System One", failures: [] },
-          { id: "prisma-aqua", name: "PrismaAQUA", failures: [] }
+          { id: "humidair", name: "HumidAir", failures: [
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Nettoyer contacts."], solutionsTech: ["Vérifier continuité."] },
+              { title: "Fuite d'eau", causes: ["Bac mal mis"], solutionsPatient: ["Vérifier clic insertion."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Mode Auto / ClimateLine."], solutionsTech: ["Tester tuyau."] }
+          ] },
+          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Activer dans menu."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifier fermeture."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez chauffe menu."], solutionsTech: ["Ajuster paramètres."] }
+          ] },
+          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [
+              { title: "Pas de chauffage", causes: ["Connexion"], solutionsPatient: ["Réinsérer bac."], solutionsTech: ["Check interne."] },
+              { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Vérifier joint arrière."], solutionsTech: ["Changer joint."] },
+              { title: "Pas d'humidification", causes: ["Froid"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Check circuit."] }
+          ] },
+          { id: "hum-sys1", name: "Humidificateur System One", failures: [
+              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Check connexion."], solutionsTech: ["Remplacer plaque."] },
+              { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Vérifier état joint."], solutionsTech: ["Remplacer joint."] },
+              { title: "Pas d'humidification", causes: ["Condensation"], solutionsPatient: ["Baissez réglage."], solutionsTech: ["Check circuit."] }
+          ] },
+          { id: "prisma-aqua", name: "PrismaAQUA", failures: [
+              { title: "Pas de chauffage", causes: ["Résistance"], solutionsPatient: ["Vérifier symbole."], solutionsTech: ["Maintenance base."] },
+              { title: "Fuite d'eau", causes: ["Fissure"], solutionsPatient: ["Vérifier fissures bac."], solutionsTech: ["Remplacer bac."] },
+              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Ajuster paramètres."] }
+          ] }
         ] 
-      },
-      {
-        id: "insufflateur-exsufflateur",
-        name: "Insufflateur-Exsufflateur Mécanique",
-        brands: []
       },
       {
         id: "o2",
