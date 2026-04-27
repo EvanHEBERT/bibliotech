@@ -294,53 +294,573 @@ body {
         subTypes: [
           { id: "aide-a-la-toux", name: "Aide à la toux", models: [
             { id: "biwaze", name: "BiWaze", failures: [
-              { title: "Inefficacité", causes: ["Pression mal réglée"], solutionsPatient: ["Le souffle est-il trop faible pour tousser ?"], solutionsTech: ["Ajuster pressions."] },
-              { title: "Fatigue", causes: ["Séances trop intensives"], solutionsPatient: ["Êtes-vous épuisé après la séance ?"], solutionsTech: ["Adapter la durée."] },
-              { title: "Tolérance", causes: ["Pression élevée"], solutionsPatient: ["Le souffle est-il trop brutal ?"], solutionsTech: ["Augmentation progressive."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Temps d'inspiration trop court"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "S'assurer que le masque est bien plaqué contre le visage (pas de sifflement)",
+                  "Boire davantage d'eau pour fluidifier les glaires"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement les pressions d'insufflation et d'exsufflation",
+                  "Ajuster les temps de cycle",
+                  "Vérifier l'étanchéité pneumatique complète du circuit"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou abîmé", "Batterie interne vide ou HS", "Bloc d'alimentation HS"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien enfoncée au mur et sur le bloc",
+                  "Laisser charger l'appareil au moins 2 heures"
+                ], 
+                solutionsTech: ["Tester la tension de sortie du bloc d'alimentation"] 
+              }
             ]},
             { id: "clearway", name: "Clearway", failures: [
-              { title: "Fuite", causes: ["Masque inadapté"], solutionsPatient: ["L'air passe-t-il dans vos yeux ?"], solutionsTech: ["Changer interface."] },
-              { title: "Inefficacité", causes: ["Pression insuffisante"], solutionsPatient: ["Avez-vous du mal à cracher ?"], solutionsTech: ["Augmenter pression."] },
-              { title: "Inconfort", causes: ["Mauvaise utilisation"], solutionsPatient: ["Maîtrisez-vous le moment pour tousser ?"], solutionsTech: ["Formation patient."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop sèches", "Fuites massives au masque", "Temps d'exsufflation trop court"], 
+                solutionsPatient: [
+                  "Vérifiez que le masque est bien plaqué (pas de sifflement)",
+                  "Avez-vous bu assez d'eau aujourd'hui ?",
+                  "Essayez de bien vider vos poumons avant le démarrage"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement la pression d'exsufflation",
+                  "Ajuster le temps de plateau inspiratoire",
+                  "Vérifier l'étanchéité interne du bloc turbine"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Stress patient", "Fuite perturbant le capteur"], 
+                solutionsPatient: [
+                  "Essayez de caler votre respiration sur l'appareil",
+                  "Le tuyau est-il bien branché et non plié ?",
+                  "Respirez calmement par le nez"
+                ], 
+                solutionsTech: [
+                  "Réglage fin de la sensibilité du trigger inspiratoire",
+                  "Passer en mode automatique si nécessaire",
+                  "Calibration des capteurs de débit"
+                ] 
+              },
+              { 
+                title: "Fuite d’air importante", 
+                causes: ["Masque inadapté ou usé", "Harnais trop lâche", "Valve expiratoire mal positionnée"], 
+                solutionsPatient: [
+                  "L'air passe-t-il près de vos yeux ?",
+                  "Resserrer légèrement le harnais",
+                  "Nettoyer le silicone du masque"
+                ], 
+                solutionsTech: [
+                  "Changer la taille du masque (test gabarit)",
+                  "Vérifier la valve expiratoire",
+                  "Contrôler la tubulure"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur mal enfoncé", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "La prise est-elle bien branchée au mur et à la machine ?",
+                  "Y a-t-il une lumière sur le bloc secteur ?"
+                ], 
+                solutionsTech: [
+                  "Tester la tension du bloc alim",
+                  "Vérifier le fusible interne",
+                  "Contrôler le connecteur d'embase"
+                ] 
+              }
             ]}
           ] },
           { id: "mixte", name: "Mixte", models: [
             { id: "pegaso", name: "Pegaso A Cough", failures: [
-              { title: "Toux inefficace", causes: ["Pression faible", "Glaires épaisses"], solutionsPatient: ["Les glaires sont-elles épaisses ?"], solutionsTech: ["Augmenter pression."] },
-              { title: "Alternance", causes: ["Réglage cycles"], solutionsPatient: ["Le changement de sens vous gêne-t-il ?"], solutionsTech: ["Ajuster temps cycles."] },
-              { title: "Intolérance", causes: ["Pressions fortes"], solutionsPatient: ["L'appareil vous stresse-t-il ?"], solutionsTech: ["Adaptation progressive."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Mauvaise synchronisation"], 
+                solutionsPatient: [
+                  "Vérifier que le masque est bien ajusté et qu'il n'y a pas de fuites audibles",
+                  "S'assurer d'une bonne hydratation pour fluidifier les sécrétions",
+                  "Essayer de bien vider les poumons avant le début du cycle d'insufflation"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement les pressions d'insufflation et d'exsufflation",
+                  "Ajuster les temps de cycle (inspiration/expiration)",
+                  "Vérifier l'étanchéité du circuit patient et du masque",
+                  "Recalibrer les capteurs de pression et de débit"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Rythme respiratoire irrégulier du patient", "Fuite d'air perturbant la détection"], 
+                solutionsPatient: [
+                  "Essayer de se détendre et de caler sa respiration sur le rythme de la machine",
+                  "Vérifier que le tuyau n'est pas plié ou écrasé",
+                  "Signaler si l'appareil démarre trop tôt ou trop tard"
+                ], 
+                solutionsTech: [
+                  "Ajuster la sensibilité du trigger inspiratoire et expiratoire",
+                  "Passer en mode automatique si le patient a du mal à déclencher",
+                  "Vérifier l'absence de fuite au niveau du masque et du circuit"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Batterie interne vide ou défectueuse", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "S'assurer que le voyant du bloc d'alimentation est allumé",
+                  "Laisser l'appareil charger sur secteur pendant au moins 2 heures"
+                ], 
+                solutionsTech: [
+                  "Tester la tension de sortie du bloc d'alimentation",
+                  "Vérifier l'état de la batterie interne (test de capacité)",
+                  "Contrôler la continuité du câble secteur et du connecteur d'embase"
+                ] 
+              },
+              { 
+                title: "Bruit anormal / Baisse de puissance (Turbine)", 
+                causes: ["Usure des roulements de la turbine", "Filtres internes encrassés", "Surchauffe moteur", "Obstruction de l'entrée d'air"], 
+                solutionsPatient: [
+                  "Nettoyer ou remplacer le filtre à air à l'arrière de l'appareil",
+                  "S'assurer que rien ne bouche les grilles de ventilation",
+                  "Signaler tout bruit inhabituel (sifflement, frottement)"
+                ], 
+                solutionsTech: [
+                  "Vérifier le compteur d'heures de la turbine",
+                  "Mesurer les pressions de sortie réelles de l'appareil",
+                  "Nettoyer l'intérieur de l'appareil et remplacer les filtres HEPA",
+                  "Remplacer le bloc turbine si le bruit de roulement persiste"
+                ] 
+              }
             ]},
             { id: "clearway-2", name: "Clearway 2", failures: [
-              { title: "Inefficacité", causes: ["Technique incorrecte"], solutionsPatient: ["Êtes-vous bien synchronisé ?"], solutionsTech: ["Revoir la technique."] },
-              { title: "Fuite", causes: ["Masque mal mis"], solutionsPatient: ["Le masque fuit-il ?"], solutionsTech: ["Repositionner."] },
-              { title: "Inconfort", causes: ["Pression haute"], solutionsPatient: ["C'est trop puissant ?"], solutionsTech: ["Diminuer pression."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Temps d'exsufflation trop court"], 
+                solutionsPatient: [
+                  "Vérifiez que le masque est bien plaqué (pas de sifflement)",
+                  "Avez-vous bu assez d'eau aujourd'hui ?",
+                  "Essayez de bien vider vos poumons avant le démarrage"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement la pression d'exsufflation",
+                  "Ajuster le temps de plateau inspiratoire",
+                  "Vérifier l'étanchéité interne du bloc turbine"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Stress patient", "Fuite perturbant le capteur"], 
+                solutionsPatient: [
+                  "Essayez de caler votre respiration sur l'appareil",
+                  "Le tuyau est-il bien branché et non plié ?",
+                  "Respirez calmement par le nez"
+                ], 
+                solutionsTech: [
+                  "Réglage fin de la sensibilité du trigger inspiratoire",
+                  "Passer en mode automatique si nécessaire",
+                  "Calibration des capteurs de débit"
+                ] 
+              },
+              { 
+                title: "Fuite d’air importante", 
+                causes: ["Masque inadapté ou usé", "Harnais trop lâche", "Valve expiratoire mal positionnée"], 
+                solutionsPatient: [
+                  "L'air passe-t-il près de vos yeux ?",
+                  "Resserrer légèrement le harnais",
+                  "Nettoyer le silicone du masque"
+                ], 
+                solutionsTech: [
+                  "Changer la taille du masque (test gabarit)",
+                  "Vérifier la valve expiratoire",
+                  "Contrôler la tubulure"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur mal enfoncé", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "La prise est-elle bien branchée au mur et à la machine ?",
+                  "Y a-t-il une lumière sur le bloc secteur ?"
+                ], 
+                solutionsTech: [
+                  "Tester la tension du bloc alim",
+                  "Vérifier le fusible interne",
+                  "Contrôler le connecteur d'embase"
+                ] 
+              }
             ]},
             { id: "e70", name: "E70", failures: [
-              { title: "Glaires bloquées", causes: ["Pression faible"], solutionsPatient: ["Rien ne remonte ?"], solutionsTech: ["Augmenter pression."] },
-              { title: "Fatigue", causes: ["Séances longues"], solutionsPatient: ["Êtes-vous essoufflé ?"], solutionsTech: ["Fractionner séances."] },
-              { title: "Inefficacité", causes: ["Mauvaise indication"], solutionsPatient: ["Cela vous aide-t-il encore ?"], solutionsTech: ["Réévaluer."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Mauvaise synchronisation"], 
+                solutionsPatient: [
+                  "Vérifier que le masque est bien ajusté et qu'il n'y a pas de fuites audibles",
+                  "S'assurer d'une bonne hydratation pour fluidifier les sécrétions",
+                  "Essayer de bien vider les poumons avant le début du cycle d'insufflation"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement les pressions d'insufflation et d'exsufflation",
+                  "Ajuster les temps de cycle (inspiration/expiration)",
+                  "Vérifier l'étanchéité du circuit patient et du masque",
+                  "Recalibrer les capteurs de pression et de débit"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Rythme respiratoire irrégulier du patient", "Fuite d'air perturbant la détection"], 
+                solutionsPatient: [
+                  "Essayer de se détendre et de caler sa respiration sur le rythme de la machine",
+                  "Vérifier que le tuyau n'est pas plié ou écrasé",
+                  "Signaler si l'appareil démarre trop tôt ou trop tard"
+                ], 
+                solutionsTech: [
+                  "Ajuster la sensibilité du trigger inspiratoire et expiratoire",
+                  "Passer en mode automatique si le patient a du mal à déclencher",
+                  "Vérifier l'absence de fuite au niveau du masque et du circuit"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Batterie interne vide ou défectueuse", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "S'assurer que le voyant du bloc d'alimentation est allumé",
+                  "Laisser l'appareil charger sur secteur pendant au moins 2 heures"
+                ], 
+                solutionsTech: [
+                  "Tester la tension de sortie du bloc d'alimentation",
+                  "Vérifier l'état de la batterie interne (test de capacité)",
+                  "Contrôler la continuité du câble secteur et du connecteur d'embase"
+                ] 
+              },
+              { 
+                title: "Bruit anormal / Baisse de puissance (Turbine)", 
+                causes: ["Usure des roulements de la turbine", "Filtres internes encrassés", "Surchauffe moteur", "Obstruction de l'entrée d'air"], 
+                solutionsPatient: [
+                  "Nettoyer ou remplacer le filtre à air à l'arrière de l'appareil",
+                  "S'assurer que rien ne bouche les grilles de ventilation",
+                  "Signaler tout bruit inhabituel (sifflement, frottement)"
+                ], 
+                solutionsTech: [
+                  "Vérifier le compteur d'heures de la turbine",
+                  "Mesurer les pressions de sortie réelles de l'appareil",
+                  "Nettoyer l'intérieur de l'appareil et remplacer les filtres HEPA",
+                  "Remplacer le bloc turbine si le bruit de roulement persiste"
+                ] 
+              }
             ]},
             { id: "eo70", name: "EO-70", failures: [
-              { title: "Débit faible", causes: ["Turbine"], solutionsPatient: ["Bruit inhabituel ?"], solutionsTech: ["Maintenance turbine."] },
-              { title: "Panne", causes: ["Usure"], solutionsPatient: ["Refuse de démarrer ?"], solutionsTech: ["Entretien."] },
-              { title: "Performance", causes: ["Réglages"], solutionsPatient: ["Souffle différent ?"], solutionsTech: ["Recalibrage."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Mauvaise synchronisation"], 
+                solutionsPatient: [
+                  "Vérifier que le masque est bien ajusté et qu'il n'y a pas de fuites audibles",
+                  "S'assurer d'une bonne hydratation pour fluidifier les sécrétions",
+                  "Essayer de bien vider les poumons avant le début du cycle d'insufflation"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement les pressions d'insufflation et d'exsufflation",
+                  "Ajuster les temps de cycle (inspiration/expiration)",
+                  "Vérifier l'étanchéité du circuit patient et du masque",
+                  "Recalibrer les capteurs de pression et de débit"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Rythme respiratoire irrégulier du patient", "Fuite d'air perturbant la détection"], 
+                solutionsPatient: [
+                  "Essayer de se détendre et de caler sa respiration sur le rythme de la machine",
+                  "Vérifier que le tuyau n'est pas plié ou écrasé",
+                  "Signaler si l'appareil démarre trop tôt ou trop tard"
+                ], 
+                solutionsTech: [
+                  "Ajuster la sensibilité du trigger inspiratoire et expiratoire",
+                  "Passer en mode automatique si le patient a du mal à déclencher",
+                  "Vérifier l'absence de fuite au niveau du masque et du circuit"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Batterie interne vide ou défectueuse", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "S'assurer que le voyant du bloc d'alimentation est allumé",
+                  "Laisser l'appareil charger sur secteur pendant au moins 2 heures"
+                ], 
+                solutionsTech: [
+                  "Tester la tension de sortie du bloc d'alimentation",
+                  "Vérifier l'état de la batterie interne (test de capacité)",
+                  "Contrôler la continuité du câble secteur et du connecteur d'embase"
+                ] 
+              },
+              { 
+                title: "Bruit anormal / Baisse de puissance (Turbine)", 
+                causes: ["Usure des roulements de la turbine", "Filtres internes encrassés", "Surchauffe moteur", "Obstruction de l'entrée d'air"], 
+                solutionsPatient: [
+                  "Nettoyer ou remplacer le filtre à air à l'arrière de l'appareil",
+                  "S'assurer que rien ne bouche les grilles de ventilation",
+                  "Signaler tout bruit inhabituel (sifflement, frottement)"
+                ], 
+                solutionsTech: [
+                  "Vérifier le compteur d'heures de la turbine",
+                  "Mesurer les pressions de sortie réelles de l'appareil",
+                  "Nettoyer l'intérieur de l'appareil et remplacer les filtres HEPA",
+                  "Remplacer le bloc turbine si le bruit de roulement persiste"
+                ] 
+              }
             ]},
             { id: "comfort-cough", name: "Comfort Cough II", failures: [
-              { title: "Toux inefficace", causes: ["Timing"], solutionsPatient: ["Souffle trop long ?"], solutionsTech: ["Ajuster cycles."] },
-              { title: "Désaturation", causes: ["Tolérance"], solutionsPatient: ["Tête qui tourne ?"], solutionsTech: ["Pauses.", "Suivi SpO2."] },
-              { title: "Synchronisation", causes: ["Coordination"], solutionsPatient: ["Suivez-vous le rythme ?"], solutionsTech: ["Entraînement."] }
+              { 
+                title: "Toux inefficace (Mobilisation faible)", 
+                causes: ["Pressions d'insufflation/exsufflation trop basses", "Sécrétions trop visqueuses ou sèches", "Fuites massives au masque", "Temps d'exsufflation trop court"], 
+                solutionsPatient: [
+                  "Vérifier que le masque est bien ajusté et qu'il n'y a pas de fuites audibles",
+                  "S'assurer d'une bonne hydratation pour fluidifier les sécrétions",
+                  "Essayer de bien vider les poumons avant le début du cycle d'insufflation"
+                ], 
+                solutionsTech: [
+                  "Augmenter progressivement les pressions d'insufflation et d'exsufflation",
+                  "Ajuster les temps de cycle (inspiration/expiration)",
+                  "Vérifier l'étanchéité du circuit patient et du masque",
+                  "Recalibrer les capteurs de pression et de débit"
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation (Trigger)", 
+                causes: ["Sensibilité du trigger inadaptée", "Rythme respiratoire irrégulier du patient", "Fuite d'air perturbant la détection"], 
+                solutionsPatient: [
+                  "Essayer de se détendre et de caler sa respiration sur le rythme de la machine",
+                  "Vérifier que le tuyau n'est pas plié ou écrasé",
+                  "Signaler si l'appareil démarre trop tôt ou trop tard"
+                ], 
+                solutionsTech: [
+                  "Ajuster la sensibilité du trigger inspiratoire et expiratoire",
+                  "Passer en mode automatique si le patient a du mal à déclencher",
+                  "Vérifier l'absence de fuite au niveau du masque et du circuit"
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Batterie interne vide ou défectueuse", "Bloc d'alimentation HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "S'assurer que le voyant du bloc d'alimentation est allumé",
+                  "Laisser l'appareil charger sur secteur pendant au moins 2 heures"
+                ], 
+                solutionsTech: [
+                  "Tester la tension de sortie du bloc d'alimentation",
+                  "Vérifier l'état de la batterie interne (test de capacité)",
+                  "Contrôler la continuité du câble secteur et du connecteur d'embase"
+                ] 
+              },
+              { 
+                title: "Bruit anormal / Baisse de puissance (Turbine)", 
+                causes: ["Usure des roulements de la turbine", "Filtres internes encrassés", "Surchauffe moteur", "Obstruction de l'entrée d'air"], 
+                solutionsPatient: [
+                  "Nettoyer ou remplacer le filtre à air à l'arrière de l'appareil",
+                  "S'assurer que rien ne bouche les grilles de ventilation",
+                  "Signaler tout bruit inhabituel (sifflement, frottement)"
+                ], 
+                solutionsTech: [
+                  "Vérifier le compteur d'heures de la turbine",
+                  "Mesurer les pressions de sortie réelles de l'appareil",
+                  "Nettoyer l'intérieur de l'appareil et remplacer les filtres HEPA",
+                  "Remplacer le bloc turbine si le bruit de roulement persiste"
+                ] 
+              }
             ]}
           ] },
           { id: "ippb", name: "IPPB", models: [
-            { id: "alpha-300", name: "Alpha 300", failures: [
-              { title: "Pression instable", causes: ["Réglage", "Fuite"], solutionsPatient: ["L'air change-t-il de force ?"], solutionsTech: ["Maintenance."] },
-              { title: "Inconfort", causes: ["Pression haute"], solutionsPatient: ["Trop d'air d'un coup ?"], solutionsTech: ["Ajustement."] },
-              { title: "Fuite", causes: ["Masque"], solutionsPatient: ["L'air s'échappe ?"], solutionsTech: ["Ajuster masque."] }
+            { 
+              id: "alpha-300", 
+              name: "VAEB Alpha 300", 
+              failures: [
+                { 
+                title: "Pression instable / Débit irrégulier", 
+                causes: ["Mauvais réglage de la pression ou du débit", "Fuite importante dans le circuit", "Usure interne du compresseur ou des valves", "Filtres colmatés"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Est-ce que l'air vous semble changer de force brusquement ou de manière irrégulière ?",
+                  "Entendez-vous un sifflement ou un bruit d'air qui s'échappe quelque part ?",
+                  "Le filtre à air à l'arrière est-il propre ?"
+                ], 
+                solutionsTech: [
+                  "Recalibrer l'appareil (pression et débit) via le menu service.",
+                  "Effectuer un test d'étanchéité complet du circuit patient et interne.",
+                  "Vérifier l'état du compresseur et des valves pneumatiques.",
+                  "Remplacer les filtres à air (entrée et sortie)."
+                ] 
+              },
+              { 
+                title: "Inconfort respiratoire / Mauvaise tolérance", 
+                causes: ["Pression d'insufflation trop élevée", "Temps d'insufflation trop court ou trop long", "Mauvaise adaptation du patient", "Plaie buccale ou nasale"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "L'air arrive-t-il trop fort ou trop brutalement ?",
+                  "Le masque ou l'embout vous blesse-t-il ou irrite-t-il la peau ?",
+                  "Avez-vous du mal à suivre le rythme de la machine ?"
+                ], 
+                solutionsTech: [
+                  "Ajuster progressivement la pression d'insufflation pour améliorer le confort.",
+                  "Modifier les temps d'insufflation et d'expiration pour une meilleure synchronisation.",
+                  "Conseiller une interface patient plus adaptée (masque, embout buccal).",
+                  "Vérifier la pression de consigne et les réglages de rampe."
+                ] 
+              },
+              { 
+                title: "Fuite d’air importante au masque ou circuit", 
+                causes: ["Masque/embout mal positionné", "Taille d'interface inadaptée", "Harnais trop lâche ou usé", "Tubulure percée ou mal connectée"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Sentez-vous de l'air s'échapper sur les côtés du masque ou de l'embout ?",
+                  "Le masque bouge-t-il trop facilement sur votre visage ?",
+                  "Entendez-vous un sifflement au niveau du tuyau ?"
+                ], 
+                solutionsTech: [
+                  "Repositionner correctement le masque ou l'embout sur le patient.",
+                  "Changer la taille ou le modèle de l'interface patient.",
+                  "Remplacer le harnais si usé ou détendu.",
+                  "Vérifier l'intégrité de la tubulure et des connexions."
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation (L'appareil ne s'allume pas)", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Prise murale défectueuse", "Compresseur interne HS", "Interrupteur défectueux", "Fusible grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Le compresseur démarre-t-il (fait-il du bruit) ?",
+                  "Avez-vous essayé de brancher l'appareil sur une autre prise électrique ?",
+                  "Le voyant d'alimentation est-il allumé ?"
+                ], 
+                solutionsTech: [
+                  "Tester la continuité du cordon secteur et du connecteur d'embase.",
+                  "Vérifier le condensateur de démarrage du compresseur.",
+                  "Contrôler l'interrupteur Marche/Arrêt.",
+                  "Vérifier et remplacer le fusible interne si nécessaire."
+                ] 
+              },
+              { 
+                title: "Bruit anormal / Baisse de puissance (Compresseur)", 
+                causes: ["Usure du bloc compresseur", "Membrane du compresseur percée ou fatiguée", "Fuite pneumatique interne", "Filtres internes encrassés"], 
+                solutionsPatient: [
+                  "La machine fait-elle plus de bruit que d'habitude (claquements, frottements) ?",
+                  "Sentez-vous des vibrations anormales dans l'appareil ?",
+                  "La puissance de l'air vous semble-t-elle avoir diminué ?",
+                  "Le filtre à air est-il propre ?"
+                ], 
+                solutionsTech: [
+                  "Vérifier l'état de la membrane du compresseur.",
+                  "Rechercher une fuite sur les raccords et les vannes internes.",
+                  "Mesurer le débit et la pression maximum en sortie d'appareil.",
+                  "Remplacer le bloc compresseur si l'usure est avérée."
+                ] 
+              }
             ]},
-            { id: "eo-300", name: "EO-300", failures: [
-              { title: "Inefficacité", causes: ["Réglage"], solutionsPatient: ["Vous aide à respirer ?"], solutionsTech: ["Ajuster paramètres."] },
-              { title: "Synchronisation", causes: ["Trigger"], solutionsPatient: ["Se déclenche bien ?"], solutionsTech: ["Réglage trigger."] },
-              { title: "Débit faible", causes: ["Circuit"], solutionsPatient: ["Tuyau plié ?"], solutionsTech: ["Vérifier circuit."] }
+            { 
+              id: "eo-300", 
+              name: "EO-300 IPPB", 
+              failures: [
+                { 
+                title: "Inefficacité ventilatoire / Toux inefficace", 
+                causes: ["Mauvais réglage de la pression ou du débit", "Fuite importante au masque ou circuit", "Capteur de pression/débit défectueux", "Sécrétions trop denses"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "L'appareil vous aide-t-il à respirer profondément et à mobiliser les sécrétions ?",
+                  "Sentez-vous une résistance anormale à l'inspiration ou l'expiration ?",
+                  "S'assurer d'une bonne hydratation."
+                ], 
+                solutionsTech: [
+                  "Ajuster les paramètres de pression (IPAP/EPAP) et de débit (Flow).",
+                  "Réévaluer le protocole de traitement avec le prescripteur.",
+                  "Recalibrer les capteurs de pression et de débit.",
+                  "Vérifier l'étanchéité complète du circuit patient."
+                ] 
+              },
+              { 
+                title: "Mauvaise synchronisation patient-machine", 
+                causes: ["Sensibilité du trigger inadaptée", "Fuites massives perturbant la détection", "Rythme respiratoire irrégulier du patient", "Défaut du capteur de trigger"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "La machine se déclenche-t-elle au moment où vous inspirez ?",
+                  "L'air arrive-t-il trop tard ou trop tôt par rapport à votre effort ?",
+                  "Avez-vous du mal à coordonner votre respiration avec l'appareil ?"
+                ], 
+                solutionsTech: [
+                  "Ajuster la sensibilité du trigger inspiratoire et expiratoire.",
+                  "Renforcer le coaching du patient sur la coordination respiratoire.",
+                  "Vérifier l'absence de fuites importantes au masque et au circuit.",
+                  "Tester et, si nécessaire, remplacer le capteur de trigger."
+                ] 
+              },
+              { 
+                title: "Fuite d’air importante au masque ou circuit", 
+                causes: ["Masque mal positionné ou taille inadaptée", "Tubulure percée ou mal connectée", "Valve expiratoire défectueuse", "Coussin de masque usé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Sentez-vous de l'air s'échapper sur les côtés du masque ?",
+                  "Le masque est-il bien plaqué contre votre visage ?",
+                  "Entendez-vous un sifflement au niveau du tuyau ou des raccords ?"
+                ], 
+                solutionsTech: [
+                  "Repositionner correctement le masque et ajuster le harnais.",
+                  "Changer la taille ou le modèle de l'interface patient.",
+                  "Remplacer la tubulure si elle est percée ou fendue.",
+                  "Vérifier et nettoyer la valve expiratoire."
+                ] 
+              },
+              { 
+                title: "Débit insuffisant / Baisse de puissance", 
+                causes: ["Obstruction du circuit patient", "Filtre d'entrée d'air colmaté", "Moteur ou turbine fatigué", "Fuite interne"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Le tuyau est-il plié, écrasé ou bouché ?",
+                  "Le filtre à air à l'arrière est-il propre et non encrassé ?",
+                  "L'appareil vous semble-t-il moins puissant qu'avant ?"
+                ], 
+                solutionsTech: [
+                  "Vérifier l'intégrité et la perméabilité du circuit patient.",
+                  "Remplacer le filtre d'entrée d'air.",
+                  "Mesurer le débit et la pression en sortie d'appareil.",
+                  "Vérifier l'état du moteur/turbine et rechercher des fuites internes."
+                ] 
+              },
+              { 
+                title: "Problème d'alimentation / Batterie", 
+                causes: ["Cordon secteur déconnecté ou endommagé", "Station d'alimentation défaillante", "Batterie interne déchargée ou HS", "Fusible interne grillé"], 
+                solutionsPatient: [
+                  "Vérifier que la prise est bien branchée au mur et à l'appareil",
+                  "Voyez-vous des voyants s'allumer sur l'appareil ou la station ?",
+                  "L'écran est-il noir ou affiche-t-il un message d'erreur d'alimentation ?",
+                  "Laisser l'appareil charger sur secteur pendant au moins 2 heures."
+                ], 
+                solutionsTech: [
+                  "Tester la continuité du cordon secteur.",
+                  "Vérifier la tension de sortie de la station d'alimentation.",
+                  "Contrôler l'état de santé de la batterie interne.",
+                  "Vérifier et remplacer le fusible interne si nécessaire."
+                ] 
+              },
+              { 
+                title: "Bruit anormal (Turbine/Station)", 
+                causes: ["Usure du moteur/turbine", "Filtre d'entrée colmaté", "Défaut de connexion à la station", "Vibrations internes"], 
+                solutionsPatient: [
+                  "Entendez-vous la turbine tourner à l'intérieur de la station ?",
+                  "Y a-t-il un sifflement, un frottement ou un claquement inhabituel ?",
+                  "Le filtre à air est-il propre ?",
+                  "La station est-elle stable sur une surface plane ?"
+                ], 
+                solutionsTech: [
+                  "Vérifier le module turbine et ses roulements.",
+                  "Nettoyer les conduits d'entrée d'air et remplacer les filtres.",
+                  "Contrôler la connexion électrique et pneumatique à la station.",
+                  "Remplacer le bloc moteur/turbine si l'usure est avérée."
+                ] 
+              }
             ]}
           ] }
         ]
@@ -348,33 +868,55 @@ body {
       { 
         id: "humidificateur", 
         name: "Humidificateur", 
-        models: [
-          { id: "humidair", name: "HumidAir", failures: [
-              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Nettoyer contacts."], solutionsTech: ["Vérifier continuité."] },
-              { title: "Fuite d'eau", causes: ["Bac mal mis"], solutionsPatient: ["Vérifier clic insertion."], solutionsTech: ["Remplacer joint."] },
-              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Mode Auto / ClimateLine."], solutionsTech: ["Tester tuyau."] }
+        subTypes: [
+          { id: "hum-interne", name: "Internes (dépendants)", models: [
+            { id: "humidair", name: "HumidAir", failures: [
+                { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Est-ce que les contacts au dos du bac sont propres ?"], solutionsTech: ["Vérifier continuité."] },
+                { title: "Fuite d'eau", causes: ["Bac mal mis"], solutionsPatient: ["Avez-vous bien entendu le petit clic au moment de l'insérer ?"], solutionsTech: ["Remplacer joint."] },
+                { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Mode Auto / ClimateLine."], solutionsTech: ["Tester tuyau."] }
+            ] },
+            { id: "hum-breas", name: "Humidificateur Chauffant", failures: [
+                { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Activer dans menu."], solutionsTech: ["Remplacer plaque."] },
+                { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Est-ce que le couvercle vous semble bien fermé ?"], solutionsTech: ["Remplacer joint."] },
+                { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez chauffe menu."], solutionsTech: ["Ajuster paramètres."] }
+            ] },
+            { id: "hum-sbox", name: "Humidificateur S.Box", failures: [
+                { title: "Pas de chauffage", causes: ["Connexion"], solutionsPatient: ["Réinsérer bac."], solutionsTech: ["Check interne."] },
+                { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Est-ce que le joint à l'arrière a l'air bien en place ?"], solutionsTech: ["Changer joint."] },
+                { title: "Pas d'humidification", causes: ["Froid"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Check circuit."] }
+            ] },
+            { id: "hum-sys1", name: "Humidificateur System One", failures: [
+                { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Check connexion."], solutionsTech: ["Remplacer plaque."] },
+                { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Est-ce que le joint vous semble encore bien souple ?"], solutionsTech: ["Remplacer joint."] },
+                { title: "Pas d'humidification", causes: ["Condensation"], solutionsPatient: ["Baissez réglage."], solutionsTech: ["Check circuit."] }
+            ] },
+            { id: "prisma-aqua", name: "PrismaAQUA", failures: [
+                { title: "Pas de chauffage", causes: ["Résistance"], solutionsPatient: ["Vérifier symbole."], solutionsTech: ["Maintenance base."] },
+                { title: "Fuite d'eau", causes: ["Fissure"], solutionsPatient: ["Voyez-vous une petite fissure sur le plastique du bac ?"], solutionsTech: ["Remplacer bac."] },
+                { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Ajuster paramètres."] }
+            ] }
           ] },
-          { id: "hum-breas", name: "Humidificateur Chauffant", failures: [
-              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Activer dans menu."], solutionsTech: ["Remplacer plaque."] },
-              { title: "Fuite d'eau", causes: ["Joint usé"], solutionsPatient: ["Vérifier fermeture."], solutionsTech: ["Remplacer joint."] },
-              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez chauffe menu."], solutionsTech: ["Ajuster paramètres."] }
-          ] },
-          { id: "hum-sbox", name: "Humidificateur S.Box", failures: [
-              { title: "Pas de chauffage", causes: ["Connexion"], solutionsPatient: ["Réinsérer bac."], solutionsTech: ["Check interne."] },
-              { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Vérifier joint arrière."], solutionsTech: ["Changer joint."] },
-              { title: "Pas d'humidification", causes: ["Froid"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Check circuit."] }
-          ] },
-          { id: "hum-sys1", name: "Humidificateur System One", failures: [
-              { title: "Pas de chauffage", causes: ["Plaque HS"], solutionsPatient: ["Check connexion."], solutionsTech: ["Remplacer plaque."] },
-              { title: "Fuite d'eau", causes: ["Joint"], solutionsPatient: ["Vérifier état joint."], solutionsTech: ["Remplacer joint."] },
-              { title: "Pas d'humidification", causes: ["Condensation"], solutionsPatient: ["Baissez réglage."], solutionsTech: ["Check circuit."] }
-          ] },
-          { id: "prisma-aqua", name: "PrismaAQUA", failures: [
-              { title: "Pas de chauffage", causes: ["Résistance"], solutionsPatient: ["Vérifier symbole."], solutionsTech: ["Maintenance base."] },
-              { title: "Fuite d'eau", causes: ["Fissure"], solutionsPatient: ["Vérifier fissures bac."], solutionsTech: ["Remplacer bac."] },
-              { title: "Pas d'humidification", causes: ["Réglage"], solutionsPatient: ["Baissez humidité."], solutionsTech: ["Ajuster paramètres."] }
+          { id: "hum-externe", name: "Externes (autonomes)", models: [
+            { id: "hc150", name: "HC150", failures: [
+                { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Est-ce que le voyant orange est allumé ?"], solutionsTech: ["Check tension."] },
+                { title: "Fuite d'eau", causes: ["Fissure"], solutionsPatient: ["Check bac."], solutionsTech: ["Remplacer joint."] },
+                { title: "Alimentation", causes: ["Prise", "Cordon"], solutionsPatient: ["Check branchement."], solutionsTech: ["Vérifier cordon."] }
+            ] },
+            { id: "mr810-mr820", name: "MR810 / MR820", failures: [
+                { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Check voyant orange."], solutionsTech: ["Remplacer base."] },
+                { title: "Fuite d'eau", causes: ["Chambre"], solutionsPatient: ["Check raccords."], solutionsTech: ["Changer chambre."] },
+                { title: "Alimentation", causes: ["Cordon"], solutionsPatient: ["Check prise."], solutionsTech: ["Check fusible."] }
+            ] },
+            { id: "my-airvo-2", name: "MY AIRVO 2", failures: [
+                { title: "Pas de chauffage", causes: ["Résistance HS"], solutionsPatient: ["Check écran."], solutionsTech: ["Remplacer base."] },
+                { title: "Fuite d'eau", causes: ["Chambre"], solutionsPatient: ["Check insertion."], solutionsTech: ["Remplacer joint."] },
+                { title: "Alimentation/Batterie", causes: ["Secteur", "Batterie"], solutionsPatient: ["Check icône batterie."], solutionsTech: ["Check alim."] }
+            ] },
+            { id: "vhb10a", name: "VHB10A", failures: [
+                { title: "Alimentation", causes: ["Prise", "Interrupteur"], solutionsPatient: ["Vérifiez secteur."], solutionsTech: ["Check fusible."] }
+            ] }
           ] }
-        ] 
+        ]
       },
       {
         id: "o2",
