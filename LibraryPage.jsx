@@ -321,6 +321,24 @@ const LIBRARY_DATA = [
             causes: ["Joint du réservoir HumidAir fissuré ou sec", "Réservoir calcaire empêchant la fermeture hermétique"],
             solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Voyez-vous des traces d'eau sous l'appareil ?", "Le joint en silicone du réservoir vous semble-t-il abîmé ou sec ?"],
             solutionsTech: ["Nettoyez le calcaire avec du vinaigre blanc.", "Remplacez le joint en silicone s'il présente des coupures."]
+          },
+          {
+            title: "Bouton Marche/Arrêt ou molette inopérante",
+            causes: ["Poussière ou résidus bloquant le mécanisme", "Axe de molette fendu", "Nappe de commande déconnectée"],
+            solutionsPatient: ["Avez-vous essayé d'appuyer plus fermement au centre ?", "Nettoyez le contour avec une brossette sèche.", "La molette tourne-t-elle dans le vide ?"],
+            solutionsTech: ["Nettoyer le contacteur.", "Vérifier la nappe de liaison.", "Remplacer l'interface de commande."]
+          },
+          {
+            title: "Problème d’affichage (Écran noir ou figé)",
+            causes: ["Bug logiciel", "Écran LCD défectueux", "Choc physique"],
+            solutionsPatient: ["Effectuez un cycle d'alimentation (débrancher 30 sec).", "L'écran s'éclaire-t-il au démarrage ?", "Voyez-vous des taches noires sur l'afficheur ?"],
+            solutionsTech: ["Rebrancher la nappe LCD.", "Remplacer le bloc écran.", "Mise à jour firmware."]
+          },
+          {
+            title: "Alerte 'Filtre bouché, vérifiez le filtre'",
+            causes: ["Filtre à air sale", "Obstruction de la grille d'entrée", "Rappel de maintenance"],
+            solutionsPatient: ["Le filtre à l'arrière est-il blanc ou gris/noir ?", "Assurez-vous qu'aucun objet (rideau, mur) n'est à moins de 5cm de l'entrée d'air."],
+            solutionsTech: ["Changer le filtre.", "Dépoussiérer l'entrée d'air turbine.", "Vérifier le capteur de débit."]
           }
         ] 
       },
@@ -351,7 +369,14 @@ const LIBRARY_DATA = [
             causes: ["Alimentation", "Connectique", "Carte HS", "Surtension"], 
             solutionsPatient: ["La prise est-elle branchée ?", "L'écran s'allume-t-il ?", "Testé sur une autre prise ?", "Câble tordu ?"], 
             solutionsTech: ["Tester bloc alim.", "Changer cordon.", "Vérifier carte.", "Contrôler fusible."] 
+          },
+          {
+            title: "Erreur de carte SD",
+            causes: ["Carte mal insérée", "Protection en écriture", "Carte HS"],
+            solutionsPatient: ["Le petit loquet de la carte est-il bien vers le haut ?", "Retirez et remettez la carte fermement."],
+            solutionsTech: ["Formater la carte en FAT32.", "Remplacer la carte SD."]
           }
+
         ]
       },
       {
@@ -1748,7 +1773,7 @@ const containerStyle = {
   padding: "20px",
   fontFamily: "Arial, sans-serif",
   color: "#0f172a",
-};
+},
 
 const headerStyle = {
   display: "flex",
@@ -1757,13 +1782,13 @@ const headerStyle = {
   marginBottom: "40px",
   paddingBottom: "20px",
   borderBottom: "1px solid #e2e8f0"
-};
+},
 
 const cardGridStyle = {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
   gap: "20px",
-};
+},
 
 const cardStyle = {
   background: "white",
@@ -1779,7 +1804,7 @@ const cardStyle = {
   textAlign: "center",
   justifyContent: "center",
   minHeight: "120px"
-};
+},
 
 const breadcrumbStyle = {
   display: "flex",
@@ -1789,7 +1814,7 @@ const breadcrumbStyle = {
   color: "#64748b",
   marginBottom: "30px",
   fontWeight: 500
-};
+},
 
 const breadcrumbItemStyle = {
   cursor: "pointer",

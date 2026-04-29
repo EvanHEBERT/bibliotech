@@ -1381,9 +1381,9 @@ body {
         id: "ppc", 
         name: "PPC", 
         models: [
-            { 
-                id: "s9", 
-                name: "S9 (AutoSet, Elite)", 
+            {
+                id: "s9",
+                name: "S9 (AutoSet, Elite)",
                 failures: [
                     { title: "L’appareil ne s’allume pas (écran noir)", causes: ["Cordon débranché", "Bloc alim HS", "Prise murale défectueuse"], solutionsPatient: ["Vérifiez le branchement mural et sur l'appareil.", "Le voyant du bloc secteur est-il vert ?", "Essayez sur une autre prise."], solutionsTech: ["Tester le bloc d'alimentation 90W.", "Vérifier le connecteur d'embase interne.", "Remplacer le cordon secteur."] },
                     { title: "Alerte 'Air chaud' ou surchauffe", causes: ["Filtre colmaté", "Entrée d'air obstruée", "Pièce trop chaude"], solutionsPatient: ["Le petit filtre à l'arrière est-il propre ?", "Y a-t-il assez d'espace autour de la machine ?", "Éloignez l'appareil du radiateur."], solutionsTech: ["Remplacer le filtre.", "Nettoyer la turbine (poussière).", "Vérifier le ventilateur interne."] },
@@ -1398,7 +1398,11 @@ body {
                     { title: "Fuites de masque importantes", causes: ["Mauvais ajustement", "Coussin usé", "Harnais trop lâche"], solutionsPatient: ["Votre silicone est-il devenu jauni ou rigide ?", "Avez-vous bien ajusté les sangles ?", "Vérifiez que le masque correspond à votre taille."], solutionsTech: ["Examinez le coussin.", "Utiliser le gabarit de taille.", "Vérifier la pression IPAP/EPAP."] },
                     { title: "Problème d'alimentation", causes: ["Cordon déconnecté", "Alimentation HS", "Embase interne dessoudée"], solutionsPatient: ["L'écran s'allume-t-il au branchement ?", "Le fil est-il abîmé ?", "Vérifiez la prise murale avec une lampe."], solutionsTech: ["Tester le bloc 90W.", "Vérifier la continuité électrique.", "Ressouder le connecteur interne."] },
                     { title: "Message : 'Moteur défaillant'", causes: ["Entrée d'air bouchée", "Humidité dans le moteur", "Usure naturelle"], solutionsPatient: ["Le filtre à air arrière est-il propre ?", "Avez-vous renversé de l'eau sur l'appareil ?"], solutionsTech: ["Remplacer le filtre.", "Laisser sécher.", "Tester la turbine en mode service."] },
-                    { title: "Fuite d'eau ou 'Insérer réservoir'", causes: ["Joint de réservoir fissuré", "Réservoir calcaire"], solutionsPatient: ["Voyez-vous de l'eau sous l'appareil ?", "Le joint en silicone est-il bien propre et plat ?"], solutionsTech: ["Nettoyer le calcaire.", "Remplacer le joint silicone."] }
+                    { title: "Fuite d'eau ou 'Insérer réservoir'", causes: ["Joint de réservoir fissuré", "Réservoir calcaire"], solutionsPatient: ["Voyez-vous de l'eau sous l'appareil ?", "Le joint en silicone est-il bien propre et plat ?"], solutionsTech: ["Nettoyer le calcaire.", "Remplacer le joint silicone."] },
+                    { title: "Bouton Marche/Arrêt ou molette inopérante", causes: ["Poussière ou résidus bloquant le mécanisme", "Axe de molette fendu", "Nappe de commande déconnectée"], solutionsPatient: ["Avez-vous essayé d'appuyer plus fermement au centre ?", "Nettoyez le contour avec une brossette sèche.", "La molette tourne-t-elle dans le vide ?"], solutionsTech: ["Nettoyer le contacteur.", "Vérifier la nappe de liaison.", "Remplacer l'interface de commande."] },
+                    { title: "Problème d’affichage (Écran noir ou figé)", causes: ["Bug logiciel", "Écran LCD défectueux", "Choc physique"], solutionsPatient: ["Effectuez un cycle d'alimentation (débrancher 30 sec).", "L'écran s'éclaire-t-il au démarrage ?", "Voyez-vous des taches noires sur l'afficheur ?"], solutionsTech: ["Rebrancher la nappe LCD.", "Remplacer le bloc écran.", "Mise à jour firmware."] },
+                    { title: "Alerte 'Filtre bouché, vérifiez le filtre'", causes: ["Filtre à air sale", "Obstruction de la grille d'entrée", "Rappel de maintenance"], solutionsPatient: ["Le filtre à l'arrière est-il blanc ou gris/noir ?", "Assurez-vous qu'aucun objet (rideau, mur) n'est à moins de 5cm de l'entrée d'air."], solutionsTech: ["Changer le filtre.", "Dépoussiérer l'entrée d'air turbine.", "Vérifier le capteur de débit."] },
+                    { title: "Erreur de carte SD", causes: ["Carte mal insérée", "Protection en écriture", "Carte HS"], solutionsPatient: ["Le petit loquet de la carte est-il bien vers le haut ?", "Retirez et remettez la carte fermement."], solutionsTech: ["Formater la carte en FAT32.", "Remplacer la carte SD."] }
                 ] 
             },
             { 
@@ -1407,7 +1411,9 @@ body {
                 failures: [
                     { title: "L’écran tactile ne répond pas", causes: ["Doigts humides", "Bug logiciel", "Interférences"], solutionsPatient: ["Avez-vous les mains bien sèches ?", "Débranchez et rebranchez l'appareil.", "Nettoyez l'écran avec un chiffon sec."], solutionsTech: ["Mise à jour firmware.", "Tester l'écran en mode SAV.", "Vérifier la nappe de l'écran."] },
                     { title: "Alerte : 'Fuite importante'", causes: ["Bac mal inséré", "Joint mal mis", "Tuyau mal cliqué"], solutionsPatient: ["Le bac a-t-il bien fait 'clic' ?", "Vérifiez que le coude arrière est bien verrouillé."], solutionsTech: ["Réinsérer le bac.", "Vérifier le joint interne.", "Vérifier l'étanchéité du réservoir."] },
-                    { title: "SmartStart ne fonctionne pas", causes: ["Respiration trop faible", "Option désactivée", "Fuite importante"], solutionsPatient: ["Le SmartStart est-il sur 'On' ?", "Le masque est-il bien plaqué sur votre visage ?"], solutionsTech: ["Vérifier le menu clinicien.", "Ajuster la sensibilité du trigger."] }
+                    { title: "SmartStart ne fonctionne pas", causes: ["Respiration trop faible", "Option désactivée", "Fuite importante"], solutionsPatient: ["Le SmartStart est-il sur 'On' ?", "Le masque est-il bien plaqué sur votre visage ?"], solutionsTech: ["Vérifier le menu clinicien.", "Ajuster la sensibilité du trigger."] },
+                    { title: "Alim (Écran noir)", causes: ["Alimentation", "Connectique", "Carte HS", "Surtension"], solutionsPatient: ["La prise est-elle branchée ?", "L'écran s'allume-t-il ?", "Testé sur une autre prise ?", "Câble tordu ?"], solutionsTech: ["Tester bloc alim.", "Changer cordon.", "Vérifier carte.", "Contrôler fusible."] },
+                    { title: "Erreur de carte SD", causes: ["Carte mal insérée", "Protection en écriture", "Carte HS"], solutionsPatient: ["Le petit loquet de la carte est-il bien vers le haut ?", "Retirez et remettez la carte fermement."], solutionsTech: ["Formater la carte en FAT32.", "Remplacer la carte SD."] }
                 ] 
             },
             {
@@ -1442,7 +1448,8 @@ body {
                 name: "REMstar Auto", 
                 failures: [
                     { title: "Sifflement à l'inspiration", causes: ["Humidificateur mal verrouillé", "Joint usé", "Bac fissuré"], solutionsPatient: ["Les deux parties sont-elles bien clipsées ?", "Voyez-vous de l'eau couler ?"], solutionsTech: ["Vérifier les joints noirs.", "Remplacer l'embase de l'humidificateur."] },
-                    { title: "L'eau ne chauffe pas", causes: ["Contacts oxydés", "Plaque HS", "Mode ECO"], solutionsPatient: ["Les petits picots en métal sont-ils propres ?", "Le réservoir est-il bien enfoncé ?"], solutionsTech: ["Nettoyer les contacts.", "Tester la résistance de la plaque."] }
+                    { title: "L'eau ne chauffe pas", causes: ["Contacts oxydés", "Plaque HS", "Mode ECO"], solutionsPatient: ["Les petits picots en métal sont-ils propres ?", "Le réservoir est-il bien enfoncé ?"], solutionsTech: ["Nettoyer les contacts.", "Tester la résistance de la plaque."] },
+                    { title: "L'appareil fait un bruit de sifflement ou de vibration", causes: ["Filtre mal installé", "Humidificateur mal clipsé", "Moteur fatigué", "Filtre absent"], solutionsPatient: ["Le filtre est-il au fond ?", "L'humidificateur est-il clipsé ?", "Rien ne vibre ?", "Prise bien branchée ?"], solutionsTech: ["Vérifier filtre.", "Réassembler unité.", "Changer moteur.", "Remplacer silentblocs."] }
                 ]
             },
             {
@@ -1459,7 +1466,8 @@ body {
                 failures: [ 
                     { title: "L'appareil ne démarre pas", causes: ["Cordon mal branché", "Bloc alim défectueux", "Carte HS"], solutionsPatient: ["Voyez-vous un voyant sur le bloc noir du fil ?", "Testez sur une autre prise murale."], solutionsTech: ["Tester la tension du bloc.", "Vérifier le connecteur d'embase."] },
                     { title: "Air trop sec / Nez bouché", causes: ["Humidité basse", "Bac vide", "Plaque HS"], solutionsPatient: ["Reste-t-il de l'eau le matin ?", "Avez-vous augmenté le chauffage dans le menu ?"], solutionsTech: ["Augmenter le réglage.", "Vérifier la chauffe.", "Tester la sonde."] },
-                    { title: "Bruit de condensation", causes: ["Humidité trop forte", "Chambre froide", "Machine trop haute"], solutionsPatient: ["L'appareil est-il plus bas que votre tête ?", "Videz l'eau du tuyau."], solutionsTech: ["Diminuer le niveau.", "Housse isolante sur le tuyau."] }
+                    { title: "Bruit de condensation", causes: ["Humidité trop forte", "Chambre froide", "Machine trop haute"], solutionsPatient: ["L'appareil est-il plus bas que votre tête ?", "Videz l'eau du tuyau."], solutionsTech: ["Diminuer le niveau.", "Housse isolante sur le tuyau."] },
+                    { title: "Fuites de masque importantes", causes: ["Masque mal mis", "Coussin usé", "Taille inadaptée", "Pression support"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Sentez-vous de l'air s'échapper vers vos yeux ?", "Le silicone du masque est-il encore bien souple ?", "Harnais trop serré ?"], solutionsTech: ["Vérifier la taille.", "Remplacer coussin.", "Changer harnais.", "Réglage Rampe."] }
                 ] 
             },
             { 
@@ -1470,13 +1478,9 @@ body {
                     { title: "Alarme 'No Flow'", causes: ["Tuyau percé", "Masque débranché", "Filtre bouché"], solutionsPatient: ["Le tuyau est-il bien enfoncé ?", "Le filtre est-il gris ?"], solutionsTech: ["Vérifier l'étanchéité.", "Changer le filtre."] }
                 ] 
             },
-          
-          
-          { id: "aircurve-10", name: "AirCurve 10", failures: [
-              { title: "Ballonnements", causes: ["Pression support", "Aérophagie"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avale de l'air ?", "Dodo dos ?"], solutionsTech: ["Check Rampe.", "Baisse PS."] },
-              { title: "Masque siffle", causes: ["Joint réservoir", "Pression haute"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Siffle inspiration ?", "Joint gris OK ?"], solutionsTech: ["Check joint gris.", "Check tension tuyau."] }
-            ]
-          }
+            { id: "aircurve-10", name: "AirCurve 10", failures: [
+                { title: "Bruit de condensation dans le circuit", causes: ["Humidité trop forte", "Chambre froide", "Absence de circuit chauffant"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Entendez-vous un clapotis dans le tuyau ?"], solutionsTech: ["Réduire l'humidité.", "Utiliser ClimateLineAir.", "Ajouter une housse."] }
+            ] }
         ]
       },
       { 
