@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Bibliotech - Base de Connaissances</title>
+
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+
+            <!-- LOGO -->
+            <div class="logo-container" onclick="location.reload()">
+
+                <img src="./assets/logo.png" alt="Logo" class="logo-img">
+
+                <div>
+                    <h1 class="title">Base de Connaissances</h1>
+                    <span class="subtitle">Bibliothèque technique</span>
+                </div>
+
+            </div>
+
+            <!-- SEARCH -->
+            <div class="search-container">
+
+                <input
+                    type="search"
+                    id="global-search"
+                    placeholder="Rechercher un appareil, une panne..."
+                >
+
+            </div>
+
+            <!-- BUTTONS -->
+            <button
+                onclick="toggleFailuresView()"
+                class="header-btn"
+            >
+                📂 Catalogue
+            </button>
+
+            <button
+                onclick="toggleView()"
+                class="header-btn"
+            >
+                📋 Journal
+            </button>
+
+            <button
+                onclick="addItem()"
+                class="add-btn"
+            >
+                ➕ Ajouter
+            </button>
+
+        </div>
+
+        <!-- CONTENT -->
+        <div id="app-content"></div>
+
+    </div>
+
+    <!-- Firebase SDK (Version Compat pour script.js) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+# =====================
+# Node / npm
+# =====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+.npm/
+
+# =====================
+# PlatformIO (ESP / embedded)
+# =====================
+.platformio/
+.pio/
+libdeps/
+.envrc
+
+# =====================
+# VSCode
+# =====================
+.vscode/
+*.code-workspace
+
+# =====================
+# macOS
+# =====================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# =====================
+# Logs
+# =====================
+logs/
+*.log
+
+# =====================
+# Build outputs
+# =====================
+dist/
+build/
+out/
+
+# =====================
+# Python (si présent)
+# =====================
+__pycache__/
+*.pyc
+.venv/
+
+# =====================
+# Env files
+# =====================
+.env
+.env.local
+.env.*.local
+
+# =====================
+# npm cache (IMPORTANT dans ton cas)
+# =====================
+.npm/_cacache/
+.npm/_logs/
