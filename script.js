@@ -7,22 +7,29 @@ let LIBRARY_DATA = [
           { id: "airforce-max", name: "Airforce Max", failures: [
               { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Fusible interne grillé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
               { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
+<<<<<<< HEAD
           , { title: "Problème de bruit excessif", causes: ["Moteur usé", "Filtre mal inséré", "Corps étranger dans la turbine"], solutionsPatient: ["Vérifier que le filtre est bien en place.", "S'assurer que l'appareil est sur une surface stable."], solutionsTech: ["Nettoyer/remplacer la turbine.", "Vérifier les silentblocs."] }
           , { title: "Surchauffe de l'appareil", causes: ["Aérations obstruées", "Utilisation prolongée", "Filtre encrassé"], solutionsPatient: ["Dégager les aérations de l'appareil.", "Laisser refroidir l'appareil avant de le réutiliser."], solutionsTech: ["Nettoyer les conduits d'air internes.", "Vérifier le fonctionnement du ventilateur."] }
           , { title: "Tuyau se déconnecte fréquemment", causes: ["Buse du kit obstruée", "Tuyau usé ou distendu", "Pression sortie trop élevée"], solutionsPatient: ["Nettoyez la buse centrale du kit", "Vérifiez si le raccord du tuyau est gras", "Essayez un tuyau neuf"], solutionsTech: ["Vérifier la pression de service.", "Remplacer le raccord de sortie."] }
           , { title: "Odeur de brûlé / Surchauffe", causes: ["Filtre à air obstrué", "Moteur fatigué", "Poussière interne"], solutionsPatient: ["Éteindre immédiatement l'appareil", "Remplacer le filtre à air si gris/noir", "Dégager les entrées d'air"], solutionsTech: ["Nettoyage interne.", "Contrôler la consommation moteur.", "Vérifier le ventilateur."] }
+=======
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
           ] },
           { id: "innospire-elegance", name: "Innospire Elegance", failures: [
                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Interrupteur défaillant"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
               { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+<<<<<<< HEAD
           , { title: "Fuite d'air au niveau du kit", causes: ["Kit mal assemblé", "Joint usé", "Fissure dans le kit"], solutionsPatient: ["Réassembler correctement le kit.", "Vérifier l'état des joints du kit."], solutionsTech: ["Remplacer le kit de nébulisation.", "Vérifier la pression de sortie de l'appareil."] }
           , { title: "Vibrations excessives / Bruit de choc", causes: ["Pieds caoutchouc usés", "Surface instable", "Fixation interne desserrée"], solutionsPatient: ["Placer sur une surface plane et solide", "Vérifier les 4 pieds sous l'appareil"], solutionsTech: ["Resserrer les fixations compresseur.", "Remplacer les silentblocs."] }
           , { title: "Arrêt intermittent", causes: ["Surchauffe moteur", "Faux contact cordon", "Interrupteur HS"], solutionsPatient: ["Laisser refroidir 30 min", "Vérifier le branchement mural", "Ne pas utiliser de multiprise"], solutionsTech: ["Tester le cordon.", "Vérifier la sécurité thermique.", "Remplacer l'interrupteur."] }
           , { title: "Raccord de sortie cassé", causes: ["Choc", "Usure branchements"], solutionsPatient: ["Vérifier si le tuyau tient", "Ne pas forcer le branchement"], solutionsTech: ["Remplacer l'embase de sortie."] }
+=======
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
           ] },
           { id: "innospire-mini", name: "Innospire Mini", failures: [
               { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie déchargée", "Chargeur défectueux", "Carte mère HS"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
               { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
+<<<<<<< HEAD
           , { title: "Voyant de charge ne s'allume pas", causes: ["Chargeur défectueux", "Port de charge endommagé", "Batterie HS"], solutionsPatient: ["Tester avec un autre chargeur.", "Vérifier que le port de charge n'est pas obstrué."], solutionsTech: ["Remplacer le chargeur.", "Vérifier la carte de charge."] }
           , { title: "Batterie faible autonomie / Gonflée", causes: ["Cellules Lithium usées", "Chaleur excessive", "Défaut de charge"], solutionsPatient: ["Utiliser sur secteur", "Retirer la batterie si déformée", "Ne pas charger au soleil"], solutionsTech: ["Remplacer la batterie.", "Vérifier tension chargeur."] }
           , { title: "Sifflement aigu", causes: ["Fuite kit nébuliseur", "Tuyau micro-percé", "Filtre mal inséré"], solutionsPatient: ["Réassembler le kit fermement", "Vérifier l'état du tuyau", "Vérifier le filtre à air"], solutionsTech: ["Test étanchéité interne.", "Vérifier clapet compresseur."] }
@@ -51,6 +58,20 @@ let LIBRARY_DATA = [
               { title: "Débit saccadé", causes: ["Membrane compresseur usée", "Clapets fatigués"], solutionsPatient: ["Vérifier si le bruit change", "Vérifier le filtre"], solutionsTech: ["Révision tête compresseur."] },
               { title: "Odeur de chaud", causes: ["Moteur surchauffe", "Ventilation interne obstruée"], solutionsPatient: ["Vérifier le dessous de l'appareil", "Changer le filtre"], solutionsTech: ["Contrôler température moteur."] },
               { title: "Manque de puissance / Ronflement", causes: ["Condensateur HS", "Usure mécanique"], solutionsPatient: ["Moteur peine à démarrer ?", "Ronflement sans air ?"], solutionsTech: ["Changer condensateur."] }
+=======
+          ] },
+          { id: "inspiration-elite", name: "Inspiration Elite", failures: [
+              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+              { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+          ] },
+          { id: "pariboy-pro", name: "PariBoy Pro", failures: [
+              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+          ] },
+          { id: "pariboy-sx", name: "PariBoy SX", failures: [
+              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+              { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
           ] }
         ]
       },
@@ -762,6 +783,7 @@ var state = {
     searchQuery: '', searchResults: []
 };
 
+<<<<<<< HEAD
 let HISTORY = [];
 
 // --- CONFIGURATION FIREBASE ---
@@ -798,6 +820,9 @@ if (typeof firebase !== 'undefined') {
     // Fallback local si Firebase n'est pas chargé
     HISTORY = JSON.parse(localStorage.getItem('failure_history') || '[]');
 }
+=======
+let HISTORY = JSON.parse(localStorage.getItem('failure_history') || '[]');
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
 
 // --- FONCTIONS DE NAVIGATION ---
 function performSearch(query) {
@@ -931,7 +956,11 @@ function toggleFailuresView() {
     render();
 }
 
+<<<<<<< HEAD
 async function logIntervention(status) {
+=======
+function logIntervention(status) {
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
     const otherCause = document.getElementById('cause-other-input')?.value || '';
     const entry = {
         id: Date.now(),
@@ -944,6 +973,7 @@ async function logIntervention(status) {
         solutionsPatient: state.failure?.solutionsPatient || [],
         solutionsTech: state.failure?.solutionsTech || []
     };
+<<<<<<< HEAD
 
     if (typeof firebase !== 'undefined') {
         try {
@@ -958,6 +988,11 @@ async function logIntervention(status) {
         localStorage.setItem('failure_history', JSON.stringify(HISTORY));
         resetToModel();
     }
+=======
+    HISTORY.unshift(entry);
+    localStorage.setItem('failure_history', JSON.stringify(HISTORY));
+    resetToModel();
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
 }
 
 function clearHistory() {
@@ -968,6 +1003,7 @@ function clearHistory() {
     }
 }
 
+<<<<<<< HEAD
 async function deleteHistoryItem(id, docId) {
     if (confirm("Supprimer cette intervention du journal ?")) {
         if (docId && typeof firebase !== 'undefined') {
@@ -977,6 +1013,13 @@ async function deleteHistoryItem(id, docId) {
             localStorage.setItem('failure_history', JSON.stringify(HISTORY));
             render();
         }
+=======
+function deleteHistoryItem(id) {
+    if (confirm("Supprimer cette intervention du journal ?")) {
+        HISTORY = HISTORY.filter(item => item.id !== id);
+        localStorage.setItem('failure_history', JSON.stringify(HISTORY));
+        render();
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
     }
 }
 
@@ -1157,7 +1200,11 @@ function render() {
                     <td>${causesDisplay}</td><td>${solutionsPatientDisplay}</td><td>${solutionsTechDisplay}</td>
                     <td><span class="status-badge ${statusClass}">${item.status}</span></td>
                     <td>${item.comment || '-'}</td>
+<<<<<<< HEAD
                     <td style="text-align: center;"><button onclick="deleteHistoryItem(${item.id}, '${item.docId || ''}')" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 18px; font-weight: bold;">&times;</button></td>
+=======
+                    <td style="text-align: center;"><button onclick="deleteHistoryItem(${item.id})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 18px; font-weight: bold;">&times;</button></td>
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
                 </tr>`;
             });
             html += `</tbody></table></div>`;

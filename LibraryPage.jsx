@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { db } from "./firebaseConfig";
 import { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc, setDoc } from "firebase/firestore";
+=======
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import jsPDF from 'jspdf';
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
 import ErrorBoundary from "./ErrorBoundary"; // Assurez-vous que le chemin est correct
 
 // Données simulées pour la bibliothèque
@@ -14,6 +20,7 @@ const LIBRARY_DATA = [
     models: [
       { id: "airforce-max", name: "Airforce Max", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Fusible interne grillé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+<<<<<<< HEAD
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] },
           { title: "Problème de bruit excessif", causes: ["Moteur usé", "Filtre mal inséré", "Corps étranger dans la turbine"], solutionsPatient: ["Vérifier que le filtre est bien en place.", "S'assurer que l'appareil est sur une surface stable."], solutionsTech: ["Nettoyer/remplacer la turbine.", "Vérifier les silentblocs."] },
           { title: "Surchauffe de l'appareil", causes: ["Aérations obstruées", "Utilisation prolongée", "Filtre encrassé"], solutionsPatient: ["Dégager les aérations de l'appareil.", "Laisser refroidir l'appareil avant de le réutiliser."], solutionsTech: ["Nettoyer les conduits d'air internes.", "Vérifier le fonctionnement du ventilateur."] },
@@ -59,6 +66,29 @@ const LIBRARY_DATA = [
           { title: "Débit saccadé", causes: ["Membrane compresseur usée", "Clapets fatigués"], solutionsPatient: ["Vérifier si le bruit change", "Vérifier le filtre"], solutionsTech: ["Révision tête compresseur."] },
           { title: "Odeur de chaud", causes: ["Moteur surchauffe", "Ventilation interne obstruée"], solutionsPatient: ["Vérifier le dessous de l'appareil", "Changer le filtre"], solutionsTech: ["Contrôler température moteur."] },
           { title: "Manque de puissance / Ronflement", causes: ["Condensateur HS", "Usure mécanique"], solutionsPatient: ["Moteur peine à démarrer ?", "Ronflement sans air ?"], solutionsTech: ["Changer condensateur."] }
+=======
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] }
+      ] },
+      { id: "innospire-elegance", name: "Innospire Elegance", failures: [
+           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Interrupteur défaillant"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+      ] },
+      { id: "innospire-mini", name: "Innospire Mini", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie déchargée", "Chargeur défectueux", "Carte mère HS"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }
+      ] },
+      { id: "inspiration-elite", name: "Inspiration Elite", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }
+      ] },
+      { id: "pariboy-pro", name: "PariBoy Pro", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+      ] },
+      { id: "pariboy-sx", name: "PariBoy SX", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
       ] }
     ]
   },
@@ -2411,6 +2441,7 @@ const SelectionCard = ({ label, image, onClick, onDelete }) => (
 export default function LibraryPage() {
   // Enveloppez le contenu de LibraryPage avec ErrorBoundary
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [data, setData] = useState([]); // Initialement vide, sera rempli par Firebase
   const [selectedType, setSelectedType] = useState(null);
   const [history, setHistory] = useState([]);
@@ -2441,6 +2472,14 @@ export default function LibraryPage() {
     return () => unsubscribe();
   }, []);
 
+=======
+  const [data, setData] = useState(LIBRARY_DATA);
+  const [selectedType, setSelectedType] = useState(null);
+  const [history, setHistory] = useState(() => {
+    const saved = localStorage.getItem('failure_history');
+    return saved ? JSON.parse(saved) : [];
+  });
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
   const [view, setView] = useState('library'); // 'library', 'history', 'failures'
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedModel, setSelectedModel] = useState(null);
@@ -2513,6 +2552,7 @@ export default function LibraryPage() {
     return results;
   };
 
+<<<<<<< HEAD
   // Fonction pour copier les données locales vers Firebase au premier lancement
   const seedDatabase = async () => {
     if (window.confirm("Transférer les données locales vers Firebase ?")) {
@@ -2528,6 +2568,8 @@ export default function LibraryPage() {
     }
   };
 
+=======
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
   const handleSelectFailure = (failure) => {
     setSelectedFailure(failure);
     setView('library');
@@ -2535,6 +2577,7 @@ export default function LibraryPage() {
     setShowTech(false);
   };
 
+<<<<<<< HEAD
   const addItem = async () => {
     if (!selectedType) {
       const name = prompt("Nom de la nouvelle catégorie :");
@@ -2551,10 +2594,28 @@ export default function LibraryPage() {
           models: [] 
         }];
         await updateDoc(categoryRef, { brands: updatedBrands });
+=======
+  const addItem = () => {
+    if (!selectedType) {
+      const name = prompt("Nom de la nouvelle catégorie :");
+      if (name) setData([...data, { id: Date.now().toString(), name, models: [] }]);
+    } else if (selectedType && typesWithBrandsStep.includes(selectedType.id) && !selectedBrand) {
+      const name = prompt(`Nouvelle marque pour ${selectedType.name} :`);
+      if (name) {
+        const newData = data.map(t => {
+          if (t.id === selectedType.id) {
+            if (!t.brands) t.brands = [];
+            t.brands = [...t.brands, { id: Date.now().toString(), name, models: [] }];
+          }
+          return t;
+        });
+        setData(newData);
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
       }
     } else if (selectedType && !selectedModel) {
       const name = prompt(`Nouveau modèle pour ${selectedType.name} :`);
       if (name) {
+<<<<<<< HEAD
         const categoryRef = doc(db, "library", selectedType.id);
         const newModel = { id: Date.now().toString(), name, failures: [] };
         
@@ -2567,6 +2628,21 @@ export default function LibraryPage() {
           const updatedModels = [...(selectedType.models || []), newModel];
           await updateDoc(categoryRef, { models: updatedModels });
         }
+=======
+        const newData = data.map(t => {
+          if (t.id === selectedType.id) {
+            const target = selectedBrand || t;
+            const newModel = { id: Date.now().toString(), name, failures: [] };
+            if (selectedBrand) {
+               target.models = [...(target.models || []), newModel];
+            } else {
+               t.models = [...(t.models || []), newModel];
+            }
+          }
+          return t;
+        });
+        setData(newData);
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
       }
     } else if (selectedModel) {
       const title = prompt("Titre du problème :");
@@ -2582,6 +2658,7 @@ export default function LibraryPage() {
         solutionsTech: solTInput ? solTInput.split(/[;,]/).map(s => s.trim()) : []
       };
 
+<<<<<<< HEAD
       const categoryRef = doc(db, "library", selectedType.id);
       // On met à jour l'arborescence dans Firestore
       let updatedModels;
@@ -2640,6 +2717,49 @@ export default function LibraryPage() {
   };
 
   const logIntervention = async (status) => {
+=======
+      const updatedModel = { ...selectedModel, failures: [...selectedModel.failures, newFailure] };
+      setSelectedModel(updatedModel);
+      alert("Problème ajouté au modèle actuel.");
+    }
+  };
+
+  const removeItem = (type, id, index) => {
+    if (!window.confirm("Supprimer cet élément ?")) return;
+
+    if (type === 'category') {
+      setData(data.filter(t => t.id !== id));
+      setSelectedType(null);
+    } else if (type === 'brand') {
+      const newData = data.map(t => {
+        if (t.id === selectedType.id) {
+          return { ...t, brands: t.brands.filter(b => b.id !== id) };
+        }
+        return t;
+      });
+      setData(newData);
+      setSelectedBrand(null);
+    } else if (type === 'model') {
+      const newData = data.map(t => {
+        if (t.id === selectedType.id) {
+          if (selectedBrand) {
+            const newBrands = t.brands.map(b => b.id === selectedBrand.id ? { ...b, models: b.models.filter(m => m.id !== id) } : b);
+            return { ...t, brands: newBrands };
+          }
+          return { ...t, models: t.models.filter(m => m.id !== id) };
+        }
+        return t;
+      });
+      setData(newData);
+      setSelectedModel(null);
+    } else if (type === 'failure') {
+      const newFailures = selectedModel.failures.filter((_, i) => i !== index);
+      setSelectedModel({ ...selectedModel, failures: newFailures });
+    }
+  };
+
+  const logIntervention = (status) => {
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
     const otherCause = document.getElementById('cause-other-input')?.value;
     const entry = {
       id: Date.now(),
@@ -2649,6 +2769,7 @@ export default function LibraryPage() {
       status: status, // 'Succès' ou 'Échec'
       comment: otherCause || ''
     };
+<<<<<<< HEAD
 
     try {
       await addDoc(collection(db, "history"), entry);
@@ -2670,6 +2791,26 @@ export default function LibraryPage() {
     } catch (error) {
       console.error("Erreur suppression Firebase:", error);
     }
+=======
+    const newHistory = [entry, ...history];
+    setHistory(newHistory);
+    localStorage.setItem('failure_history', JSON.stringify(newHistory));
+    resetToModel();
+  };
+
+  const clearHistory = () => {
+    if (window.confirm("Vider l'historique ?")) {
+      setHistory([]);
+      localStorage.removeItem('failure_history');
+    }
+  };
+
+  const removeHistoryItem = (id) => {
+    if (!window.confirm("Supprimer cette ligne du journal ?")) return;
+    const newHistory = history.filter(item => item.id !== id);
+    setHistory(newHistory);
+    localStorage.setItem('failure_history', JSON.stringify(newHistory));
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
   };
 
   const nextStep = () => setCurrentStep(s => s + 1);
@@ -2678,6 +2819,7 @@ export default function LibraryPage() {
   const shouldHideNameInTitle = (name) => 
     !name || ["concentrateur", "fixe", "portable", "transportable"].some(term => name.toLowerCase().includes(term));
 
+<<<<<<< HEAD
   const downloadHistoryPDF = () => {
     if (history.length === 0) return alert("Le journal est vide.");
     
@@ -2696,6 +2838,12 @@ export default function LibraryPage() {
       headStyles: { fillColor: [2, 132, 199] }
     });
     doc.save(`journal_bibliotech_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.pdf`);
+=======
+  // Fonction pour télécharger le journal en PDF
+  const downloadHistoryPDF = () => {
+    // Implémentation de la fonction PDF (nécessite jspdf et jspdf-autotable)
+    // ... (le code de la fonction downloadHistoryPDF sera ajouté ici)
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
   };
 
   return ( // Le composant ErrorBoundary est ajouté ici
@@ -2713,12 +2861,15 @@ export default function LibraryPage() {
               <span style={{ fontSize: "12px", color: "#64748b" }}>Bibliothèque technique</span>
             </div>
           </div>
+<<<<<<< HEAD
           {/* Bouton d'initialisation Cloud si vide */}
           {data.length === 0 && (
             <button onClick={seedDatabase} style={{ marginLeft: '20px', background: '#f59e0b', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '6px', cursor: 'pointer', fontSize: '12px' }}>
               ☁️ Initialiser Cloud
             </button>
           )}
+=======
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
           {/* Barre de recherche intégrée */}
           <div style={{ flexGrow: 1, margin: "0 20px 0 40px" }}>
             <input 
@@ -2808,7 +2959,20 @@ export default function LibraryPage() {
               <div style={{ display: 'flex', gap: '10px' }}>
                 <button 
                   className="header-btn primary"
+<<<<<<< HEAD
                   onClick={downloadHistoryPDF}
+=======
+                  onClick={() => {
+                    const doc = new jsPDF('l', 'mm', 'a4'); // 'l' for landscape
+                    doc.setFontSize(18);
+                    doc.text("Journal des Interventions - Bibliotech", 14, 15);
+                    doc.setFontSize(10);
+                    doc.text(`Généré le ${new Date().toLocaleString('fr-FR')}`, 14, 22);
+                    const tableRows = history.map(item => [item.date, item.device, item.failure, item.status, item.comment || '-']);
+                    doc.autoTable({ head: [['Date', 'Appareil', 'Problème', 'Statut', 'Notes']], body: tableRows, startY: 28, styles: { fontSize: 8, cellPadding: 2 }, headStyles: { fillColor: [2, 132, 199] } });
+                    doc.save(`historique_interventions_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.pdf`);
+                  }}
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
                 >
                   📥 Télécharger PDF
                 </button>
@@ -2830,7 +2994,11 @@ export default function LibraryPage() {
                     </tr>
                   </thead>
                   <tbody>
+<<<<<<< HEAD
                     {history.map(item => <tr key={item.docId}>
+=======
+                    {history.map(item => <tr key={item.id}>
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
                         <td>{item.date}</td>
                         <td>{item.device}</td>
                         <td>{item.failure}</td>
@@ -2840,7 +3008,11 @@ export default function LibraryPage() {
                           </span>
                         </td>
                         <td style={{ color: '#64748b', fontStyle: 'italic' }}>{item.comment || "-"}</td>
+<<<<<<< HEAD
                         <td><button className="delete-btn" onClick={() => removeHistoryItem(item.docId)} style={{ position: 'static', opacity: 1, background: 'none', border: 'none', color: '#ef4444', fontSize: '18px', fontWeight: 'bold', width: 'auto', height: 'auto' }}>×</button></td>
+=======
+                        <td><button className="delete-btn" onClick={() => removeHistoryItem(item.id)} style={{ position: 'static', opacity: 1, background: 'none', border: 'none', color: '#ef4444', fontSize: '18px', fontWeight: 'bold', width: 'auto', height: 'auto' }}>×</button></td>
+>>>>>>> e5b87e76aa420577e274043716df419552aec92f
                       </tr>
                     ))}
                   </tbody>
