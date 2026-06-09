@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import * as XLSX from 'xlsx';
 import { db } from "./firebaseConfig";
 import { collection, addDoc, onSnapshot, query, orderBy, deleteDoc, doc, updateDoc, setDoc } from "firebase/firestore";
 import ErrorBoundary from "./ErrorBoundary"; // Assurez-vous que le chemin est correct
@@ -15,7 +14,7 @@ const LIBRARY_DATA = [
       { id: "airforce-max", name: "Airforce Max", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Fusible interne grillé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] },
-          { title: "Problème de bruit excessif", causes: ["Moteur usé", "Filtre mal inséré", "Corps étranger dans la turbine"], solutionsPatient: ["Vérifier que le filtre est bien en place.", "S'assurer que l'appareil est sur une surface stable."], solutionsTech: ["Nettoyer/remplacer la turbine.", "Vérifier les silentblocs."] },
+          { title: "Bruit anormal ou vibrations", causes: ["Moteur usé", "Filtre mal inséré", "Corps étranger dans la turbine"], solutionsPatient: ["Vérifier que le filtre est bien en place.", "S'assurer que l'appareil est sur une surface stable."], solutionsTech: ["Nettoyer/remplacer la turbine.", "Vérifier les silentblocs."] },
           { title: "Surchauffe de l'appareil", causes: ["Aérations obstruées", "Utilisation prolongée", "Filtre encrassé"], solutionsPatient: ["Dégager les aérations de l'appareil.", "Laisser refroidir l'appareil avant de le réutiliser."], solutionsTech: ["Nettoyer les conduits d'air internes.", "Vérifier le fonctionnement du ventilateur."] },
           { title: "Tuyau se déconnecte fréquemment", causes: ["Buse du kit obstruée", "Tuyau usé ou distendu", "Pression sortie trop élevée"], solutionsPatient: ["Nettoyez la buse centrale du kit", "Vérifiez si le raccord du tuyau est gras", "Essayez un tuyau neuf"], solutionsTech: ["Vérifier la pression de service.", "Remplacer le raccord de sortie."] },
           { title: "Odeur de brûlé / Surchauffe", causes: ["Filtre à air obstrué", "Moteur fatigué", "Poussière interne"], solutionsPatient: ["Éteindre immédiatement l'appareil", "Remplacer le filtre à air si gris/noir", "Dégager les entrées d'air"], solutionsTech: ["Nettoyage interne.", "Contrôler la consommation moteur.", "Vérifier le ventilateur."] }
@@ -23,8 +22,8 @@ const LIBRARY_DATA = [
       { id: "innospire-elegance", name: "Innospire Elegance", failures: [
            { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Interrupteur défaillant"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] },
-          { title: "Fuite d'air au niveau du kit", causes: ["Kit mal assemblé", "Joint usé", "Fissure dans le kit"], solutionsPatient: ["Réassembler correctement le kit.", "Vérifier l'état des joints du kit."], solutionsTech: ["Remplacer le kit de nébulisation.", "Vérifier la pression de sortie de l'appareil."] },
-          { title: "Vibrations excessives / Bruit de choc", causes: ["Pieds caoutchouc usés", "Surface instable", "Fixation interne desserrée"], solutionsPatient: ["Placer sur une surface plane et solide", "Vérifier les 4 pieds sous l'appareil"], solutionsTech: ["Resserrer les fixations compresseur.", "Remplacer les silentblocs."] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Kit mal assemblé", "Joint usé", "Fissure dans le kit"], solutionsPatient: ["Réassembler correctement le kit.", "Vérifier l'état des joints du kit."], solutionsTech: ["Remplacer le kit de nébulisation.", "Vérifier la pression de sortie de l'appareil."] },
+          { title: "Bruit anormal ou vibrations", causes: ["Pieds caoutchouc usés", "Surface instable", "Fixation interne desserrée"], solutionsPatient: ["Placer sur une surface plane et solide", "Vérifier les 4 pieds sous l'appareil"], solutionsTech: ["Resserrer les fixations compresseur.", "Remplacer les silentblocs."] },
           { title: "Arrêt intermittent", causes: ["Surchauffe moteur", "Faux contact cordon", "Interrupteur HS"], solutionsPatient: ["Laisser refroidir 30 min", "Vérifier le branchement mural", "Ne pas utiliser de multiprise"], solutionsTech: ["Tester le cordon.", "Vérifier la sécurité thermique.", "Remplacer l'interrupteur."] },
           { title: "Raccord de sortie cassé", causes: ["Choc", "Usure branchements"], solutionsPatient: ["Vérifier si le tuyau tient", "Ne pas forcer le branchement"], solutionsTech: ["Remplacer l'embase de sortie."] }
       ] },
@@ -33,29 +32,29 @@ const LIBRARY_DATA = [
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] },
           { title: "Voyant de charge ne s'allume pas", causes: ["Chargeur défectueux", "Port de charge endommagé", "Batterie HS"], solutionsPatient: ["Tester avec un autre chargeur.", "Vérifier que le port de charge n'est pas obstrué."], solutionsTech: ["Remplacer le chargeur.", "Vérifier la carte de charge."] },
           { title: "Batterie faible autonomie / Gonflée", causes: ["Cellules Lithium usées", "Chaleur excessive", "Défaut de charge"], solutionsPatient: ["Utiliser sur secteur", "Retirer la batterie si déformée", "Ne pas charger au soleil"], solutionsTech: ["Remplacer la batterie.", "Vérifier tension chargeur."] },
-          { title: "Sifflement aigu", causes: ["Fuite kit nébuliseur", "Tuyau micro-percé", "Filtre mal inséré"], solutionsPatient: ["Réassembler le kit fermement", "Vérifier l'état du tuyau", "Vérifier le filtre à air"], solutionsTech: ["Test étanchéité interne.", "Vérifier clapet compresseur."] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Fuite kit nébuliseur", "Tuyau micro-percé", "Filtre mal inséré"], solutionsPatient: ["Réassembler le kit fermement", "Vérifier l'état du tuyau", "Vérifier le filtre à air"], solutionsTech: ["Test étanchéité interne.", "Vérifier clapet compresseur."] },
           { title: "Nébulisation trop lente", causes: ["Kit entartré/usé", "Débit compresseur faible", "Filtre colmaté"], solutionsPatient: ["Changer le kit nébuliseur", "Nettoyer filtre à air", "Utiliser du sérum physiologique frais"], solutionsTech: ["Mesurer le débit air libre.", "Vérifier pression compresseur."] }
       ] },
       { id: "inspiration-elite", name: "Inspiration Elite", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] },
-          { title: "Bruit de frottement interne", causes: ["Coussinets moteur usés", "Ventilateur touchant le boîtier"], solutionsPatient: ["Vérifier si l'appareil a subi un choc", "S'assurer qu'aucun objet n'est entré dedans"], solutionsTech: ["Ouvrir et inspecter la mécanique.", "Remplacer roulements."] },
-          { title: "Fuite d'air au raccord tuyau", causes: ["Joint interne usé", "Raccord fissuré"], solutionsPatient: ["Vérifier l'extrémité du tuyau", "Enfoncer le tuyau fermement"], solutionsTech: ["Remplacer le raccord sortie.", "Vérifier tubes internes."] },
+          { title: "Bruit anormal ou vibrations", causes: ["Coussinets moteur usés", "Ventilateur touchant le boîtier"], solutionsPatient: ["Vérifier si l'appareil a subi un choc", "S'assurer qu'aucun objet n'est entré dedans"], solutionsTech: ["Ouvrir et inspecter la mécanique.", "Remplacer roulements."] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Joint interne usé", "Raccord fissuré"], solutionsPatient: ["Vérifier l'extrémité du tuyau", "Enfoncer le tuyau fermement"], solutionsTech: ["Remplacer le raccord sortie.", "Vérifier tubes internes."] },
           { title: "Surchauffe rapide du boîtier", causes: ["Entrées air bouchées", "Filtre interne colmaté"], solutionsPatient: ["Dégager l'espace autour de l'appareil", "Changer le filtre à air"], solutionsTech: ["Nettoyage circuit aération.", "Vérifier ventilateur."] },
           { title: "Tuyau qui saute de l'appareil", causes: ["Pression excessive (kit bouché)", "Extrémité tuyau lâche"], solutionsPatient: ["Nettoyer la buse du kit", "Couper 1cm du bout du tuyau", "Tester un nouveau tuyau"], solutionsTech: ["Mesurer pression maximale."] }
       ] },
       { id: "pariboy-pro", name: "PariBoy Pro", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] },
-          { title: "Bruit anormal / Claquement", causes: ["Moteur desserré", "Segment piston usé"], solutionsPatient: ["Vérifier que rien ne vibre contre l'appareil"], solutionsTech: ["Resserrer berceau moteur.", "Maintenance compresseur."] },
-          { title: "Fuite air interne (Sifflement)", causes: ["Tuyau interne débranché", "Joint culasse HS"], solutionsPatient: ["Appareil semble moins puissant", "Sifflement venant de l'intérieur"], solutionsTech: ["Réparation pneumatique interne."] },
+          { title: "Bruit anormal ou vibrations", causes: ["Moteur desserré", "Segment piston usé"], solutionsPatient: ["Vérifier que rien ne vibre contre l'appareil"], solutionsTech: ["Resserrer berceau moteur.", "Maintenance compresseur."] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Tuyau interne débranché", "Joint culasse HS"], solutionsPatient: ["Appareil semble moins puissant", "Sifflement venant de l'intérieur"], solutionsTech: ["Réparation pneumatique interne."] },
           { title: "Interrupteur bloqué", causes: ["Résidus de médicaments", "Ressort cassé"], solutionsPatient: ["Nettoyer le bouton au sec"], solutionsTech: ["Remplacer interrupteur."] },
           { title: "Pas de brouillard / Buse bouchée", causes: ["Orifice buse obstrué", "Filtre mouillé"], solutionsPatient: ["Déboucher la buse du kit", "Sécher ou changer le filtre"], solutionsTech: ["Vérifier débit (min 3.5L/min)."] }
       ] },
       { id: "pariboy-sx", name: "PariBoy SX", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] },
-          { title: "Vibrations fortes", causes: ["Amortisseurs moteur usés", "Axe moteur voilé"], solutionsPatient: ["Poser sur un support stable", "Vérifier les pieds"], solutionsTech: ["Remplacer silentblocs."] },
+          { title: "Bruit anormal ou vibrations", causes: ["Amortisseurs moteur usés", "Axe moteur voilé"], solutionsPatient: ["Poser sur un support stable", "Vérifier les pieds"], solutionsTech: ["Remplacer silentblocs."] },
           { title: "Débit saccadé", causes: ["Membrane compresseur usée", "Clapets fatigués"], solutionsPatient: ["Vérifier si le bruit change", "Vérifier le filtre"], solutionsTech: ["Révision tête compresseur."] },
           { title: "Odeur de chaud", causes: ["Moteur surchauffe", "Ventilation interne obstruée"], solutionsPatient: ["Vérifier le dessous de l'appareil", "Changer le filtre"], solutionsTech: ["Contrôler température moteur."] },
           { title: "Manque de puissance / Ronflement", causes: ["Condensateur HS", "Usure mécanique"], solutionsPatient: ["Moteur peine à démarrer ?", "Ronflement sans air ?"], solutionsTech: ["Changer condensateur."] }
@@ -136,8 +135,8 @@ const LIBRARY_DATA = [
                 {
                   title: "Problème d'affichage (Écran noir ou figé)",
                   causes: ["Défaut de nappe LCD", "Panne de rétroéclairage", "Erreur logicielle"],
-                  solutionsPatient: ["Redémarrer l'appareil", "Vérifier si le bouton Marche s'allume"],
-                  solutionsTech: ["Tester la tension de la nappe écran.", "Remplacer le bloc LCD."]
+                  solutionsPatient: ["Redémarrer l'appareil", "Vérifier si le bouton Marche s'allume", "Débrancher/rebrancher le bloc secteur", "Appuyer longuement sur la molette"],
+                  solutionsTech: ["Tester la tension de la nappe écran.", "Remplacer le bloc LCD.", "Mettre à jour le firmware", "Vérifier la carte graphique interne"]
                 },
                 {
                   title: "Problème d'humidification (Air sec ou condensation)",
@@ -148,8 +147,8 @@ const LIBRARY_DATA = [
                 {
                     title: "Erreur Système (Message d'erreur)",
                     causes: ["Mécanisme bloqué par la poussière", "Axe molette fendu", "Nappe déconnectée"],
-                    solutionsPatient: ["Nettoyer le contour du bouton", "Appuyer plus fermement", "Débrancher/rebrancher"],
-                  solutionsTech: ["Tester la tension de la nappe écran.", "Remplacer le bloc LCD."]
+                    solutionsPatient: ["Nettoyer le contour du bouton", "Appuyer plus fermement", "Débrancher/rebrancher", "Vérifier l'absence de liquide collant"],
+                  solutionsTech: ["Tester la tension de la nappe écran.", "Remplacer le bloc LCD.", "Remplacer l'encodeur rotatif", "Dépoussiérer la carte interface"]
                 },
                 {
                   title: "Bruit anormal ou vibrations",
@@ -160,8 +159,8 @@ const LIBRARY_DATA = [
                 {
                   title: "Problème de batterie ou autonomie",
                   causes: ["Batterie de sauvegarde défectueuse", "Décharge profonde", "Cycles de vie atteints"],
-                  solutionsPatient: ["Laisser branché sur secteur 24h", "Vérifier l'icône batterie", "Contacter le prestataire"],
-                  solutionsTech: ["Contrôler la tension de maintien", "Remplacer l'accumulateur interne"]
+                  solutionsPatient: ["Laisser branché sur secteur 24h", "Vérifier l'icône batterie", "Contacter le prestataire", "Tester sur une autre prise"],
+                  solutionsTech: ["Contrôler la tension de maintien", "Remplacer l'accumulateur interne", "Vérifier le circuit de charge", "Recalibrer via le logiciel Prisma"]
                 }
               ]}
             ]
@@ -174,20 +173,20 @@ const LIBRARY_DATA = [
               { id: "aircurve-10", name: "AirCurve 10", failures: [
                 {
                 title: "Pression insuffisante ou instable",
-                causes: ["Fuite importante dans le circuit", "Masque mal ajusté", "Usure de la turbine", "Tuyau percé ou fissuré", "Valve de fuite intentionnelle obstruée", "Capteur de pression interne décalibré"],
+                causes: ["Fuite importante dans le circuit", "Masque mal ajusté", "Usure de la turbine", "Tuyau percé ou fissuré"],
                 solutionsPatient: [
                   "Est-ce que ça sonne tout le temps, ou juste quand vous vous tournez dans le lit ?",
                   "Vous sentez de l'air qui s'échappe près de vos yeux ou de votre bouche ? Ça fait un sifflement ?",
                   "Vérifiez que le tuyau n'est pas coincé ou percé.",
                   "Assurez-vous que le coude est bien cliqué à l'arrière de la machine."
                 ],
-                solutionsTech: [
-                  "Guidez le patient pour utiliser la fonction 'Ajustement du masque' (Mask Fit) disponible dans le menu patient pour visualiser l'étanchéité.",
-                  "Accédez au menu clinicien et vérifiez que la pression prescrite (IPAP/EPAP) correspond à l'ordonnance.",
-                  "Entrez dans le menu de service pour lancer un test de la turbine et vérifier que la pression mesurée correspond à la pression de consigne.",
-                  "Inspecter le joint de sortie d'air interne.",
-                  "Vérifier l'absence d'obstruction dans le capteur de pression."
-                ]
+                solutionsTech: ["Vérifier P IPAP/EPAP", "Test turbine service", "Inspecter joint sortie"]
+              },
+              {
+                title: "Pas de chauffage",
+                causes: ["Résistance chauffante HS", "Humidité trop forte", "Absence de circuit chauffant"],
+                solutionsPatient: ["Entendez-vous un clapotis dans le tuyau ?", "Baisser le réglage d'humidité"],
+                solutionsTech: ["Réduire l'humidité.", "Utiliser ClimateLineAir.", "Ajouter une housse."]
               },
               {
                 title: "Problème d'alimentation (L'appareil ne démarre pas)",
@@ -204,8 +203,8 @@ const LIBRARY_DATA = [
               {
                 title: "Problème de batterie ou autonomie",
                 causes: ["Batterie externe (Power Station II) usée", "Câble DC mal branché", "Défaut de charge"],
-                solutionsPatient: ["Vérifier le branchement de la batterie externe", "Laisser charger la batterie PS II", "Tester sans batterie"],
-                solutionsTech: ["Vérifier la tension de sortie de la PS II", "Remplacer le câble de liaison DC"]
+                solutionsPatient: ["Vérifier le branchement de la batterie externe", "Laisser charger la batterie PS II", "Tester sans batterie", "Nettoyer les contacts"],
+                solutionsTech: ["Vérifier la tension de sortie de la PS II", "Remplacer le câble de liaison DC", "Remplacer la batterie", "Mettre à jour le firmware de l'appareil"]
               }]
               },
               {
@@ -250,8 +249,8 @@ const LIBRARY_DATA = [
               {
                 title: "Problème de batterie ou autonomie",
                 causes: ["Alarme de batterie vide", "Défaut de la batterie externe", "Connectique défectueuse"],
-                solutionsPatient: ["Brancher sur secteur", "Vérifier l'icône batterie", "Laisser charger la batterie externe"],
-                solutionsTech: ["Tester la batterie interne de secours", "Vérifier le circuit de commutation"]
+                solutionsPatient: ["Brancher sur secteur", "Vérifier l'icône batterie", "Laisser charger la batterie externe", "Vérifier le câble DC"],
+                solutionsTech: ["Tester la batterie interne de secours", "Vérifier le circuit de commutation", "Mesurer l'ampérage de charge", "Remplacer la batterie interne"]
               }]
               },
               {
@@ -274,9 +273,9 @@ const LIBRARY_DATA = [
               },
               {
                 title: "Problème de batterie ou autonomie",
-                causes: ["Batterie de sauvegarde déchargée", "Surchauffe pendant la charge"],
-                solutionsPatient: ["Laisser refroidir l'appareil", "Brancher sur secteur", "Vérifier les icônes"],
-                solutionsTech: ["Vérifier le ventilateur de charge", "Remplacer la batterie interne"]
+                causes: ["Batterie de sauvegarde déchargée", "Surchauffe pendant la charge", "Cycles épuisés", "Défaut carte mère"],
+                solutionsPatient: ["Laisser refroidir l'appareil", "Brancher sur secteur", "Vérifier les icônes", "Retirer le sac de transport"],
+                solutionsTech: ["Vérifier le ventilateur de charge", "Remplacer la batterie interne", "Mesurer la tension de charge", "Mise à jour logicielle"]
               }
               ]
               },
@@ -301,8 +300,8 @@ const LIBRARY_DATA = [
                   {
                     title: "Problème de batterie ou autonomie",
                     causes: ["Batterie interne HS", "Défaut de charge", "Utilisation prolongée sur batterie"],
-                    solutionsPatient: ["Brancher sur secteur", "Laisser charger 6h", "Vérifier les icônes à l'écran"],
-                    solutionsTech: ["Tester la capacité réelle", "Remplacer le module batterie"]
+                  solutionsPatient: ["Brancher sur secteur", "Laisser charger 6h", "Vérifier les icônes à l'écran", "Vérifier le voyant du chargeur"],
+                  solutionsTech: ["Tester la capacité réelle", "Remplacer le module batterie", "Vérifier l'embase de connexion", "Mise à jour firmware"]
                   }
                 ]
               },
@@ -315,198 +314,11 @@ const LIBRARY_DATA = [
             models: [{
               id: "trilogy-evo",
               name: "Trilogy Evo",
-              failures: [{
-                title: "Problème d'alimentation (L'appareil ne démarre pas)",
-                causes: ["Problème d'alimentation externe", "Batterie déchargée ou défectueuse", "Panne matérielle interne de la carte mère"],
-                solutionsPatient: [
-                  "Quand vous appuyez sur le bouton, est-ce que l'écran s'allume, même une seconde ?",
-                  "Est-ce que l'appareil est tombé, a pris l'eau, ou y'a eu une coupure de courant juste avant la panne ?",
-                  "C'était quand la dernière fois qu'il a bien marché ?",
-                  "Est-ce que vous êtes dehors avec l'appareil ?"
-                ],
-                solutionsTech: [
-                  "Si disponible, utilisez un bloc d'alimentation et un câble d'un autre appareil identique pour écarter un problème d'alimentation externe.",
-                  "Si l'appareil a une batterie amovible, retirez-la. Branchez l'appareil sur secteur et essayez de démarrer. Si ça marche, la batterie est défectueuse.",
-                  "Si rien ne fonctionne, une panne de la carte mère ou d'un composant interne est probable. L'appareil nécessite une intervention en atelier."
-                ]
-              },
-              {
-                title: "Problème de batterie ou autonomie",
-                causes: ["Batterie amovible défectueuse", "Fin de vie utile", "Surchauffe"],
-                solutionsPatient: ["Retirer et réinsérer la batterie", "Brancher sur secteur", "Laisser refroidir"],
-                solutionsTech: ["Tester la capacité", "Remplacer la batterie Smart"]
-              }]
-            },
-            {
-              title: "Problème d'affichage (Écran noir ou figé)",
-              causes: ["L'appareil est en mode 'Éco énergie'", "La carte SD est défectueuse ou mal lue", "Une erreur interne logicielle est survenue", "Nappe de l'écran LCD déconnectée ou endommagée"],
-              solutionsPatient: ["Appuyer brièvement sur la touche I/O (Marche/Arrêt)", "Retirer la carte SD et redémarrer l'appareil", "Débrancher et rebrancher l'appareil après 1 minute"],
-              solutionsTech: ["Désactiver le mode 'Éco énergie' dans le menu clinicien.", "Tester avec une carte SD neuve formatée en FAT32.", "Réinstaller le firmware.", "Vérifier la connexion de la nappe écran."]
-            },
-            {
-              title: "Problème d'humidification (Air sec ou condensation)",
-              causes: ["Humidificateur mal inséré", "Niveau d'humidité réglé incorrectement", "Réservoir d'eau vide ou entartré", "Tuyau non chauffant"],
-              solutionsPatient: ["Vérifier que le réservoir est bien en place", "Ajuster le réglage d'humidité", "Nettoyer le réservoir", "Vider l'eau du tuyau si condensation"],
-              solutionsTech: ["Vérifier la connexion électrique de l'humidificateur", "Tester la résistance chauffante", "Contrôler la sonde de température", "Remplacer l'humidificateur si défectueux"]
-            }
-            ]
+              failures: []
+            }]
           }
         ]
-      },
-      {
-        id: "niv-ii",
-        name: "NIV II",
-        brands: [
-          {
-            id: "resmed",
-            name: "ResMed",
-            logo: "/logos/resmed.png",
-            models: [
-              {
-                id: "stellar-150",
-                name: "Stellar 150",
-                failures: [
-                  {
-                    title: "Erreur Système (Message d'erreur)",
-                    causes: ["Condensation dans le tube de pression", "Tuyau percé ou micro-fissuré", "Filtre antibactérien saturé"],
-                    solutionsPatient: ["Secouer le tuyau pour vider l'eau", "Remplacer le tuyau", "Remplacer le filtre antibactérien"],
-                    solutionsTech: ["Vérifier l'absence d'obstruction dans le capteur de pression interne.", "Lancer un test de circuit en mode service."]
-                  },
-                  {
-                    title: "Problème de batterie ou autonomie",
-                    causes: ["Batterie usée (fin de vie)", "Défaut de charge", "Stockage prolongé sans charge", "Connectique interne défectueuse", "Batterie mal enclenchée"],
-                    solutionsPatient: ["Brancher l'appareil sur secteur", "Vérifier le voyant de charge", "Laisser charger au moins 4 heures", "Vérifier l'icône batterie à l'écran", "Réinsérer la batterie jusqu'au clic"],
-                    solutionsTech: ["Tester la capacité réelle de la batterie", "Vérifier le circuit de charge", "Remplacer la batterie interne", "Contrôler les tensions de la carte mère", "Nettoyer les connecteurs batterie"]
-                  },
-                  {
-                    title: "Fuites importantes (Masque ou Circuit)",
-                    causes: ["Masque mal positionné", "Harnais lâche", "Valve expiratoire mal fixée", "Mauvais réglage du diamètre du tuyau"],
-                    solutionsPatient: ["Réajuster le masque (fonction 'Fit')", "Vérifier le clipsage de la valve expiratoire", "Vérifier le type de circuit dans le menu"],
-                    solutionsTech: ["Vérifier la calibration du capteur de débit.", "Inspecter le joint de sortie d'air."]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "breas",
-            name: "Breas",
-            logo: "/logos/breas.png", // Assuming a logo path for Breas
-            models: [
-              {
-                id: "vivo-45",
-                name: "Vivo 45",
-                failures: [
-                  {
-                    title: "Fuites importantes (Masque ou Circuit)",
-                    causes: ["Débranchement accidentel du circuit", "Masque retiré pendant le sommeil", "Fuite buccale (masque nasal)", "Seuil d'alarme trop sensible"],
-                    solutionsPatient: ["Reconnecter fermement le circuit", "Utiliser une mentonnière", "Contacter le prestataire pour le seuil d'alarme"],
-                    solutionsTech: ["Vérifier la calibration du capteur de débit.", "Ajuster les réglages d'alarme dans le menu clinicien."]
-                  },
-                  {
-                    title: "Pression insuffisante ou instable",
-                    causes: ["Encombrement bronchique (sécrétions)", "Masque trop serré (écrase le flux)", "Changement physiologique"],
-                    solutionsPatient: ["Procéder à un désencombrement (aspiration/toux)", "Desserrer légèrement le masque", "Contacter le médecin si le problème persiste"],
-                    solutionsTech: ["Vérifier l'absence de fuite interne.", "Recalibrer la turbine."]
-                  },
-                  {
-                    title: "Problème de batterie ou autonomie",
-                    causes: ["Batterie usée (fin de vie)", "Défaut de charge", "Stockage prolongé sans charge", "Batterie mal enclenchée"],
-                    solutionsPatient: ["Brancher sur secteur immédiatement", "Vérifier le voyant de charge", "Laisser charger au moins 4 heures", "Réinsérer la batterie jusqu'au clic"],
-                    solutionsTech: ["Tester la capacité réelle de la batterie", "Vérifier le circuit de charge", "Remplacer la batterie interne"]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "lowenstein",
-            name: "Löwenstein",
-            logo: "/logos/lowenstein.png",
-            models: [
-              {
-                id: "prisma-vent40",
-                name: "prisma VENT40",
-                failures: [
-                  {
-                    title: "Fuites importantes (Masque ou Circuit)",
-                    causes: ["Valve expiratoire mal montée ou bloquée", "Masque usé (silicone rigide)", "Bouchon de mesure de pression ouvert"],
-                    solutionsPatient: ["Remonter la valve de fuite", "Remplacer le masque ou la bulle", "Fermer les ports de mesure du circuit"],
-                    solutionsTech: ["Inspecter la valve de non-retour.", "Vérifier les réglages de compensation de fuite."]
-                  },
-                  {
-                    title: "Problème de batterie ou autonomie",
-                    causes: ["Vieillissement des cellules", "Décharge profonde (stockage)", "Défaut de la carte de charge"],
-                    solutionsPatient: ["Brancher sur secteur", "Vérifier si le voyant du bloc est allumé", "Laisser charger une nuit complète"],
-                    solutionsTech: ["Contrôler la tension de charge", "Effectuer un test de décharge", "Remplacer le pack batterie"]
-                  },
-                  {
-                    title: "Problème d'alimentation (L'appareil ne démarre pas)",
-                    causes: ["Câble secteur mal inséré ou défectueux", "Batterie interne déchargée", "Surchauffe (filtre obstrué)"],
-                    solutionsPatient: ["Vérifier le voyant du bloc secteur", "Laisser charger sur secteur plusieurs heures", "Remplacer le filtre à air"],
-                    solutionsTech: ["Tester le bloc d'alimentation.", "Vérifier la carte de gestion de charge."]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            id: "philips-respironics",
-            name: "Philips Respironics",
-            logo: "/logos/philips.png",
-            models: [
-              {
-                id: "bipap-a40",
-                name: "BiPAP A40",
-                failures: [
-                  {
-                    title: "Pression insuffisante ou instable",
-                    causes: ["Tuyau plié ou coincé", "Filtre antibactérien (HME) saturé", "Obstruction de l'entrée d'air (poussière)"],
-                    solutionsPatient: ["Dégager le tuyau", "Remplacer le filtre antibactérien", "Nettoyer le support et les filtres à air"],
-                    solutionsTech: ["Nettoyer le bloc turbine.", "Vérifier le capteur de pression différentielle."]
-                  },
-                  {
-                    title: "Problème de batterie ou autonomie",
-                    causes: ["Batterie SmartBatterie défectueuse", "Contacts oxydés", "Fin de vie utile"],
-                    solutionsPatient: ["Retirer et nettoyer les contacts de la batterie", "Vérifier le niveau de charge sur la batterie elle-même", "Brancher sur secteur"],
-                    solutionsTech: ["Vérifier les logs d'erreurs batterie", "Tester avec une batterie neuve", "Mettre à jour le firmware de gestion d'énergie"]
-                  },
-                  {
-                    title: "Erreur Système (Message d'erreur)",
-                    causes: ["Silence d'alarme actif", "Batterie amovible mal enclenchée"],
-                    solutionsPatient: ["Appuyer sur 'Reset' alarme pour voir le message", "Réinsérer la batterie jusqu'au clic"],
-                    solutionsTech: ["Vérifier les connecteurs de la batterie.", "Mettre à jour le firmware."]
-                  }
-                ]
-              },
-              {
-                id: "dreamstation-bipap-avaps",
-                name: "DreamStation BiPAP AVAPS",
-                failures: [
-                  {
-                    title: "Pression insuffisante ou instable",
-                    causes: ["Mauvais réglage du diamètre du tuyau (15mm vs 22mm)", "Orifices de fuite du masque encrassés"],
-                    solutionsPatient: ["Ajuster le diamètre du tuyau dans le menu", "Nettoyer les orifices du masque"],
-                    solutionsTech: ["Vérifier le capteur de débit interne.", "Effectuer un test de calibration pneumatique."]
-                  },
-                  {
-                    title: "Problème de batterie ou autonomie",
-                    causes: ["Batterie usée (fin de vie)", "Défaut de charge", "Utilisation d'une alimentation 60W au lieu de 80W", "Stockage prolongé sans charge"],
-                    solutionsPatient: ["Vérifier que le bloc d'alimentation est bien le modèle 80W Philips", "Laisser charger au moins 4 heures", "Vérifier le voyant sur le pack batterie"],
-                    solutionsTech: ["Tester la capacité réelle de la batterie", "Vérifier la tension de charge", "Remplacer le module batterie", "Contrôler le circuit de charge"]
-                  },
-                  {
-                    title: "Problème d'humidification (Air sec ou condensation)",
-                    causes: ["Réservoir mal enclenché", "Température réglée trop bas"],
-                    solutionsPatient: ["Pousser le bac jusqu'au clic", "Augmenter le réglage d'humidification"],
-                    solutionsTech: ["Mesurer la résistance de la plaque chauffante.", "Vérifier les picots de connexion de l'embase."]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
+    },
       {
         id: "niv-iii",
         name: "NIV III",
@@ -518,11 +330,13 @@ const LIBRARY_DATA = [
             models: [
               { id: "astral-150", name: "Astral 150", failures: [
                 { title: "Problème de batterie ou autonomie", causes: ["Fin cycle batterie", "Stockage sans charge", "Température élevée"], solutionsPatient: ["Brancher sur secteur pour recalibrer", "Vérifier santé batterie (Info)", "Contacter le technicien"], solutionsTech: ["Remplacer batterie interne"] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Apprentissage circuit non fait", "Fuite valve expiratoire Astral"], solutionsPatient: ["Lancer 'Apprentissage circuit'", "Vérifier clipsage valve expiratoire"], solutionsTech: ["Tester autre bloc valve", "Calibration capteurs"] }
+                { title: "Erreur Système (Générique / Apprentissage)", causes: ["Apprentissage circuit non fait", "Fuite valve expiratoire Astral", "Capteur O2 HS", "Entrée air bouchée"], solutionsPatient: ["Lancer 'Apprentissage circuit'", "Vérifier clipsage valve expiratoire", "Nettoyer les filtres", "Redémarrer la machine"], solutionsTech: ["Tester autre bloc valve", "Calibration capteurs", "Remplacer cellule O2", "Nettoyage interne"] },
+                { title: "Alarme Volume Minute Bas (Vmin Bas)", causes: ["Encombrement bronchique", "Fuite importante au masque", "Pression inspiratoire insuffisante", "Patient endormi profondément"], solutionsPatient: ["Réajuster le masque", "Pratiquer un désencombrement", "Vérifier si le tuyau est percé"], solutionsTech: ["Ajuster les alarmes", "Vérifier la calibration du capteur de débit", "Vérifier l'étanchéité interne"] },
+                { title: "Alarme Fréquence Haute", causes: ["Anxiété ou douleur", "Lutte contre la machine", "Auto-déclenchement (Trigger trop sensible)"], solutionsPatient: ["Se calmer et respirer avec la machine", "Vérifier l'absence de condensation dans le tuyau"], solutionsTech: ["Diminuer la sensibilité du trigger", "Vérifier les réglages de confort (pente)", "Analyser les logs de trigger"] }
               ]},
               { id: "elisee-150", name: "Elisée 150 (V2)", failures: [
-                { title: "Erreur Système (Message d'erreur)", causes: ["Tube commande débranché", "Membrane valve percée", "Pile bouton vide"], solutionsPatient: ["Vérifier petit tube transparent", "Vérifier membrane silicone", "Demander remplacement pile"], solutionsTech: ["Remplacer pile CR2032"] },
-                { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Humidité sur dalle", "Défaut étalonnage"], solutionsPatient: ["Nettoyer l'écran", "Redémarrer l'appareil"], solutionsTech: ["Étalonnage dalle tactile"] },
+                { title: "Erreur Système (Message d'erreur)", causes: ["Tube commande débranché", "Membrane valve percée", "Pile bouton vide"], solutionsPatient: ["Vérifier petit tube transparent", "Vérifier membrane silicone", "Demander remplacement pile"], solutionsTech: ["Remplacer pile CR2032", "Vérifier bus communication", "Mise à jour soft"] },
+                { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Humidité sur dalle", "Défaut étalonnage dalle tactile", "Nappe desserrée", "Surcharge processeur"], solutionsPatient: ["Nettoyer l'écran", "Redémarrer l'appareil", "Utiliser un stylet", "Vérifier branchement secteur"], solutionsTech: ["Étalonnage dalle tactile", "Remplacer l'écran LCD", "Contrôler la carte mère", "Vérifier rétroéclairage"] },
                 {
                   title: "Problème de batterie ou autonomie",
                   causes: ["Batterie interne usée", "Décharge profonde", "Surchauffe"],
@@ -531,13 +345,14 @@ const LIBRARY_DATA = [
                 }
               ]},
               { id: "vs-iii", name: "VS III", failures: [
-                { title: "Pression insuffisante ou instable", causes: ["Circuit double mal raccordé", "Fuite port pilotage valve"], solutionsPatient: ["Vérifier clipsage bloc arrière", "Inspecter raccords circuit double"], solutionsTech: ["Test étanchéité interne"] },
+                { title: "Pression insuffisante ou instable", causes: ["Circuit double mal raccordé", "Fuite port pilotage valve", "Membrane expiratoire percée", "Usure piston"], solutionsPatient: ["Vérifier clipsage bloc arrière", "Inspecter raccords circuit double", "Vérifier la membrane de valve", "Réajuster le masque"], solutionsTech: ["Test étanchéité interne", "Calibration turbine", "Remplacer la membrane de valve", "Contrôler le bloc de pilotage"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Fin de vie des accumulateurs", "Stockage sans charge"],
-                  solutionsPatient: ["Laisser branché sur secteur en permanence hors utilisation", "Vérifier le voyant de charge"],
-                  solutionsTech: ["Remplacer le bloc batterie interne", "Vérifier la tension de maintien"]
-                }
+                  causes: ["Fin de vie des accumulateurs", "Stockage sans charge", "Défaut carte alim", "Surchauffe"],
+                  solutionsPatient: ["Laisser branché sur secteur en permanence hors utilisation", "Vérifier le voyant de charge", "Tester autre cordon", "Vérifier prise murale"],
+                  solutionsTech: ["Remplacer le bloc batterie interne", "Vérifier la tension de maintien", "Mesurer ampérage charge", "Contrôler bus batterie"]
+                },
+                { title: "Alarme Déconnexion", causes: ["Circuit patient débranché", "Fuite massive", "Valve expiratoire mal clipsée"], solutionsPatient: ["Vérifier les connexions du tuyau", "Vérifier le masque", "Vérifier le clipsage du bloc valve"], solutionsTech: ["Tester avec un poumon de test", "Vérifier le capteur de pression", "Calibration"] }
               ]}
             ]
           },
@@ -547,13 +362,14 @@ const LIBRARY_DATA = [
             logo: "/logos/philips.png",
             models: [
               { id: "trilogy-100", name: "Trilogy 100", failures: [
-                { title: "Erreur Système (Message d'erreur)", causes: ["Évents obstrués", "Filtre mousse sale", "Température > 40°C"], solutionsPatient: ["Dégager espace (> 15cm)", "Nettoyer le filtre mousse", "Laisser refroidir"], solutionsTech: ["Vérifier ventilateur interne"] },
-                { title: "Pression insuffisante ou instable", causes: ["Encombrement bronchique", "Fuite importante", "Vmin Bas"], solutionsPatient: ["Vérifier les raccords", "Soin de désencombrement", "Réajuster le masque"], solutionsTech: ["Calibration débit"] },
+                { title: "Erreur Système (Générique / Surchauffe)", causes: ["Évents obstrués", "Filtre mousse sale", "Température > 40°C"], solutionsPatient: ["Dégager espace (> 15cm)", "Nettoyer le filtre mousse", "Laisser refroidir"], solutionsTech: ["Vérifier ventilateur interne", "Dépoussiérage interne", "Mise à jour firmware"] },
+                { title: "Pression insuffisante ou instable", causes: ["Encombrement bronchique", "Fuite importante", "Vmin Bas"], solutionsPatient: ["Vérifier les raccords", "Soin de désencombrement", "Réajuster le masque"], solutionsTech: ["Calibration débit", "Tester turbine", "Check valve expiratoire"] },
+                { title: "Alarme Circuit déconnecté", causes: ["Circuit patient débranché", "Fuite massive", "Capteur de pression interne défectueux"], solutionsPatient: ["Vérifier les connexions du tuyau", "Vérifier le masque", "Appuyer sur 'Silence alarme' et reconnecter"], solutionsTech: ["Tester avec un poumon de test", "Vérifier le capteur de pression"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Batterie interne ou externe HS", "Mauvaise gestion de charge"],
-                  solutionsPatient: ["Vérifier si l'appareil bascule bien sur AC", "Laisser charger 6h", "Retirer la batterie externe pour tester"],
-                  solutionsTech: ["Tester l'autonomie sur charge fictive", "Remplacer la batterie interne (Lithium-Ion)"]
+                  causes: ["Batterie interne ou externe HS", "Mauvaise gestion de charge", "Contacts Smart oxydés", "Fusible batterie grillé"],
+                  solutionsPatient: ["Vérifier si l'appareil bascule bien sur AC", "Laisser charger 6h", "Retirer la batterie externe pour tester", "Nettoyer contacts"],
+                  solutionsTech: ["Tester l'autonomie sur charge fictive", "Remplacer la batterie interne (Lithium-Ion)", "Vérifier le module Smart", "Mise à jour logiciel charge"]
                 }
               ]}
             ]
@@ -564,13 +380,14 @@ const LIBRARY_DATA = [
             logo: "/logos/airliquide.png",
             models: [
               { id: "monnal-t50", name: "Monnal T50", failures: [
-                { title: "Erreur Système (Message d'erreur)", causes: ["Capteur débit humide/sale", "Batterie faible pour tests"], solutionsPatient: ["Vérifier propreté capteur", "Brancher sur secteur", "Vérifier étanchéité branche"], solutionsTech: ["Calibrer capteur débit"] },
-                { title: "Pression insuffisante ou instable", causes: ["Valve expiratoire bloquée", "Tuyau plié", "Lutte patient"], solutionsPatient: ["Sécher valve expiratoire", "Dégager tubulure", "Aspiration bronchique"], solutionsTech: ["Nettoyer bloc expiratoire"] },
+                { title: "Erreur Système (Générique / Capteur Débit)", causes: ["Capteur débit humide/sale", "Batterie faible pour tests", "Bug écran", "Obstruction turbine"], solutionsPatient: ["Vérifier propreté capteur", "Brancher sur secteur", "Vérifier étanchéité branche", "Redémarrer"], solutionsTech: ["Calibrer capteur débit", "Mise à jour soft", "Check filtres internes"] },
+                { title: "Pression insuffisante ou instable", causes: ["Valve expiratoire bloquée", "Tuyau plié", "Lutte patient"], solutionsPatient: ["Sécher valve expiratoire", "Dégager tubulure", "Aspiration bronchique"], solutionsTech: ["Nettoyer bloc expiratoire", "Check Pmax", "Recalibrer trigger"] },
+                { title: "Alarme O2 Bas", causes: ["Source O2 vide", "Cellule O2 usée", "Raccord O2 mal branché"], solutionsPatient: ["Vérifier la bouteille d'oxygène", "Vérifier le branchement au dos de la machine"], solutionsTech: ["Recalibrer la cellule O2", "Remplacer la cellule O2", "Vérifier le mélangeur interne"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Cycles de charge dépassés", "Surchauffe pendant la charge"],
-                  solutionsPatient: ["Brancher sur secteur immédiatement", "Vérifier l'état de la batterie dans le menu maintenance"],
-                  solutionsTech: ["Remplacer le pack batterie", "Mise à jour logiciel de gestion d'énergie"]
+                  causes: ["Cycles de charge dépassés", "Surchauffe pendant la charge", "Défaut bloc alim", "Batterie HS"],
+                  solutionsPatient: ["Brancher sur secteur immédiatement", "Vérifier l'état de la batterie dans le menu maintenance", "Charger 12h", "Vérifier voyant"],
+                  solutionsTech: ["Remplacer le pack batterie", "Mise à jour logiciel de gestion d'énergie", "Tester alimentation 19V", "Calibration"]
                 }
               ]}
             ]
@@ -581,13 +398,14 @@ const LIBRARY_DATA = [
             logo: "/logos/covidien.png",
             models: [
               { id: "pb-560", name: "PB 560", failures: [
-                { title: "Erreur Système (Message d'erreur)", causes: ["Paramètres incompatibles", "Erreur décharge totale"], solutionsPatient: ["Revoir prescription", "Valider chaque écran réglage"], solutionsTech: ["Reset logiciel"] },
-                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Câble défaillant", "Fusible interne grillé"], solutionsPatient: ["Tester autre câble standard", "Vérifier icône prise à l'écran"], solutionsTech: ["Tester bloc alim"] },
+                { title: "Erreur Système (Générique / Paramètres)", causes: ["Paramètres incompatibles", "Erreur décharge totale", "Bug firmware", "Capteur de pression HS"], solutionsPatient: ["Revoir la prescription", "Valider chaque écran de réglage", "Débrancher et rebrancher l'alimentation", "Redémarrer l'appareil"], solutionsTech: ["Reset logiciel via menu SAV", "Mise à jour du firmware", "Remplacer le capteur de pression", "Analyser les logs d'erreurs"] },
+                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Câble défaillant", "Fusible interne grillé", "Interrupteur HS", "Tension instable"], solutionsPatient: ["Tester autre câble standard", "Vérifier icône prise à l'écran", "Changer de prise murale", "Pousser l'interrupteur"], solutionsTech: ["Tester bloc alim", "Vérifier continuité inter", "Remplacer fusible", "Mesurer V sortie"] },
+                { title: "Problème de trigger (Auto-déclenchement)", causes: ["Condensation dans le circuit", "Trigger trop sensible", "Fuite importante"], solutionsPatient: ["Vider l'eau du tuyau", "Réajuster le masque"], solutionsTech: ["Diminuer la sensibilité du trigger", "Vérifier l'étanchéité du circuit"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Batterie totalement déchargée (0%)", "Fin de vie utile"],
-                  solutionsPatient: ["Laisser branché 24h sans interruption", "Vérifier si l'appareil bipe au branchement"],
-                  solutionsTech: ["Tester la tension résiduelle", "Remplacer la batterie interne"]
+                  causes: ["Batterie totalement déchargée (0%)", "Fin de vie utile", "Surchauffe charge", "Commutateur batterie"],
+                  solutionsPatient: ["Laisser branché 24h sans interruption", "Vérifier si l'appareil bipe au branchement", "Aérer la machine", "Vérifier icône batterie"],
+                  solutionsTech: ["Tester la tension résiduelle", "Remplacer la batterie interne", "Calibration batterie", "Tester cycle décharge"]
                 }
               ]}
             ]
@@ -598,13 +416,13 @@ const LIBRARY_DATA = [
             logo: "/logos/lowenstein.png",
             models: [
               { id: "luisa", name: "LUISA", failures: [
-                { title: "Problème d'oxygène (FiO2 basse)", causes: ["Source O2 vide", "Cellule O2 usée/non calibrée"], solutionsPatient: ["Vérifier l'arrivée d'O2", "Recalibrer la cellule"], solutionsTech: ["Remplacer la cellule O2"] },
-                { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Saleté/humidité sur dalle", "Bug logiciel"], solutionsPatient: ["Nettoyer l'écran", "Redémarrer l'appareil"], solutionsTech: ["Mise à jour firmware"] },
+                { title: "Problème d'oxygène (FiO2 basse)", causes: ["Source O2 vide", "Cellule O2 usée/non calibrée", "Fuite circuit", "Sélecteur O2"], solutionsPatient: ["Vérifier l'arrivée d'O2", "Recalibrer la cellule", "Vérifier raccords", "Changer le bocal O2"], solutionsTech: ["Remplacer la cellule O2", "Tester la valve O2", "Mise à jour calibration", "Check pressostat"] },
+                { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Saleté/humidité sur dalle", "Bug logiciel", "Nappe écran", "Surchauffe CPU"], solutionsPatient: ["Nettoyer l'écran", "Redémarrer l'appareil", "Vérifier secteur", "Laisser refroidir"], solutionsTech: ["Mise à jour firmware", "Changer unité LCD", "Vérifier nappe graphique", "Reprogrammation carte mère"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Batterie intelligente en erreur", "Vieillissement"],
-                  solutionsPatient: ["Vérifier le niveau sur l'écran tactile", "Brancher sur secteur"],
-                  solutionsTech: ["Vérifier les logs batterie", "Remplacer la SmartBattery"]
+                  causes: ["Batterie intelligente en erreur", "Vieillissement", "Contacts sales", "Alim sous-dimensionnée"],
+                  solutionsPatient: ["Vérifier le niveau sur l'écran tactile", "Brancher sur secteur", "Nettoyer les connecteurs", "Charger 10h"],
+                  solutionsTech: ["Vérifier les logs batterie", "Remplacer la SmartBattery", "Tester bloc alim", "Recalibrer"]
                 }
               ]}
             ]
@@ -614,14 +432,18 @@ const LIBRARY_DATA = [
             name: "Saime",
             models: [
               { id: "eole-3", name: "Eole 3 S / XLS", failures: [
-                { title: "Pression insuffisante ou instable", causes: ["Usure soufflet (modèle XLS)", "Fuite interne majeure"], solutionsPatient: ["Utiliser ventilateur de secours immédiatement", "Appeler le technicien"], solutionsTech: ["Remplacer le soufflet", "Révision atelier"] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Panne carte électronique", "Batterie sécurité vide"], solutionsPatient: ["Passer en ventilation manuelle (ballon)", "Retour atelier d'urgence"], solutionsTech: ["Diagnostic carte mère"] },
+                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Fusible embase grillé", "Interrupteur défectueux", "Batterie interne HS", "Panne carte alim"], solutionsPatient: ["Vérifier le branchement au mur et au dos de l'appareil", "Appuyer fermement sur l'interrupteur", "Vérifier si un voyant s'allume au branchement", "Tester une autre prise murale"], solutionsTech: ["Tester le cordon secteur", "Vérifier/Remplacer le fusible d'embase", "Mesurer la tension de sortie de la carte alim", "Vérifier la tension des batteries"] },
+                { title: "Pression insuffisante ou instable", causes: ["Usure soufflet (modèle XLS)", "Fuite interne majeure", "Vanne expiratoire", "Filtre bouché"], solutionsPatient: ["Utiliser ventilateur de secours immédiatement", "Appeler le technicien", "Changer le filtre", "Désencombrer patient"], solutionsTech: ["Remplacer le soufflet", "Révision atelier", "Calibration débit", "Test étanchéité interne"] },
+                { title: "Erreur Système (Message d'erreur)", causes: ["Panne carte électronique", "Batterie sécurité vide", "Bug logiciel", "Surtension"], solutionsPatient: ["Passer en ventilation manuelle (ballon)", "Retour atelier d'urgence", "Éteindre/rallumer", "Vérifier voyants"], solutionsTech: ["Diagnostic carte mère", "Mise à jour firm", "Remplacer pile RAM", "Dépannage bus"] },
                 {
                   title: "Problème de batterie ou autonomie",
-                  causes: ["Batterie Pb-Acide ou NiMH usée", "Absence de charge longue durée"],
-                  solutionsPatient: ["Brancher sur secteur 12h", "Vérifier le voyant batterie"],
-                  solutionsTech: ["Remplacer les accumulateurs de secours"]
-                }
+                  causes: ["Batterie Pb-Acide ou NiMH usée", "Absence de charge longue durée", "Chargeur interne HS", "Surchauffe"],
+                  solutionsPatient: ["Brancher sur secteur 12h", "Vérifier le voyant batterie", "Nettoyer les ouïes", "Vérifier cordon"],
+                  solutionsTech: ["Remplacer les accumulateurs de secours", "Tester le circuit de charge", "Mesurer V maintien", "Revision complète"]
+                },
+                { title: "Fuites importantes (Masque ou Circuit)", causes: ["Circuit mal branché", "Valve expiratoire mal vissée", "Tuyau percé"], solutionsPatient: ["Vérifier le serrage du circuit", "S'assurer que la valve expiratoire fait 'clic'", "Inspecter le tuyau"], solutionsTech: ["Test étanchéité circuit", "Vérifier la membrane de valve", "Contrôler le débit de fuite"] },
+                { title: "Bruit anormal ou sifflement (Turbine)", causes: ["Usure des roulements", "Filtre à air colmaté", "Corps étranger"], solutionsPatient: ["Vérifier la propreté du filtre arrière", "Dégager l'arrière de l'appareil"], solutionsTech: ["Nettoyer la turbine", "Remplacer le bloc moteur/turbine", "Vérifier l'équilibrage"] },
+                { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Nappe d'écran desserrée", "Surtension secteur", "Défaut rétroéclairage"], solutionsPatient: ["Débrancher/rebrancher le secteur", "Vérifier si les voyants s'allument"], solutionsTech: ["Tester la nappe LCD", "Remplacer l'unité d'affichage", "Vérifier les tensions carte mère"] }
               ]}
             ]
           },
@@ -630,13 +452,14 @@ const LIBRARY_DATA = [
             name: "Breas",
             models: [
               { id: "vivo-45-ls", name: "Vivo 45 LS", failures: [
-                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur", "Voyant charge allumé ?"], solutionsTech: ["Tester alimentation", "Remplacer batterie"] },
-                { title: "Pression insuffisante ou instable", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Masque bien mis ?", "Filtre propre ?"], solutionsTech: ["Vérifier calibration", "Remplacer turbine"] }
+                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Batterie", "Carte"], solutionsPatient: ["Brancher sur secteur", "Voyant charge allumé ?", "Tester autre prise", "Vérifier voyant bloc"], solutionsTech: ["Tester alimentation", "Remplacer batterie", "Contrôler carte mère", "Vérifier connecteur DC"] },
+                { title: "Pression insuffisante ou instable", causes: ["Masque", "Circuit", "Filtre"], solutionsPatient: ["Masque bien mis ?", "Filtre propre ?", "Tuyau plié ?", "Respirer doucement"], solutionsTech: ["Vérifier calibration", "Remplacer turbine", "Nettoyage interne", "Test étanchéité"] }
               ]}
             ]
           }
         ]
       }
+    },
     ]
   },
   {
@@ -676,7 +499,7 @@ const LIBRARY_DATA = [
             id: "aircurve-10-cs",
             name: "AirCurve 10 CS PaceWave",
             failures: [
-              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon déconnecté", "Bloc alim HS", "Prise murale défectueuse"], solutionsPatient: ["Vérifier branchement secteur", "Tester autre prise", "Vérifier voyant bloc secteur"], solutionsTech: ["Tester bloc 90W", "Vérifier connecteur embase"] },
+              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon déconnecté", "Bloc alim HS", "Prise murale défectueuse"], solutionsPatient: ["Vérifier branchement secteur", "Tester autre prise", "Vérifier voyant bloc secteur", "Vérifier le voyant vert sur bloc"], solutionsTech: ["Tester bloc 90W", "Vérifier connecteur embase", "Remplacer cordon", "Check fusible embase"] },
               { title: "Pression insuffisante ou instable", causes: ["Tuyau plié", "Filtre colmaté", "Obstruction interne"], solutionsPatient: ["Vérifier si le tuyau est plié", "Remplacer le filtre à air", "Réajuster le masque"], solutionsTech: ["Vérifier calibration turbine", "Check capteur pression"] },
               { title: "Fuites importantes (Masque ou Circuit)", causes: ["Masque mal ajusté", "Joint réservoir usé", "Bac mal inséré"], solutionsPatient: ["Réajuster le masque ('Mask Fit')", "Vérifier insertion bac", "Vérifier clipsage tuyau"], solutionsTech: ["Vérifier étanchéité coude", "Remplacer joint silicone"] },
               { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Humidité trop haute", "Chambre froide", "Tuyau non isolé"], solutionsPatient: ["Baisser réglage humidité", "Utiliser housse tuyau", "Placer l'appareil plus bas que le lit"], solutionsTech: ["Vérifier sonde thermique", "Installer ClimateLineAir"] },
@@ -689,8 +512,8 @@ const LIBRARY_DATA = [
               {
                 title: "Problème de batterie ou autonomie",
                 causes: ["Batterie externe (PS II) usée", "Câble DC défectueux", "Défaut communication"],
-                solutionsPatient: ["Vérifier le câble de la batterie externe", "Charger la Power Station II", "Vérifier les connecteurs"],
-                solutionsTech: ["Vérifier la tension DC", "Remplacer le câble"]
+                solutionsPatient: ["Vérifier le câble de la batterie externe", "Charger la Power Station II", "Vérifier les connecteurs", "Brancher sur secteur"],
+                solutionsTech: ["Vérifier la tension DC", "Remplacer le câble", "Recalibrer charge", "Changer PS II"]
               }
             ]
           },
@@ -698,10 +521,10 @@ const LIBRARY_DATA = [
             id: "aircurve-10-vauto",
             name: "AirCurve 10 VAuto",
             failures: [
-              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Bloc alim HS", "Faux contact prise", "Câble abîmé"], solutionsPatient: ["Vérifier branchement secteur", "Vérifier voyant bloc", "Tester autre prise"], solutionsTech: ["Vérifier alimentation 90W", "Check embase interne"] },
-              { title: "Pression insuffisante ou instable", causes: ["Trigger trop sensible", "Pression support élevée", "Asynchronie"], solutionsPatient: ["Réajuster le masque", "Vérifier si tuyau plié", "Respirer calmement"], solutionsTech: ["Ajuster sensibilité trigger", "Check pressions IPAP/EPAP"] },
-              { title: "Fuites importantes (Masque ou Circuit)", causes: ["Coussin usé", "Harnais lâche", "Bac mal inséré"], solutionsPatient: ["Resserrer le harnais", "Vérifier insertion bac", "Vérifier clipsage tuyau"], solutionsTech: ["Vérifier taille masque", "Remplacer joint de sortie"] },
-              { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Humidité haute", "Chambre froide", "Appareil au sol"], solutionsPatient: ["Baisser réglage humidité", "Vider l'eau du tuyau", "Utiliser housse isolante"], solutionsTech: ["Réduire réglage humidité", "Check sonde température"] }
+              { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Bloc alim HS", "Faux contact prise", "Câble abîmé"], solutionsPatient: ["Vérifier branchement secteur", "Vérifier voyant bloc", "Tester autre prise", "Vérifier connecteur machine"], solutionsTech: ["Vérifier alimentation 90W", "Check embase interne", "Ressouder connecteur", "Mise à jour soft"] },
+              { title: "Pression insuffisante ou instable", causes: ["Trigger trop sensible", "Pression support élevée", "Asynchronie"], solutionsPatient: ["Réajuster le masque", "Vérifier si tuyau plié", "Respirer calmement", "Changer le filtre"], solutionsTech: ["Ajuster sensibilité trigger", "Check pressions IPAP/EPAP", "Calibration turbine", "Test asynchronie poumon test"] },
+              { title: "Fuites importantes (Masque ou Circuit)", causes: ["Coussin usé", "Harnais lâche", "Bac mal inséré"], solutionsPatient: ["Resserrer le harnais", "Vérifier insertion bac", "Vérifier clipsage tuyau", "Ajuster la bulle"], solutionsTech: ["Vérifier taille masque", "Remplacer joint de sortie", "Test étanchéité interne", "Check bac à eau"] },
+              { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Humidité haute", "Chambre froide", "Appareil au sol"], solutionsPatient: ["Baisser réglage humidité", "Vider l'eau du tuyau", "Utiliser housse isolante", "Surélever la machine"], solutionsTech: ["Réduire réglage humidité", "Check sonde température", "Tester ClimateLine", "Check embase"] }
             ]
           }
         ]
@@ -733,8 +556,8 @@ const LIBRARY_DATA = [
               {
                 title: "Problème de batterie ou autonomie",
                 causes: ["Batterie amovible défectueuse", "Fin de vie utile", "Surchauffe"],
-                solutionsPatient: ["Retirer et réinsérer la batterie", "Brancher sur secteur", "Laisser refroidir"],
-                solutionsTech: ["Tester la capacité", "Remplacer la batterie Smart"]
+                solutionsPatient: ["Retirer et réinsérer la batterie", "Brancher sur secteur", "Laisser refroidir", "Nettoyer les contacts"],
+                solutionsTech: ["Tester la capacité", "Remplacer la batterie Smart", "Contrôler le circuit de charge", "Firmware gestion énergie"]
               }
             ]
           },
@@ -757,8 +580,8 @@ const LIBRARY_DATA = [
               {
                 title: "Problème de batterie ou autonomie",
                 causes: ["Module batterie Philips usé", "Connectique embase oxydée", "Charge incomplète"],
-                solutionsPatient: ["Vérifier le voyant sur le module batterie", "Nettoyer les contacts avec un chiffon sec", "Laisser charger 4h"],
-                solutionsTech: ["Tester la tension du module", "Remplacer le module batterie"]
+                solutionsPatient: ["Vérifier le voyant sur le module batterie", "Nettoyer les contacts avec un chiffon sec", "Laisser charger 4h", "Brancher on secteur"],
+                solutionsTech: ["Tester la tension du module", "Remplacer le module batterie", "Vérifier alim 80W", "Check comm bus batterie"]
               }
             ]
           },
@@ -768,21 +591,21 @@ const LIBRARY_DATA = [
             failures: [
               {
               title: "Problème d'alimentation (L'appareil ne démarre pas)",
-              causes: ["Perte secteur", "Faux contact prise arrière", "Bloc alim HS"],
-              solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "La machine s'arrête-t-elle si vous bougez légèrement le fil à l'arrière ?"],
-              solutionsTech: ["Vérifier que le cordon est bien enfoncé.", "Tester avec une autre alimentation.", "Contrôler la température interne."]
+              causes: ["Perte secteur", "Faux contact prise arrière", "Bloc alim HS", "Température interne", "Cordon coupé"],
+              solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "La machine s'arrête-t-elle si vous bougez légèrement le fil à l'arrière ?", "Dégager l'arrière", "Tester autre prise"],
+              solutionsTech: ["Vérifier que le cordon est bien enfoncé.", "Tester avec une autre alimentation.", "Contrôler la température interne.", "Vérifier l'embase soudée"]
               },
               {
                 title: "Pression insuffisante ou instable",
                 causes: ["Valve expiratoire bloquée", "Toux patient", "Filtre colmaté", "Tuyau plié"],
-                solutionsPatient: ["Vérifier branchement", "Nettoyer la valve System One", "Remplacer le filtre arrière"],
-                solutionsTech: ["Nettoyer la valve System One.", "Remplacer le filtre gris.", "Vérifier les réglages de Pmax."]
+                solutionsPatient: ["Vérifier branchement", "Nettoyer la valve System One", "Remplacer le filtre arrière", "Ajuster masque"],
+                solutionsTech: ["Nettoyer la valve System One.", "Remplacer le filtre gris.", "Vérifier les réglages de Pmax.", "Recalibrer turbine"]
               },
               {
                 title: "Problème de batterie ou autonomie",
-                causes: ["Batterie interne de secours usée", "Stockage prolongé sans charge"],
-                solutionsPatient: ["Brancher sur secteur en permanence", "Vérifier si l'appareil bipe au démarrage"],
-                solutionsTech: ["Remplacer l'accumulateur interne"]
+                causes: ["Batterie interne de secours usée", "Stockage prolongé sans charge", "Défaut carte mère", "Chargeur interne HS"],
+                solutionsPatient: ["Brancher sur secteur en permanence", "Vérifier si l'appareil bipe au démarrage", "Laisser charger 24h", "Redémarrer l'appareil"],
+                solutionsTech: ["Remplacer l'accumulateur interne", "Vérifier tension de maintien", "Révision carte alim", "Recalibrage batterie"]
               }
             ]
           }
@@ -862,216 +685,45 @@ const LIBRARY_DATA = [
     id: "ppc",
     name: "Pression Positive Continue (PPC)",
     models: [
-      { 
-        id: "s9", 
-        name: "S9", 
-        failures: [
-          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon débranché", "Bloc alim HS", "Prise murale HS", "Panne bouton"], solutionsPatient: ["Est-ce que la prise est bien branchée ?", "Le voyant du bloc est-il vert ?", "Avez-vous testé une autre prise ?"], solutionsTech: ["Tester le bloc d'alimentation 90W.", "Vérifier le connecteur interne.", "Remplacer le cordon secteur.", "Vérifier le bouton Marche/Arrêt."] },
-          { title: "Erreur Système (Message d'erreur)", causes: ["Filtre colmaté", "Entrée d'air obstruée", "Pièce trop chaude", "Ventilateur interne bloqué"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le petit filtre à air à l'arrière est-il blanc ou gris ?", "Y a-t-il assez d'espace autour de la machine ?"], solutionsTech: ["Remplacer le filtre.", "Nettoyer la turbine.", "Dépoussiérer les ouïes.", "Remplacer le ventilateur."] },
-          { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Condensation", "Chambre froide", "Réglage haut", "Tuyau non isolé"], solutionsPatient: ["Est-ce que la prise est bien branchée ?", "Y a-t-il de l'eau dans le tuyau ?", "La machine est-elle au sol ?"], solutionsTech: ["Baisser le niveau d'humidité.", "Installer une housse de tuyau.", "Passer en mode manuel.", "Vérifier la sonde thermique."] },
-          { title: "Erreur Système (Message d'erreur)", causes: ["Carte mal insérée", "Fuite buccale", "Humidificateur bas", "Protection écriture"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le petit loquet de la carte SD est-il bien vers le haut ?", "Dormez-vous la bouche ouverte ?"], solutionsTech: ["Remplacer la carte SD.", "Augmenter l'humidité.", "Formater la carte en FAT32."] }
-        ] 
-      },
-      { 
-        id: "s10", 
-        name: "S10", 
-        failures: [
-          {
-            title: "Fuites importantes (Masque ou Circuit)",
-            causes: ["Mauvais ajustement du masque", "Coussin usé", "Mauvaise taille de masque", "Harnais trop lâche", "Silicone jauni/rigide"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "La partie en silicone de votre masque, vous l'avez changée quand pour la dernière fois ?", "Ça fuit surtout quand vous dormez sur le côté, ou sur le dos ?"],
-            solutionsTech: ["Examinez le coussin en silicone.", "Utilisez le gabarit de taille.", "Essayer un autre modèle.", "Vérifier la pression IPAP/EPAP."]
-          },
-          {
-            title: "Problème d'alimentation (L'appareil ne démarre pas)",
-            causes: ["Cordon déconnecté", "Prise défectueuse", "Alimentation HS", "Connecteur embase dessoudé"],
-            solutionsPatient: ["La prise est-elle bien enfoncée ?", "L'écran s'allume-t-il au branchement ?", "Le fil est-il abîmé ?", "La prise murale marche avec une lampe ?"],
-            solutionsTech: ["Vérifier le bloc d'alimentation.", "Tester la continuité.", "Contrôler le fusible embase.", "Ressouder le connecteur interne."]
-          },
-          {
-            title: "Erreur Système (Message d'erreur)",
-            causes: ["Entrée d'air obstruée (poussière)", "Humidité ayant pénétré dans le moteur", "Usure naturelle de la turbine", "Filtre bouché"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le filtre à air à l'arrière est-il propre ?", "Y a-t-il eu de l'eau renversée sur l'appareil ?"],
-            solutionsTech: ["Remplacez le filtre à air immédiatement.", "Laissez l'appareil sécher.", "SAV technique.", "Tester la turbine en mode service."]
-          },
-          {
-            title: "Problème d'humidification (Air sec ou condensation)",
-            causes: ["Joint du réservoir HumidAir fissuré ou sec", "Réservoir calcaire empêchant la fermeture hermétique"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Voyez-vous des traces d'eau sous l'appareil ?", "Le joint en silicone du réservoir vous semble-t-il abîmé ou sec ?"],
-            solutionsTech: ["Nettoyez le calcaire avec du vinaigre blanc.", "Remplacez le joint en silicone s'il présente des coupures."]
-          },
-          {
-            title: "Erreur Système (Message d'erreur)",
-            causes: ["Poussière ou résidus bloquant le mécanisme", "Axe de molette fendu", "Nappe de commande déconnectée"],
-            solutionsPatient: ["Avez-vous essayé d'appuyer plus fermement au centre ?", "Nettoyez le contour avec une brossette sèche.", "La molette tourne-t-elle dans le vide ?"],
-            solutionsTech: ["Nettoyer le contacteur.", "Vérifier la nappe de liaison.", "Remplacer l'interface de commande."]
-          },
-          {
-            title: "Problème d'affichage (Écran noir ou figé)",
-            causes: ["Bug logiciel", "Écran LCD défectueux", "Choc physique"],
-            solutionsPatient: ["Effectuez un cycle d'alimentation (débrancher 30 sec).", "L'écran s'éclaire-t-il au démarrage ?", "Voyez-vous des taches noires sur l'afficheur ?"],
-            solutionsTech: ["Rebrancher la nappe LCD.", "Remplacer le bloc écran.", "Mise à jour firmware."]
-          },
-          {
-            title: "Erreur Système (Message d'erreur)",
-            causes: ["Filtre à air sale", "Obstruction de la grille d'entrée", "Rappel de maintenance"],
-            solutionsPatient: ["Le filtre à l'arrière est-il blanc ou gris/noir ?", "Assurez-vous qu'aucun objet (rideau, mur) n'est à moins de 5cm de l'entrée d'air."],
-            solutionsTech: ["Changer le filtre.", "Dépoussiérer l'entrée d'air turbine.", "Vérifier le capteur de débit."]
-          }
-        ] 
-      },
-      { 
-        id: "s11", 
-        name: "S11", 
-        failures: [
-          {
-            title: "Problème d'affichage (Écran noir ou figé)",
-            causes: ["Doigts humides", "Bug logiciel", "Interférences", "Eau sur l'écran"],
-            solutionsPatient: ["Avez-vous les mains sèches ?", "Avez-vous un téléphone proche ?", "L'écran est-il propre ?", "Prise bien branchée ?"],
-            solutionsTech: ["Nettoyer l'écran.", "Débrancher 30 sec.", "Mise à jour firmware.", "Tester l'écran tactile."]
-          },
-          {
-            title: "Fuites importantes (Masque ou Circuit)",
-            causes: ["Bac mal inséré", "Joint mal mis", "Tuyau mal cliqué", "Bac fendu"],
-            solutionsPatient: ["Le bac a-t-il fait 'clic' ?", "Le joint est-il plat ?", "Le coude arrière est-il verrouillé ?", "Prise bien branchée ?"],
-            solutionsTech: ["Réinsérer le bac fermement.", "Vérifier le joint interne.", "Changer le circuit.", "Vérifier l'étanchéité du bac."]
-          },
-          {
-            title: "Problème de détection respiratoire (Trigger)",
-            causes: ["Respiration faible", "Fuites", "Option OFF", "Canule trop longue"],
-            solutionsPatient: ["Respirez plus fort au début.", "Le SmartStart est-il sur 'On' ?", "Le masque est-il bien ajusté ?", "Prise bien branchée ?"],
-            solutionsTech: ["Vérifier le menu clinicien.", "Contrôler l'étanchéité.", "Recalibrer turbine.", "Ajuster trigger."]
-          },
-          { 
-            title: "Problème d'alimentation (L'appareil ne démarre pas)", 
-            causes: ["Alimentation", "Connectique", "Carte HS", "Surtension"], 
-            solutionsPatient: ["La prise est-elle branchée ?", "L'écran s'allume-t-il ?", "Testé sur une autre prise ?", "Câble tordu ?"], 
-            solutionsTech: ["Tester bloc alim.", "Changer cordon.", "Vérifier carte.", "Contrôler fusible."] 
-          },
-          {
-            title: "Erreur Système (Message d'erreur)",
-            causes: ["Carte mal insérée", "Protection en écriture", "Carte HS"],
-            solutionsPatient: ["Le petit loquet de la carte est-il bien vers le haut ?", "Retirez et remettez la carte fermement."],
-            solutionsTech: ["Formater la carte en FAT32.", "Remplacer la carte SD."]
-          }
-
-        ]
-      },
-      {
-        id: "dreamstation-1", 
-        name: "DreamStation (Pro, Auto, Expert)", 
-        failures: [
-          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Mauvais transfo", "Fiche tordue", "Bloc défectueux"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le bloc secteur est-il bien celui d'origine ?", "La fiche centrale est-elle tordue ?"], solutionsTech: ["Vérifier puissance 80W.", "Tester avec un autre bloc Philips.", "Redresser la tige centrale avec précaution."] },
-          { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Bac mal inséré", "Trop plein", "Joint de base usé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous dépassé le trait MAX ?", "Avez-vous entendu le clic en remettant le bac ?"], solutionsTech: ["Réinsérer le bac.", "Remplacer le joint de l'embase.", "Vérifier l'étanchéité du réservoir."] },
-          {
-            title: "Pression insuffisante ou instable",
-            causes: ["Tuyau écrasé ou plié", "Filtre ultra-fin blanc colmaté", "Obstruction turbine"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le tuyau est-il bien déroulé ?", "Le petit filtre blanc est-il sale ou noir ?"],
-            solutionsTech: ["Remplacer le filtre blanc.", "Déplier le tuyau.", "Vérifier le moteur."]
-          },
-          {
-            title: "Bruit anormal ou vibrations",
-            causes: ["Pieds antidérapants sales", "Vibration du tuyau", "Surface inégale"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Les petits patins sous la machine sont-ils propres ?", "Le tuyau tire-t-il sur l'appareil ?"],
-            solutionsTech: ["Nettoyer les pieds à l'alcool.", "Utiliser une potence.", "Ajouter des patins neufs."]
-          },
-          { title: "Erreur Système (Message d'erreur)", causes: ["Vieillissement matériau", "Nettoyage ozone", "Humidité forte"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous bien arrêté d'utiliser la machine comme demandé ?", "Avez-vous reçu votre nouvelle machine ?"], solutionsTech: ["Remplacer l'appareil.", "Vérifier le numéro de série.", "Déclaration sur portail Philips."] }
-        ]
-      },
-      {
-        id: "dreamstation-2", 
-        name: "DreamStation 2", 
-        failures: [
-          { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Mains humides", "Bug", "Proximité onde"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous essayé d'essuyer l'écran ?", "Vos mains sont-elles sèches ?"], solutionsTech: ["Débrancher 30 sec pour réinitialiser.", "Mise à jour logiciel.", "Tester écran en mode SAV."] },
-          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Tuyau mal mis", "Circuit percé", "Joint coude usé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Le tuyau est-il bien branché à l'arrière ?", "Voyez-vous une fente sur le tuyau ?"], solutionsTech: ["Vérifier raccordement coude.", "Tester avec un autre circuit.", "Changer le joint de sortie."] }
-        ]
-      },
-      {
-        id: "remstar-auto", 
-        name: "REMstar Auto (P-Flex)", 
-        failures: [
-          { title: "Bruit anormal ou vibrations", causes: ["Humidificateur mal verrouillé", "Joint usé", "Bac fissuré"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Les deux parties sont-elles bien clipsées ?"], solutionsTech: ["Vérifier joints noirs.", "Remplacer embase humidificateur.", "Vérifier étanchéité bac."] }
-              ,
-              {
-                title: "Bruit anormal ou vibrations",
-                causes: ["Filtre mal installé", "Humidificateur mal clipsé", "Moteur fatigué", "Filtre absent"],
-                solutionsPatient: ["Le filtre est-il au fond ?", "L'humidificateur est-il clipsé ?", "Rien ne vibre ?", "Prise bien branchée ?"],
-                solutionsTech: ["Vérifier filtre.", "Réassembler unité.", "Changer moteur.", "Remplacer silentblocs."]
-              },
-              {
-                title: "Problème d'humidification (Air sec ou condensation)",
-                causes: ["Picots de connexion oxydés", "Réservoir mal posé", "Plaque chauffante HS", "Mode ECO"],
-                solutionsPatient: ["Est-ce que la prise est bien branchée ?", "Contacts propres ?", "Le réservoir est-il bien enfoncé ?", "L'air est-il sec ?"],
-                solutionsTech: ["Nettoyez contacts.", "Assurez-vous de l'insertion.", "Tester résistance plaque.", "Désactiver ECO."]
-              }
-        ]
-      },
-      {
-        id: "fp-icon", 
-        name: "ICON", 
-        failures: [
-          { title: "Problème d'humidification (Air sec ou condensation)", causes: ["Mode ECO", "Chambre mal mise", "Plaque HS", "Connectique sale"], solutionsPatient: ["La prise est branchée ?", "Mode ECO affiché ?", "Le bac est-il au fond ?", "Symbole chauffe visible ?"], solutionsTech: ["Désactiver ECO.", "Vérifier plaque.", "Changer embase.", "Nettoyer contacts."] },
-          { title: "Pression insuffisante ou instable", causes: ["Altitude", "Usure moteur", "Fuite interne", "Obstruction"], solutionsPatient: ["La prise est branchée ?", "Vivez-vous en montagne ?", "Le moteur est bruyant ?", "Filtre gris ?"], solutionsTech: ["Ajuster altitude.", "Check turbine.", "Calibration.", "Remplacer turbine."] }
-        ]
-      },
-      {
-        id: "nea", 
-        name: "NÉA", 
-        failures: [
-              { 
-                title: "Problème d'alimentation (L'appareil ne démarre pas)", 
-                causes: ["Cordon mal branché", "Bloc d'alimentation défectueux", "Panne carte interne", "Interrupteur"], 
-                solutionsPatient: [
-                  "Est-ce que la prise est bien branchée au mur et à l'appareil ?", 
-                  "L'écran s'allume-t-il quand vous branchez le câble ?", 
-                  "Voyez-vous un voyant allumé sur le bloc rectangulaire du cordon ?",
-                  "Testé sur une autre prise ?"
-                ], 
-                solutionsTech: ["Vérifier la tension de sortie.", "Contrôler le connecteur.", "Changer carte.", "Tester l'interrupteur."] 
-              },
-              {
-                title: "Fuites importantes (Masque ou Circuit)",
-                causes: ["Masque mal mis", "Coussin usé", "Taille inadaptée", "Pression support"],
-                solutionsPatient: [
-                  "Est-ce que la prise est bien branchée au mur et à l'appareil ?",
-                  "Sentez-vous de l'air s'échapper vers vos yeux ?",
-                  "Le silicone du masque est-il encore bien souple ?",
-                  "Harnais trop serré ?"
-                ],
-                solutionsTech: ["Vérifier la taille.", "Remplacer coussin.", "Changer harnais.", "Réglage Rampe."]
-              },
-              {
-                title: "Problème d'humidification (Air sec ou condensation)",
-                causes: ["Humidité basse", "Bac vide", "Plaque HS", "Clapet fermé"],
-                solutionsPatient: [
-                  "Est-ce que la prise est bien branchée au mur et à l'appareil ?",
-                  "Reste-t-il de l'eau dans le bac le matin ?",
-                  "Avez-vous essayé d'augmenter le niveau de chauffage ?",
-                  "Air tiède ?"
-                ],
-                solutionsTech: ["Augmenter le réglage.", "Vérifier la chauffe.", "Tester sonde.", "Vérifier clapet."]
-              },
-              {
-                title: "Problème d'humidification (Air sec ou condensation)",
-                causes: ["Humidité forte", "Chambre froide", "Machine haute", "Tuyau non isolé"],
-                solutionsPatient: ["Est-ce que la prise est bien branchée ?", "Entendez-vous de l'eau bouger ?", "L'appareil est-il plus bas que votre tête ?", "Glouglou ?"],
-                solutionsTech: ["Diminuer le niveau.", "Vider le tuyau.", "Housse isolante.", "Check sonde ambiante."]
-              }
-        ]
-      },
-      { id: "z2-auto", name: "Z2 Auto", failures: [] },
-      {
-        id: "aircurve-10",
-        name: "AirCurve 10",
-        failures: [
-          {
-            title: "Problème d'humidification (Air sec ou condensation)",
-            causes: ["Humidité trop forte", "Chambre froide", "Absence de circuit chauffant"],
-            solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Entendez-vous un clapotis dans le tuyau ?"],
-            solutionsTech: ["Réduire l'humidité.", "Utiliser ClimateLineAir.", "Ajouter une housse."]
-          }
-        ]
-      }
+      { id: "s9", name: "S9 (AutoSet, Elite)", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon débranché", "Bloc alim HS"], solutionsPatient: ["Vérifier voyant bloc", "Tester autre prise"], solutionsTech: ["Tester bloc 90W"] },
+          { title: "Pression insuffisante ou instable", causes: ["Filtre colmaté", "Fuite importante"], solutionsPatient: ["Changer filtre air", "Vérifier masque"], solutionsTech: ["Calibration turbine"] },
+          { title: "Pas de chauffage", causes: ["Résistance chauffante HS", "Réglage bas", "Chambre froide"], solutionsPatient: ["Vérifier branchement bac", "Augmenter humidité"], solutionsTech: ["Tester plaque chauffante"] },
+          { title: "Carte SD illisible", causes: ["Mal insérée", "Verrouillage"], solutionsPatient: ["Pousser la carte", "Vérifier loquet"], solutionsTech: ["Formater FAT32"] }
+      ] },
+      { id: "airsense-10", name: "S10 (AutoSet, Elite)", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon déconnecté", "Alim HS"], solutionsPatient: ["Vérifier branchement"], solutionsTech: ["Tester bloc 90W"] },
+          { title: "Pression insuffisante ou instable", causes: ["Filtre bouché", "Entrée air obstruée"], solutionsPatient: ["Remplacer filtre", "Réajuster masque"], solutionsTech: ["Recalibrer capteurs"] },
+          { title: "Pas de chauffage", causes: ["Résistance chauffante HS", "Joint réservoir fissuré"], solutionsPatient: ["Nettoyer calcaire", "Pousser le bac"], solutionsTech: ["Remplacer joint silicone"] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Coussin usé", "Harnais lâche"], solutionsPatient: ["Silicone jauni ?", "Resserrer sangles"], solutionsTech: ["Gabarit taille"] },
+          { title: "Carte SD illisible", causes: ["Mal insérée", "Carte HS"], solutionsPatient: ["Pousser la carte"], solutionsTech: ["Formater FAT32"] },
+          { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Surchauffe"], solutionsPatient: ["Noter le code"], solutionsTech: ["Check ventilateur"] }
+      ] },
+      { id: "s11", name: "S11 (AutoSet)", failures: [
+          { title: "Problème d'affichage (Écran noir ou figé)", causes: ["Doigts humides", "Bug logiciel"], solutionsPatient: ["Mains sèches", "Débrancher/rebrancher"], solutionsTech: ["Mise à jour firmware"] },
+          { title: "Pression insuffisante ou instable", causes: ["Obstruction", "Filtre"], solutionsPatient: ["Vérifier filtre gris"], solutionsTech: ["Calibration turbine"] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Bac mal inséré", "Joint mal mis"], solutionsPatient: ["Clic du bac entendu ?"], solutionsTech: ["Check étanchéité réservoir"] },
+          { title: "Carte SD illisible", causes: ["Format"], solutionsPatient: ["Pousser carte"], solutionsTech: ["Formater"] },
+          { title: "Erreur Système (Message d'erreur)", causes: ["Bug logiciel", "Capteur HS"], solutionsPatient: ["Redémarrer"], solutionsTech: ["Diagnostic Cloud"] }
+      ] },
+      { id: "dreamstation-1", name: "DreamStation 1", failures: [
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Mauvais transfo", "Fiche centrale tordue"], solutionsPatient: ["Utilisez le bloc d'origine ?", "Tige droite ?"], solutionsTech: ["Check bloc 80W"] },
+          { title: "Pas de chauffage", causes: ["Résistance chauffante HS", "Bac mal inséré"], solutionsPatient: ["Clic entendu ?", "Vérifier niveau eau"], solutionsTech: ["Tester plaque"] },
+          { title: "Pression insuffisante ou instable", causes: ["Filtre colmaté", "Tuyau plié"], solutionsPatient: ["Changer filtre blanc"], solutionsTech: ["Vérifier moteur"] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Joint embase usé"], solutionsPatient: ["Sifflement sous bac ?"], solutionsTech: ["Changer joint base"] },
+          { title: "Carte SD illisible", causes: ["Carte HS"], solutionsPatient: ["Pousser carte"], solutionsTech: ["Formater FAT32"] }
+      ] },
+      { id: "prisma-smart", name: "Prisma (Smart, Soft)", failures: [
+          { title: "Pression insuffisante ou instable", causes: ["Filtre colmaté"], solutionsPatient: ["Changer filtre"], solutionsTech: ["Calibration"] },
+          { title: "Pas de chauffage", causes: ["Résistance chauffante HS", "Bac vide"], solutionsPatient: ["Vérifier réglage"], solutionsTech: ["Tester plaque"] },
+          { title: "Fuites importantes (Masque ou Circuit)", causes: ["Mauvais fit"], solutionsPatient: ["Ajuster masque"], solutionsTech: ["Check joint sortie"] },
+          { title: "Carte SD illisible", causes: ["Format"], solutionsPatient: ["Pousser carte"], solutionsTech: ["Formater"] }
+      ] },
+      { id: "remstar-auto", name: "REMstar Auto", failures: [
+          { title: "Bruit anormal ou vibrations", causes: ["Humidificateur mal verrouillé", "Turbine fatiguée"], solutionsPatient: ["Clipsage OK ?", "Appareil stable ?"], solutionsTech: ["Remplacer silentblocs"] },
+          { title: "Pas de chauffage", causes: ["Résistance chauffante HS", "Contacts oxydés"], solutionsPatient: ["Nettoyer picots métal"], solutionsTech: ["Tester plaque"] },
+          { title: "Pression insuffisante ou instable", causes: ["Filtre gris colmaté"], solutionsPatient: ["Changer filtre"], solutionsTech: ["Recalibrer"] }
+      ] },
     ]
   },
   {
@@ -2048,59 +1700,65 @@ const LIBRARY_DATA = [
             models: [
           { id: "1025ks", name: "10L", failures: [
                         { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Problème alimentation", "Coupure de courant", "Câble mal branché"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?", "Y a-t-il eu une coupure de courant ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur.", "Vérifier le secteur / basculer sur secours."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Concentration entre 75 % et 82 %", "Saturation des tamis moléculaires", "Fuite interne sur le circuit oxygène", "Filtre d'entrée colmaté"], solutionsPatient: ["L'appareil est-il placé loin des murs pour bien respirer ?", "Le filtre à poussière à l'arrière est-il propre ?", "Est-ce qu'une révision de l'appareil est prévue prochainement ?"], solutionsTech: ["Mesurer la pureté avec un analyseur calibré.", "Vérifier l'étanchéité du circuit pneumatique.", "Remplacer les colonnes de tamis.", "Contrôler la pression de sortie du compresseur."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Disjoncteur thermique (surcharge)", "Surchauffe compresseur", "Câble secteur endommagé", "Panne ventilateur"], solutionsPatient: ["Appuyez sur le bouton blanc du disjoncteur (Reset)", "Vérifiez si le cordon est abîmé ou chaud", "Laissez refroidir l'appareil 30 minutes"], solutionsTech: ["Contrôle température turbine", "Vérifier la consommation électrique du compresseur", "Remplacer le ventilateur interne"] },
+                        { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Concentration entre 75 % et 82 %", "Saturation des tamis moléculaires", "Fuite interne sur le circuit oxygène", "Filtre d'entrée colmaté"], solutionsPatient: ["L'appareil est-il placé loin des murs pour bien respirer ?", "Le filtre à poussière à l'arrière est-il propre ?", "Est-ce qu'une révision de l'appareil est prévue prochainement ?"], solutionsTech: ["Mesurer la pureté avec un analyseur calibré.", "Vérifier l'étanchéité du circuit pneumatique.", "Remplacer les colonnes de tamis.", "Contrôler la pression de sortie du compresseur."] },
+                        { title: "Erreur Système (Surchauffe / Disjoncteur)", causes: ["Disjoncteur thermique (surcharge)", "Surchauffe compresseur", "Câble secteur endommagé", "Panne ventilateur"], solutionsPatient: ["Appuyez sur le bouton blanc du disjoncteur (Reset)", "Vérifiez si le cordon est abîmé ou chaud", "Laissez refroidir l'appareil 30 minutes"], solutionsTech: ["Contrôle température turbine", "Vérifier la consommation électrique du compresseur", "Remplacer le ventilateur interne"] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Fuite au niveau de l'humidificateur", "Canule trop longue ou pliée"], solutionsPatient: ["Le filtre à air est-il noir ou poussiéreux ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "Le bocal de l'humidificateur est-il bien vissé ?"], solutionsTech: ["Nettoyage ou remplacement du filtre HEPA.", "Vérifier la bille du débitmètre.", "Remplacement des tamis.", "Tester la pression de sortie."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Sortie d’air obstruée", "Filtre d'échappement colmaté", "Couvercle mal positionné"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que l'appareil n'est pas collé à un rideau"], solutionsTech: ["Dégager la sortie d’air.", "Remplacer le silencieux.", "Vérifier l'étanchéité du boîtier"] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Vibration excessive du compresseur", "Fuite interne sur les tubulures", "Vanne 4 voies bloquée", "Obstruction du filtre HEPA"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que l'appareil n'est pas posé sur un tapis trop épais"], solutionsTech: ["Tester la pression de sortie compresseur", "Inspecter les tuyaux internes", "Vérifier le cycle des vannes", "Remplacer filtres internes"] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Compresseur en fin de vie", "Capteur de pureté HS", "Défaut carte électronique", "Surchauffe moteur", "Pile d'alarme HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Redémarrer l'appareil après 15 min d'arrêt"], solutionsTech: ["Effectuer un diagnostic logiciel.", "Mesurer la tension de la carte.", "Vérifier les balais du moteur.", "Remplacer le bloc compresseur.", "Changer la pile 9V si applicable."] }
+                        { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
+                        { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Sortie d’air obstruée", "Filtre d'échappement colmaté", "Couvercle mal positionné"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que l'appareil n'est pas collé à un rideau"], solutionsTech: ["Dégager la sortie d’air.", "Remplacer le silencieux.", "Vérifier l'étanchéité du boîtier"] },
+                        { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                        { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Vibration excessive du compresseur", "Fuite interne sur les tubulures", "Vanne 4 voies bloquée", "Obstruction du filtre HEPA"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que l'appareil n'est pas posé sur un tapis trop épais"], solutionsTech: ["Tester la pression de sortie compresseur", "Inspecter les tuyaux internes", "Vérifier le cycle de la vannes", "Remplacer filtres internes"] },
+                        { title: "Erreur Système (Panne Interne / SAV)", causes: ["Compresseur en fin de vie", "Capteur de pureté HS", "Défaut carte électronique", "Surchauffe moteur", "Pile d'alarme HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Redémarrer l'appareil après 15 min d'arrêt"], solutionsTech: ["Effectuer un diagnostic logiciel.", "Mesurer la tension de la carte.", "Vérifier les balais du moteur.", "Remplacer le bloc compresseur.", "Changer la pile 9V si applicable."] },
+                        { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
           { id: "525ks", name: "5L", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu' il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur.", "Tester le condensateur de démarrage."] },
                     { title: "Débit faible ou irrégulier", causes: ["Débitmètre bloqué", "Obstruction interne", "Défaut capteur de pression", "Concentration O2 insuffisante"], solutionsPatient: ["Est-ce que la petite bille du débitmètre est bien au-dessus du zéro ?", "Est-ce que le tuyau n'est pas un peu plié ou coincé sous un meuble ?", "Vérifiez que l'humidificateur ne fuit pas."], solutionsTech: ["Vérifier circuit interne.", "Nettoyer le débitmètre", "Tester le capteur de pression", "Vérifier la vanne 4 voies."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Coupure électrique", "Défaut condensateur", "Surtension réseau"], solutionsPatient: ["Vérifiez le branchement mural.", "Y a-t-il eu une coupure de courant ?", "Essayez de brancher une lampe sur la même prise pour tester le courant.", "Débranchez l'appareil 10 minutes."], solutionsTech: ["Tester tension secteur", "Vérifier le condensateur de démarrage", "Remplacer la batterie d'alarme"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Grille arrière obstruée", "Accumulation de poussière interne", "Silencieux colmaté"], solutionsPatient: ["La sortie d'air est-elle dégagée ?", "L'appareil est-il trop près d'un rideau ?"], solutionsTech: ["Dégager la sortie d'air.", "Nettoyage interne à l'air sec", "Remplacer silencieux"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Capteurs HS", "Panne interne", "Fuite pneumatique", "Surchauffe", "Tamis moléculaires fatigués"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Vérifiez la température de la pièce et le filtre arrière."], solutionsTech: ["Remplacer capteurs.", "Effectuer test d'étanchéité", "Vérifier ventilateur", "Maintenance technique / SAV."] }
+                    { title: "Erreur Système (Coupure Secteur)", causes: ["Coupure électrique", "Défaut condensateur", "Surtension réseau"], solutionsPatient: ["Vérifiez le branchement mural.", "Y a-t-il eu une coupure de courant ?", "Essayez de brancher une lampe sur la même prise pour tester le courant.", "Débranchez l'appareil 10 minutes."], solutionsTech: ["Tester tension secteur", "Vérifier le condensateur de démarrage", "Remplacer la batterie d'alarme"] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
+                    { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Grille arrière obstruée", "Accumulation de poussière interne", "Silencieux colmaté"], solutionsPatient: ["La sortie d'air est-elle dégagée ?", "L'appareil est-il trop près d'un rideau ?"], solutionsTech: ["Dégager la sortie d'air.", "Nettoyage interne à l'air sec", "Remplacer silencieux"] },
+                    { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                    { title: "Erreur Système (Défaut Pression / Fuite interne)", causes: ["Défaut compresseur", "Fuite interne sur les tubulures", "Vanne 4 voies bloquée"], solutionsPatient: ["L'appareil fait-il un sifflement anormal ?", "Sentez-vous moins d'air sortir par rapport à d'habitude ?", "Vérifiez que la canule n'est pas coincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites pneumatiques.", "Vérifier le cycle des vannes.", "Resserrer les colliers de serrage."] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Capteurs HS", "Panne interne", "Fuite pneumatique", "Surchauffe", "Tamis moléculaires fatigués"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Vérifiez la température de la pièce et le filtre arrière."], solutionsTech: ["Remplacer capteurs.", "Effectuer test d'étanchéité", "Vérifier ventilateur", "Maintenance technique / SAV."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
           { id: "8f-5a", name: "5L", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur.", "Contrôler la carte d'alimentation."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Tubulure / canule obstruée", "Débitmètre fuyard", "Tuyau interne débranché", "Canule bouchée"], solutionsPatient: ["Le filtre à air est-il propre ?", "Sentez-vous que l'air n'arrive pas régulièrement ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Vérifiez si l'humidificateur fait des bulles normalement.", "Testez avec une autre canule.", "Inspectez les sorties d'air à l'arrière de l'appareil."], solutionsTech: ["Nettoyage filtre.", "Remplacement tamis.", "Vérifier ou remplacer tubulure/canule.", "Tester l'étanchéité du bocal.", "Vérifier les connexions pneumatiques internes."] },
                     // Removed duplicate entry for "Débit faible ou irrégulier"
                     // { title: "Débit faible ou irrégulier", causes: ["Tuyau interne débranché", "Canule bouchée"], solutionsPatient: ["Testez avec une autre canule.", "Inspectez les sorties d'air à l'arrière de l'appareil."], solutionsTech: ["Vérifier les connexions pneumatiques internes."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Humidité excessive dans l'air ambiant", "Compresseur sous-performant"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?", "La pièce est-elle bien aérée ?", "L'appareil est-il utilisé près d'une source de vapeur ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne des filtres.", "Remplacement des colonnes.", "Contrôler les pressions de cycle."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Obstruction physique", "Filtre final saturé", "Surchauffe"], solutionsPatient: ["La sortie d'air est-elle dégagée ?", "Vérifier qu'aucun objet n'est posé sur la machine"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer filtre HEPA", "Contrôler le débit d'air"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Vanne directionnelle bloquée", "Fuite de tubulure"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que le tuyau n'est pas écrasé."], solutionsTech: ["Maintenance technique (compresseur).", "Tester les vannes", "Resserrer raccords", "Vérifier le pressostat."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)", "Défaut alimentation carte", "Cycle de vanne irrégulier"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Débranchez et rebranchez l'appareil après 5 minutes."], solutionsTech: ["Remplacer capteurs.", "Vérifier tensions carte", "Maintenance technique / SAV.", "Contrôler le ventilateur."] }
+                    { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Humidité excessive dans l'air ambiant", "Compresseur sous-performant"], solutionsPatient: ["Le voyant O2 est-il allumé ?", "L'appareil a-t-il été entretenu récemment ?", "La pièce est-elle bien aérée ?", "L'appareil est-il utilisé près d'une source de vapeur ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne des filtres.", "Remplacement des colonnes.", "Contrôler les pressions de cycle."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il collé contre un mur ou un rideau ?", "Les grilles d'aération sont-elles propres ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d’aération.", "Déplacer appareil, laisser refroidir."] },
+                    { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Obstruction physique", "Filtre final saturé", "Surchauffe"], solutionsPatient: ["La sortie d'air est-elle dégagée ?", "Vérifier qu'un objet n'est posé sur la machine"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer filtre HEPA", "Contrôler le débit d'air"] },
+                    { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Vanne directionnelle bloquée", "Fuite de tubulure"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que le tuyau n'est pas écrasé."], solutionsTech: ["Maintenance technique (compresseur).", "Tester les vannes", "Resserrer raccords", "Vérifier le pressostat."] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Capteurs HS", "Panne interne (compresseur, capteur, carte)", "Défaut alimentation carte", "Cycle de vanne irrégulier"], solutionsPatient: ["L'appareil s'arrête-t-il tout seul sans raison apparente ?", "Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Débranchez et rebranchez l'appareil après 5 minutes."], solutionsTech: ["Remplacer capteurs.", "Vérifier tensions carte", "Maintenance technique / SAV.", "Contrôler le ventilateur."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
           { id: "platinum-9", name: "Platinum 9", failures: [
                     { title: "Débit faible ou irrégulier", causes: ["Débitmètre réglé < 1 L/min", "Tubulure 15m pliée", "Filtre HEPA colmaté", "Fuite interne"], solutionsPatient: ["Augmentez le débit au-dessus de 1 L/min pour tester.", "Redressez la tubulure pour éviter les coudes.", "Le filtre noir est-il propre ?"], solutionsTech: ["Tester la pression de sortie.", "Remplacer le filtre HEPA interne.", "Vérifier l'étanchéité du circuit interne."] },
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Surchauffe compresseur", "Pression trop haute", "Ventilateur bloqué", "Condensateur HS"], solutionsPatient: ["Éteignez l'appareil pendant 30 min pour le laisser refroidir.", "Vérifiez que l'air circule bien autour de la machine.", "Appuyez sur le bouton blanc 'Reset' au-dessus de la prise."], solutionsTech: ["Nettoyer les filtres.", "Vérifier le fonctionnement du ventilateur.", "Tester le condensateur de démarrage."] },
                     { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis", "Filtre d'entrée colmaté", "Fuite sur le circuit oxygène"], solutionsPatient: ["Le voyant jaune est-il allumé ?", "L'appareil est-il placé loin des murs (min 15cm) ?"], solutionsTech: ["Mesurer la pureté à l'analyseur.", "Remplacer les colonnes de tamis.", "Vérifier l'étanchéité pneumatique."] },
-                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Ventilateur desserré"], solutionsPatient: ["L'appareil fait-il un bruit de claquement ?", "Vérifiez si l'appareil est bien à plat sur le sol."], solutionsTech: ["Maintenance moteur.", "Remplacer les fixations moteur.", "Vérifier les pales du ventilateur."] }
+                  { title: "Erreur Système (Défaut Pression / Fuite interne)", causes: ["Défaut compresseur", "Fuite interne sur les tubulures", "Vanne 4 voies bloquée"], solutionsPatient: ["L'appareil fait-il un sifflement anormal ?", "Vérifiez que la canule n'est pas coincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites pneumatiques.", "Vérifier le cycle des vannes."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
           { id: "perfecto2-v", name: "Perfecto2 V", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Disjoncteur déclenché", "Coupure de courant", "Condensateur HS"], solutionsPatient: ["La prise est-elle bien enfoncée ?", "Appuyez sur le bouton blanc (disjoncteur) juste au-dessus de la prise.", "Essayez de brancher une lampe sur la même prise."], solutionsTech: ["Tester le cordon secteur.", "Vérifier le condensateur de démarrage.", "Contrôler l'interrupteur Marche/Arrêt."] },
                     { title: "Erreur Système (Message d'erreur)", causes: ["Usure des tamis moléculaires", "Filtre d'entrée poussiéreux", "Fuite interne"], solutionsPatient: ["Le voyant jaune ou rouge est-il allumé ?", "Le filtre noir sur le côté est-il propre ?", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté.", "Effectuer un test de fuite sous pression.", "Remplacer les colonnes."] },
                     { title: "Débit faible ou irrégulier", causes: ["Tuyau plié", "Débitmètre sur 0", "Filtre HEPA interne colmaté", "Bocal mal vissé"], solutionsPatient: ["La petite bille monte-t-elle quand vous tournez le bouton ?", "Vérifiez que le bocal de l'humidificateur est bien vissé droit.", "Le tuyau est-il coincé sous un meuble ou une porte ?"], solutionsTech: ["Nettoyer le débitmètre.", "Vérifier la pression du compresseur.", "Remplacer le filtre HEPA."] },
                     { title: "Fuites importantes (Masque ou Circuit)", causes: ["Bocal mal vissé", "Joint du couvercle usé ou absent", "Tuyau d'oxygène mal connecté"], solutionsPatient: ["Est-ce que vous entendez un sifflement persistant ?", "Avez-vous essayé de dévisser puis de revisser bien droit le couvercle du bocal ?"], solutionsTech: ["Contrôler l'état du joint du bocal.", "Vérifier le raccord de sortie d'O2.", "Tester l'étanchéité sous pression."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Température ambiante trop élevée", "Ventilateur interne bloqué"], solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Fait-il très chaud dans votre chambre ?"], solutionsTech: ["Nettoyer les ouïes de ventilation.", "Vérifier le fonctionnement du ventilateur.", "Maintenance préventive."] }
+                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Température ambiante trop élevée", "Ventilateur interne bloqué"], solutionsPatient: ["Est-ce que l'appareil est collé contre un mur ou un rideau ?", "Fait-il très chaud dans votre chambre ?"], solutionsTech: ["Nettoyer les ouïes de ventilation.", "Vérifier le fonctionnement du ventilateur.", "Maintenance préventive."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "everflo", name: "EverFlo", failures: [ // Renamed from "Concentrateur EverFlo"
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur.", "Vérifier le condensateur."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Vérifiez le serrage de l'humidificateur."], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
                     { title: "Bruit anormal ou vibrations", causes: ["Humidité dans le silencieux", "Silenblocs compresseur usés", "Position instable", "Objet dans ventilateur"], solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "La pièce est-elle humide ?", "L'appareil est-il bien à plat sur le sol ?"], solutionsTech: ["Déshumidificateur si nécessaire.", "Remplacer silencieux", "Vérifier fixations moteur"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée noirci", "Fuite interne"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?", "Vérifiez que rien n'obstrue les entrées d'air."], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne (filtre feutre).", "Remplacer les colonnes.", "Contrôler les pressions."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il chaud ?", "La grille à l'arrière est-elle libre ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Sortie d’air bloquée", "Filtre final colmaté", "Couvercle mal clipsé"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que rien ne cache le bas de l'appareil"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer le filtre de sortie", "Vérifier étanchéité boîtier"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Vanne bloquée"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas coincée."], solutionsTech: ["Maintenance technique (compresseur).", "Check tubulures", "Tester vannes"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Vanne 4 voies bloquée"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez que l'appareil est branché seul sur la prise."], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Nettoyer ouïes", "Vérifier les tensions."] }
+                    { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée noirci", "Fuite interne"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?", "Vérifiez que rien n'obstrue les entrées d'air."], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne (filtre feutre).", "Remplacer les colonnes.", "Contrôler les pressions."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il chaud ?", "La grille à l'arrière est-elle libre ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
+                    { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Sortie d’air bloquée", "Filtre final colmaté", "Couvercle mal clipsé"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que rien ne cache le bas de l'appareil"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer le filtre de sortie", "Vérifier étanchéité boîtier"] },
+                    { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Vanne bloquée"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas coincée."], solutionsTech: ["Maintenance technique (compresseur).", "Check tubulures", "Tester vannes"] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Vanne 4 voies bloquée"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez que l'appareil est branché seul sur la prise."], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Nettoyer ouïes", "Vérifier les tensions."] },
                 ] },
           { id: "homefill", name: "HomeFill", failures: [ // Renamed from "Invacare HomeFill (Compresseur)"
                     { title: "Erreur Système (Message d'erreur)", causes: ["Débit concentrateur > 3 L/min", "Pression d'entrée insuffisante", "Fuite au raccord"], solutionsPatient: ["Réduisez le débit de votre concentrateur à 3 L/min ou moins.", "Attendez 3 minutes que le voyant repasse au vert.", "Vérifiez que le tuyau reliant les deux machines n'est pas pincé."], solutionsTech: ["Vérifier la pression de couplage.", "Tester le capteur de pression d'entrée."] },
@@ -2113,24 +1771,25 @@ const LIBRARY_DATA = [
                 { id: "everflo-pediatrique", name: "EverFlo Pédiatrique", failures: [ // Renamed from "Concentrateur EverFlo Pédiatrique"
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Quand vous appuyez sur le bouton Marche, est-ce qu'il se passe quelque chose (bruit, lumière) ?", "Est-ce que le câble d'alimentation est bien enfoncé des deux côtés (mur et machine) ?", "Avez-vous essayé sur une autre prise électrique ?"], solutionsTech: ["Vérifier le cordon secteur.", "Vérifier le fusible/disjoncteur.", "Vérifier l'interrupteur."] },
                     { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Tamis moléculaire usé", "Compresseur usé", "Tubulure / canule obstruée"], solutionsPatient: ["Sentez-vous que l'air n'arrive pas régulièrement ?", "Le filtre à air est-il propre ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Vérifiez le serrage de l'humidificateur."], solutionsTech: ["Maintenance compresseur.", "Remplacement tamis.", "Nettoyage filtre.", "Vérifier ou remplacer tubulure/canule."] },
-                    { title: "Bruit anormal ou vibrations", causes: ["Humidité dans le silencieux", "Silenblocs moteur usés", "Position instable"], solutionsPatient: ["Y a-t-il de l'eau dans le tuyau ?", "L'appareil est-il bien à plat sur le sol ?"], solutionsTech: ["Remplacer silencieux", "Vérifier fixations moteur", "Contrôler le ventilateur"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée noirci", "Fuite interne"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?", "Vérifiez que rien n'obstrue les entrées d'air."], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne (filtre feutre).", "Remplacer les colonnes.", "Contrôler les pressions."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il chaud ?", "La grille à l'arrière est-elle libre ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Sortie d’air bloquée", "Filtre HEPA colmaté", "Moteur de vanne bloqué"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que rien ne cache le bas de l'appareil"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer filtre HEPA", "Tester le cycle des vannes"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction tubulure"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pliée."], solutionsTech: ["Maintenance technique (compresseur).", "Inspecter tubulures internes", "Recalibrer capteurs"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Carte électronique HS", "Capteur O2 défectueux"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez l'état de la prise murale."], solutionsTech: ["Maintenance technique / SAV.", "Vérifier tensions carte", "Remplacer capteur O2"] }
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] },
+                    { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée noirci", "Fuite interne"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "L'appareil a-t-il été entretenu récemment ?", "Vérifiez que rien n'obstrue les entrées d'air."], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne (filtre feutre).", "Remplacer les colonnes.", "Contrôler les pressions."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il chaud ?", "La grille à l'arrière est-elle libre ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
+                    { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Sortie d’air bloquée", "Filtre HEPA colmaté", "Moteur de vanne bloqué"], solutionsPatient: ["La grille à l'arrière est-elle libre ?", "Vérifiez que rien ne cache le bas de l'appareil"], solutionsTech: ["Dégager la sortie d'air.", "Remplacer filtre HEPA", "Tester le cycle des vannes"] },
+                    { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction tubulure"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pliée."], solutionsTech: ["Maintenance technique (compresseur).", "Inspecter tubulures internes", "Recalibrer capteurs"] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Carte électronique HS", "Capteur O2 défectueux"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez l'état de la prise murale."], solutionsTech: ["Maintenance technique / SAV.", "Vérifier tensions carte", "Remplacer capteur O2"] }
                 ] },
                 { id: "igo2-fixe", name: "iGo 2 (Mode Fixe)", failures: [ // Renamed from "Concentrateur iGo 2 (Mode Fixe)"
                      { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Batterie faible", "Cordon mal inséré", "Surchauffe batterie"], solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?", "La batterie est-elle chaude ?"], solutionsTech: ["Remplacer batterie.", "Nettoyer contacts batterie.", "Vérifier tension chargeur."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Surchauffe interne", "Batterie déconnectée", "Défaut carte"], solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?", "Vérifiez que la batterie ne bouge pas"], solutionsTech: ["Vérifier ventilation.", "Contrôler logs d'erreur.", "Tester carte."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée obstrué", "Compresseur usé"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "Le filtre est-il bien propre ?", "L'appareil est-il dans un sac mal aéré ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne.", "Remplacer les tamis.", "Tester la pression."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Sortie d’air obstruée", "Sacoche mal positionnée", "Filtre d'échappement saturé"], solutionsPatient: ["Vérifiez que rien ne bouche l'arrière.", "Sortez l'appareil de sa sacoche pour tester."], solutionsTech: ["Dégager la sortie d’air.", "Remplacer filtre échappement."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Sonde pression HS"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Rechercher fuite.", "Remplacer capteur."] },
-                     { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Vanne 4 voies bloquée"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez que l'appareil est branché seul sur la prise."], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Nettoyer ouïes", "Vérifier les tensions."] }
+                     { title: "Erreur Système (Batterie Faible / DC)", causes: ["Batterie faible", "Cordon mal inséré", "Surchauffe batterie"], solutionsPatient: ["Le voyant batterie est-il allumé ?", "Est-il bien branché sur le secteur ?", "La batterie est-elle chaude ?"], solutionsTech: ["Remplacer batterie.", "Nettoyer contacts batterie.", "Vérifier tension chargeur."] },
+                     { title: "Erreur Système (Surchauffe Interne)", causes: ["Surchauffe interne", "Batterie déconnectée", "Défaut carte"], solutionsPatient: ["L'appareil est-il chaud au toucher ?", "Les aérations sont-elles libres ?", "Vérifiez que la batterie ne bouge pas"], solutionsTech: ["Vérifier ventilation.", "Contrôler logs d'erreur.", "Tester carte."] },
+                     { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Tamis moléculaire usé", "Mauvaise concentration O₂", "Filtre d'entrée obstrué", "Compresseur usé"], solutionsPatient: ["Le voyant oxygène est-il jaune ou rouge ?", "Le filtre est-il bien propre ?", "L'appareil est-il dans un sac mal aéré ?"], solutionsTech: ["Vérifier la pureté à l'analyseur.", "Maintenance interne.", "Remplacer les tamis.", "Tester la pression."] },
+                     { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Environnement trop chaud"], solutionsPatient: ["L'appareil est-il très chaud ?", "Est-ce que quelque chose bouche les grilles d'aération ?", "Fait-il très chaud dans la pièce ?"], solutionsTech: ["Nettoyer grilles d'aération.", "Déplacer appareil, laisser refroidir."] },
+                     { title: "Erreur Système (Obstruction Sortie Air)", causes: ["Sortie d’air obstruée", "Sacoche mal positionnée", "Filtre d'échappement saturé"], solutionsPatient: ["Vérifiez que rien ne bouche l'arrière.", "Sortez l'appareil de sa sacoche pour tester."], solutionsTech: ["Dégager la sortie d’air.", "Remplacer filtre échappement."] },
+                     { title: "Erreur Système (Circuit Bouché)", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
+                     { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Sonde pression HS"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Rechercher fuite.", "Remplacer capteur."] },
+                     { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Vanne 4 voies bloquée"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Vérifiez que l'appareil est branché seul sur la prise."], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Nettoyer ouïes", "Vérifier les tensions."] },
+                     { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] }
             ]
           },
@@ -2142,77 +1801,89 @@ const LIBRARY_DATA = [
                 { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Coupure de courant", "Câble mal branché"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?", "Y a-t-il eu une coupure de courant ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne.", "Vérifier secteur / basculer sur secours."] },
                 { title: "Problème de batterie ou autonomie", causes: ["Batterie usée", "Contacts sales", "Mauvaise insertion", "Surchauffe batterie"], solutionsPatient: ["La batterie tient-elle la charge ?", "Vérifiez que vous avez bien entendu le 'clic' lors de l'insertion.", "Nettoyez les contacts métalliques avec un chiffon sec.", "La batterie est-elle chaude ?"], solutionsTech: ["Contrôler la capacité réelle de la batterie.", "Remplacer batterie.", "Nettoyer connecteurs.", "Vérifier circuit de charge."] },
                 { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué", "Tubulure / canule obstruée", "Tamis moléculaires fatigués", "Circuit complètement bouché", "Débit réglé trop bas", "Canule trop longue", "Pliure dans la tubulure"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Voyez-vous un message O2 faible ?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?", "Vérifiez votre canule sur toute la longueur.", "Essayez avec une canule neuve."], solutionsTech: ["Nettoyer filtre.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Analyser la pureté O2.", "Ajuster débit.", "Tester la valve de pulsion.", "Vérifier le capteur de pression."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] }
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
+                { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
+                { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] },
+                { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "inogen-g4", name: "Inogen One G4", failures: [
                 { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Coupure de courant", "Câble mal branché"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?", "Y a-t-il eu une coupure de courant ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne.", "Vérifier secteur / basculer sur secours."] },
                 { title: "Problème de batterie ou autonomie", causes: ["Batterie usée", "Contacts sales", "Mauvaise insertion", "Surchauffe batterie"], solutionsPatient: ["La batterie tient-elle la charge ?", "Vérifiez que vous avez bien entendu le 'clic' lors de l'insertion.", "Nettoyez les contacts métalliques avec un chiffon sec.", "La batterie est-elle chaude ?"], solutionsTech: ["Contrôler la capacité réelle de la batterie.", "Remplacer batterie.", "Nettoyer connecteurs.", "Vérifier circuit de charge."] },
                 { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué", "Tubulure / canule obstruée", "Tamis moléculaires fatigués", "Circuit complètement bouché", "Débit réglé trop bas", "Canule trop longue", "Pliure dans la tubulure"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Voyez-vous un message O2 faible ?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?", "Vérifiez votre canule sur toute la longueur.", "Essayez avec une canule neuve."], solutionsTech: ["Nettoyer filtre.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Analyser la pureté O2.", "Ajuster débit.", "Tester la valve de pulsion.", "Vérifier le capteur de pression."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] }
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
+                { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
+                { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] },
+                { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "inogen-g5", name: "Inogen One G5", failures: [
                 { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Coupure de courant", "Câble mal branché"], solutionsPatient: ["Quand vous branchez le chargeur, est-ce qu'un voyant s'allume sur la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?", "Y a-t-il eu une coupure de courant ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne.", "Vérifier secteur / basculer sur secours."] },
                 { title: "Problème de batterie ou autonomie", causes: ["Batterie usée", "Contacts sales", "Mauvaise insertion", "Surchauffe batterie"], solutionsPatient: ["La batterie tient-elle la charge ?", "Vérifiez que vous avez bien entendu le 'clic' lors de l'insertion.", "Nettoyez les contacts métalliques avec un chiffon sec.", "La batterie est-elle chaude ?"], solutionsTech: ["Contrôler la capacité réelle de la batterie.", "Remplacer batterie.", "Nettoyer connecteurs.", "Vérifier circuit de charge."] },
                 { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué", "Tubulure / canule obstruée", "Tamis moléculaires fatigués", "Circuit complètement bouché", "Débit réglé trop bas", "Canule trop longue", "Pliure dans la tubulure"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Voyez-vous un message O2 faible ?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?", "Vérifiez votre canule sur toute la longueur.", "Essayez avec une canule neuve."], solutionsTech: ["Nettoyer filtre.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Analyser la pureté O2.", "Ajuster débit.", "Tester la valve de pulsion.", "Vérifier le capteur de pression."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] }
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit on l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
+                { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
+                { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] },
+                { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "inogen-rove", name: "Inogen Rove 6", failures: [
                 { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                 { title: "Problème de batterie ou autonomie", causes: ["Batterie usée", "Contacts sales", "Mauvaise insertion", "Surchauffe batterie"], solutionsPatient: ["La batterie tient-elle la charge ?", "Vérifiez que vous avez bien entendu le 'clic' lors de l'insertion.", "Nettoyez les contacts métalliques avec un chiffon sec.", "La batterie est-elle chaude ?"], solutionsTech: ["Contrôler la capacité réelle de la batterie.", "Remplacer batterie.", "Nettoyer connecteurs.", "Vérifier circuit de charge."] },
                 { title: "Débit faible ou irrégulier", causes: ["Filtre bouché", "Airflow bloqué", "Tubulure / canule obstruée", "Tamis moléculaires fatigués", "Circuit complètement bouché", "Débit réglé trop bas", "Canule trop longue", "Pliure dans la tubulure"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce que le sac bouche les trous ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Voyez-vous un message O2 faible ?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?", "Vérifiez votre canule sur toute la longueur.", "Essayez avec une canule neuve."], solutionsTech: ["Nettoyer filtre.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Analyser la pureté O2.", "Ajuster débit.", "Tester la valve de pulsion.", "Vérifier le capteur de pression."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
-                { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] }
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur défectueux", "Filtres encrassés", "Ventilateur interne HS"], solutionsPatient: ["L'appareil est-il au soleil ou dans une zone chaude ?", "Vérifiez que les filtres extérieurs sont propres.", "Qu'est-ce qui est écrit sur l'écran ?", "Laissez refroidir l'appareil."], solutionsTech: ["Utiliser en zone ventilée.", "Nettoyer l'intérieur.", "Remplacer le ventilateur.", "Effectuer un diagnostic logiciel."] },
+                { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Obstruction interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas pincée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites internes.", "Remplacer capteurs de pression."] },
+                { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Tamis en fin de vie", "Pile interne vide", "Capteur O2 HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur spécifique ?", "Redémarrer l'appareil après 10 min."], solutionsTech: ["Maintenance technique / SAV.", "Remplacement des colonnes.", "Diagnostic via logiciel constructeur."] },
+                { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "xpo2", name: "Invacare XPO2", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Bloc secteur HS", "Connecteur d'embase dessoudé"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant vert sur le bloc d'alimentation est-il allumé ?", "Essayez de démarrer sans la batterie, juste sur secteur."], solutionsTech: ["Tester la tension de sortie du chargeur (19V).", "Vérifier la continuité de l'embase de charge.", "Contrôler le fusible interne."] },
                     { title: "Problème de détection respiratoire (Trigger)", causes: ["Tubulure trop longue (> 10m)", "Respiration buccale", "Capteur de trigger HS"], solutionsPatient: ["Utilisez une canule de 2 mètres maximum.", "Respirez bien par le nez.", "Vérifiez que le raccord de canule est bien vissé."], solutionsTech: ["Vérifier la valve de pulsion.", "Recalibrer la sensibilité du trigger.", "Tester l'étanchéité du circuit interne."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Usure des tamis moléculaires", "Filtre d'entrée colmaté", "Compresseur fatigué"], solutionsPatient: ["Vérifiez que les filtres extérieurs sont propres.", "Ne couvrez pas l'appareil avec une couverture.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté à l'analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression de sortie du compresseur."] },
-                    { title: "Problème de batterie ou autonomie", causes: ["Batterie trop chaude", "Cellules usées", "Contacts sales"], solutionsPatient: ["Laissez la batterie refroidir 1h.", "Nettoyez les contacts avec un chiffon sec.", "Vérifiez que la batterie est bien cliquée."], solutionsTech: ["Vérifier le cycle de charge.", "Remplacer la batterie."] }
+                    { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Usure des tamis moléculaires", "Filtre d'entrée colmaté", "Compresseur fatigué"], solutionsPatient: ["Vérifiez que les filtres extérieurs sont propres.", "Ne couvrez pas l'appareil avec une couverture.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté à l'analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression de sortie du compresseur."] },
+                    { title: "Problème de batterie ou autonomie", causes: ["Batterie trop chaude", "Cellules usées", "Contacts sales"], solutionsPatient: ["Laissez la batterie refroidir 1h.", "Nettoyez les contacts avec un chiffon sec.", "Vérifiez que la batterie est bien cliquée."], solutionsTech: ["Vérifier le cycle de charge.", "Remplacer la batterie."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "simplygo-mini", name: "SimplyGo Mini", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Filtre sale", "Environnement trop chaud", "Capteur défectueux", "Surchauffe batterie"], solutionsPatient: ["Le filtre est-il propre ?", "Fait-il très chaud là où vous êtes ?", "Vérifiez que le sac n'obstrue pas les grilles.", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Déplacer appareil, laisser refroidir.", "Vérifier ventilateur interne.", "Maintenance technique."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Filtre sale", "Environnement trop chaud", "Capteur défectueux", "Surchauffe batterie"], solutionsPatient: ["Le filtre est-il propre ?", "Fait-il très chaud là où vous êtes ?", "Vérifiez que le sac n'obstrue pas les grilles.", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Déplacer appareil, laisser refroidir.", "Vérifier ventilateur interne.", "Maintenance technique."] },
                 { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué", "Tubulure / canule obstruée", "Tamis moléculaires fatigués", "Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Vérifiez si l'appareil bipe sur chaque inspiration?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air.", "Mesurer la pureté O2.", "Vérifier ou remplacer tubulure/canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Tubulure interne coudée", "Fuite interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas écrasée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites pneumatiques.", "Vérifier le cycle des vannes."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Capteur O2 HS", "Défaut carte mère", "Pile d'alarme HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Retirez la batterie et le secteur, attendez 1 min."], solutionsTech: ["Maintenance technique / SAV.", "Effectuer un diagnostic via le menu technique.", "Vérifier les tensions de la carte."] }
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Tubulure interne coudée", "Fuite interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que la canule n'est pas écrasée."], solutionsTech: ["Maintenance technique (compresseur).", "Recherche de fuites pneumatiques.", "Vérifier le cycle des vannes."] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Capteur O2 HS", "Défaut carte mère", "Pile d'alarme HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Retirez la batterie et le secteur, attendez 1 min."], solutionsTech: ["Maintenance technique / SAV.", "Effectuer un diagnostic via le menu technique.", "Vérifier les tensions de la carte."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "simplygo-mini-ld", name: "SimplyGo Mini (Longue Durée)", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Filtre sale", "Environnement chaud", "Capteur HS"], solutionsPatient: ["Le filtre est-il propre ?", "Est-ce qu'il fait chaud dehors ?", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Déplacer appareil, laisser refroidir.", "Maintenance technique."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Filtre sale", "Environnement chaud", "Capteur HS"], solutionsPatient: ["Le filtre est-il propre ?", "Est-qu'il fait chaud dehors ?", "Voyez-vous un code d'alarme ?"], solutionsTech: ["Nettoyage filtre.", "Déplacer appareil, laisser refroidir.", "Maintenance technique."] },
                 { title: "Débit faible ou irrégulier", causes: ["Ventilation insuffisante", "Airflow bloqué", "Tubulure / canule obstruée", "Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Est-ce que le sac de transport bouche les aérations ?", "L'appareil respire-t-il bien ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Ne pas obstruer aérations.", "Dégager entrées d'air.", "Vérifier ou remplacer tubulure/canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Tubulure interne coudée", "Surchauffe"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures", "Check ventilateur"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Capteur O2 HS", "Défaut carte"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Remplacer capteur", "Vérifier tensions"] }
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Tubulure interne coudée", "Surchauffe"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures", "Check ventilateur"] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Capteur O2 HS", "Défaut carte"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Remplacer capteur", "Vérifier tensions"] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "zen-o-lite", name: "Zen-O Lite", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
                 { title: "Débit faible ou irrégulier", causes: ["Pompe défectueuse", "Airflow bloqué", "Tubulure / canule obstruée", "Filtre d'entrée colmaté", "Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["L'appareil fait-il un bruit anormal ?", "Les aérations sont-elles libres ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Vérifiez que le sac est bien positionné?", "Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Maintenance pompe.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Nettoyer les conduits d'entrée.", "Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Bruit anormal ou vibrations", causes: ["Batterie faible", "Vibration compresseur", "Objet dans ventilateur", "Silentblocs usés"], solutionsPatient: ["La batterie est-elle bien chargée ?", "L'appareil est-il stable dans son sac ?", "Entendez-vous un sifflement ou un claquement ?"], solutionsTech: ["Remplacer batterie.", "Vérifier fixations moteur.", "Nettoyer ventilateur.", "Resserrer le boîtier."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur défectueux", "Ventilateur interne bloqué", "Aérations bouchées"], solutionsPatient: ["Fait-il très chaud ?", "Vérifiez que rien ne bouche les grilles.", "Y a-t-il une alarme système sur l'écran ?"], solutionsTech: ["Déplacer appareil, laisser refroidir.", "Vérifier le fonctionnement du ventilateur.", "Maintenance technique."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Surchauffe"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures"] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Capteur HS", "Défaut carte"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Check carte"] }
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur défectueux", "Ventilateur interne bloqué", "Aérations bouchées"], solutionsPatient: ["Fait-il très chaud ?", "Vérifiez que rien ne bouche les grilles.", "Y a-t-il une alarme système sur l'écran ?"], solutionsTech: ["Déplacer appareil, laisser refroidir.", "Vérifier le fonctionnement du ventilateur.", "Maintenance technique."] },
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Surchauffe"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?"], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures"] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Capteur HS", "Défaut carte"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Check carte"] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "zen-o", name: "Zen-O (Double batterie)", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
+                    { title: "Problème de batterie ou autonomie", causes: ["Une des deux batteries est défaillante", "Batterie en fin de vie", "Défaut de communication (Bus SMBus)", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur.", "Retirez les deux batteries et testez-les une par une.", "Nettoyez les contacts métalliques au fond des compartiments.", "Vérifiez le niveau de charge sur chaque batterie (bouton test)."], solutionsTech: ["Vérifier la capacité de charge individuelle.", "Nettoyer les connecteurs machine.", "Remplacer la batterie défectueuse.", "Vérifier le circuit de commutation sur la carte mère."] },
                     { title: "Fuites importantes (Masque ou Circuit)", causes: ["Connectique mal serrée", "Joint valve usé", "Canule percée", "Raccord de sortie desserré"], solutionsPatient: ["Le tuyau est-il bien branché ?", "Sentez-vous de l'air sortir ailleurs ?", "Essayez une autre canule.", "Vérifiez le raccord de sortie sur l'appareil."], solutionsTech: ["Vérifier connexions.", "Remplacer joint valve.", "Tester étanchéité sortie.", "Vérifier le circuit pneumatique interne."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur HS", "Filtres bouchés", "Ventilateur interne fatigué"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?", "Les grilles à l'arrière sont-elles propres ?"], solutionsTech: ["Déplacer appareil, laisser refroidir.", "Nettoyer conduits.", "Remplacer ventilateur.", "Maintenance technique."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur HS", "Filtres bouchés", "Ventilateur interne fatigué"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?", "Les grilles à l'arrière sont-elles propres ?"], solutionsTech: ["Déplacer appareil, laisser refroidir.", "Nettoyer conduits.", "Remplacer ventilateur.", "Maintenance technique."] },
                 { title: "Débit faible ou irrégulier", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Tubulure pliée", "Vanne HS", "Fuite interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression on l'écran ?", "Vérifiez que le tuyau n'est pas pincé par le sac."], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures.", "Tester vannes.", "Effectuer test d'étanchéité."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Défaut carte", "Batterie défectueuse"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Contrôler batterie"] }
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Tubulure pliée", "Vanne HS", "Fuite interne"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression on l'écran ?", "Vérifiez que le tuyau n'est pas pincé par le sac."], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures.", "Tester vannes.", "Effectuer test d'étanchéité."] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Défaut carte", "Batterie défectueuse"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?"], solutionsTech: ["Maintenance technique / SAV.", "Check carte", "Contrôler batterie"] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "freestyle", name: "FreeStyle Comfort", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Carte"], solutionsPatient: ["Quand vous branchez le chargeur, est-is qu'un voyant s'allume on la machine ?", "Est-ce que le câble du chargeur est abîmé ou tordu ?", "Si vous retirez la batterie et branchez le chargeur, est-ce qu'il démarre ?"], solutionsTech: ["Tester l'alimentation externe.", "Tester sans batterie.", "Vérifier connectique interne."] },
                     { title: "Fuites importantes (Masque ou Circuit)", causes: ["Connectique mal serrée", "Airflow bloqué", "Tubulure / canule obstruée", "Joint de raccord usé"], solutionsPatient: ["Le tuyau est-il bien clipsé ?", "Rien ne bouche les trous d'air ?", "La tubulure ou la canule est-elle pliée ou bouchée ?", "Entendez-vous un sifflement au branchement ?"], solutionsTech: ["Vérifier connexions.", "Dégager aérations.", "Vérifier ou remplacer tubulure/canule.", "Remplacer joint torique de sortie."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Environnement trop chaud", "Capteur HS", "Filtre bouché", "Ventilateur interne bloqué"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?", "Les filtres noirs sur les côtés sont-ils propres ?", "Sentez-vous l'air sortir par les grilles ?"], solutionsTech: ["Nettoyer les filtres extérieurs.", "Déplacer appareil, laisser refroidir.", "Nettoyage interne à l'air sec.", "Remplacer ventilateur."] },
+                    { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Environnement trop chaud", "Capteur HS", "Filtre bouché", "Ventilateur interne bloqué"], solutionsPatient: ["Voyez-vous un message d'erreur ?", "Fait-il chaud ?", "Les filtres noirs sur les côtés sont-ils propres ?", "Sentez-vous l'air sortir par les grilles ?"], solutionsTech: ["Nettoyer les filtres extérieurs.", "Déplacer appareil, laisser refroidir.", "Nettoyage interne à l'air sec.", "Remplacer ventilateur."] },
                 { title: "Débit faible ou irrégulier", causes: ["Circuit complètement bouché", "Débit réglé trop bas"], solutionsPatient: ["Sentez-vous de l'air sortir du tout ?", "Le débit est-il réglé au minimum ?"], solutionsTech: ["Vérifier tubulure / canule.", "Ajuster débit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Défaut compresseur", "Fuite interne", "Surchauffe", "Vanne de pulsion bloquée"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que votre canule n'est pas trop longue."], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures.", "Nettoyer ventilateur.", "Tester la valve pneumatique."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Tamis moléculaires HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Laissez l'appareil éteint 30 min et redémarrez."], solutionsTech: ["Maintenance technique / SAV.", "Check carte.", "Contrôler tensions.", "Remplacer les colonnes."] }
+                    { title: "Erreur Système (Défaut Pression / Vanne)", causes: ["Défaut compresseur", "Fuite interne", "Surchauffe", "Vanne de pulsion bloquée"], solutionsPatient: ["L'appareil fait-il un bruit étrange ?", "Voyez-vous une alarme de pression sur l'écran ?", "Vérifiez que votre canule n'est pas trop longue."], solutionsTech: ["Maintenance technique (compresseur).", "Vérifier tubulures.", "Nettoyer ventilateur.", "Tester la valve pneumatique."] },
+                    { title: "Erreur Système (Panne Interne / SAV)", causes: ["Panne interne", "Défaut carte", "Surchauffe", "Tamis moléculaires HS"], solutionsPatient: ["Le voyant rouge est-il allumé et l'appareil bipe-t-il ?", "Y a-t-il un message d'erreur sur l'écran ?", "Laissez l'appareil éteint 30 min et redémarrez."], solutionsTech: ["Maintenance technique / SAV.", "Check carte.", "Contrôler tensions.", "Remplacer les colonnes."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] }
             ]
           },
@@ -2221,60 +1892,49 @@ const LIBRARY_DATA = [
             name: "Transportable",
             models: [
                 { id: "eclipse-3", name: "Eclipse 3", failures: [
-                    { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil on secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez on secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
-                    { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez on secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge on la carte."] },
-                    { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant on la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez on une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
+                    { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez sur secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
+                    { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
+                    { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant sur la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez sur une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
+                  { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
                     { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'il est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
-                    { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez on mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
-                    { title: "Bruit anormal ou vibrations", causes: ["Tuyau débranché", "Joint vanne usé", "Membrane compresseur fendue"], solutionsPatient: ["Entendez-vous un sifflement venant de l'intérieur ?", "Le bruit s'arrête-t-il si vous bouchez la sortie ?"], solutionsTech: ["Recherche de fuite interne.", "Remplacer la tubulure défectueuse.", "Vérifier le compresseur."] }
+                  { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
+                    { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez en mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
+                  { title: "Erreur Système (Code Fail 01, 02, 04...)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
                 { id: "eclipse-5", name: "Eclipse 5", failures: [
                     { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez sur secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
                     { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
                     { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant sur la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez sur une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
-                    { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
+                    { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
                     { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'il est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
                     { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
-                    { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez on mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
+                    { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez en mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
                     { title: "Erreur Système (Message d'erreur)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
-                    { title: "Bruit anormal ou vibrations", causes: ["Tuyau débranché", "Joint vanne usé", "Membrane compresseur fendue"], solutionsPatient: ["Entendez-vous un sifflement venant de l'intérieur ?", "Le bruit s'arrête-t-il si vous bouchez la sortie ?"], solutionsTech: ["Recherche de fuite interne.", "Remplacer la tubulure défectueuse.", "Vérifier le compresseur."] }
+                    { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
                 ] },
           { id: "simplygo", name: "SimplyGo (Standard)", failures: [
                         { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez sur secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
                         { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
                         { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant sur la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez sur une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'il est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
+                        { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
+                        { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'it est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
+                        { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
                         { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez on mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
-                        { title: "Bruit de sifflement ou fuite interne", causes: ["Tuyau débranché", "Joint vanne usé", "Membrane compresseur fendue"], solutionsPatient: ["Entendez-vous un sifflement venant de l'intérieur ?", "Le bruit s'arrête-t-il si vous bouchez la sortie ?"], solutionsTech: ["Recherche de fuite interne.", "Remplacer la tubulure défectueuse.", "Vérifier le compresseur."] }
+                        { title: "Erreur Système (Code Fail 01, 02, 04...)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
+                        { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
           ] },
           { id: "zen-o-transp", name: "Zen-O", failures: [
                         { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez sur secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
                         { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
                         { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant sur la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez sur une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
+                        { title: "Erreur Système (O2 Bas / Pureté)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
                         { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'il est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
+                        { title: "Erreur Système (Surchauffe / Ventilation)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
                         { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez on mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
-                        { title: "Bruit de sifflement ou fuite interne", causes: ["Tuyau débranché", "Joint vanne usé", "Membrane compresseur fendue"], solutionsPatient: ["Entendez-vous un sifflement venant de l'intérieur ?", "Le bruit s'arrête-t-il si vous bouchez la sortie ?"], solutionsTech: ["Recherche de fuite interne.", "Remplacer la tubulure défectueuse.", "Vérifier le compresseur."] }
+                        { title: "Erreur Système (Code Fail 01, 02, 04...)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
+                        { title: "Bruit anormal ou vibrations", causes: ["Compresseur fatigué", "Silentblocs usés", "Position instable", "Composant interne desserré"], solutionsPatient: ["L'appareil est-il bien à plat sur une surface stable ?", "Le bruit change-t-il si vous le déplacez ?", "Vérifiez qu'aucun objet ne vibre contre le boîtier."], solutionsTech: ["Vérifier les fixations moteur.", "Remplacer les silentblocs.", "Vérifier le ventilateur.", "Resserrer le châssis."] }
           ] },
-          { id: "solo2-transp", name: "Invacare SOLO2", failures: [
-                        { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie vide", "Chargeur HS", "Connectique interne défaillante", "Carte mère HS"], solutionsPatient: ["Branchez l'appareil sur secteur.", "Le voyant du bloc d'alimentation est-il allumé ?", "Retirez la batterie et essayez sur secteur seul.", "Vérifiez que le câble n'est pas coupé."], solutionsTech: ["Tester la tension du chargeur (28V DC).", "Vérifier l'embase de charge.", "Vérifier les fusibles internes.", "Remplacer la carte mère."] },
-                        { title: "Problème de batterie ou autonomie", causes: ["Autonomie < 10 %", "Batterie en fin de vie", "Défaut de communication batterie", "Surchauffe batterie"], solutionsPatient: ["Branchez sur secteur immédiatement.", "Retirez et remettez la batterie fermement.", "Laissez la batterie refroidir si elle est chaude.", "Vérifiez si l'icône batterie s'affiche."], solutionsTech: ["Vérifier la capacité de charge.", "Nettoyer les connecteurs batterie.", "Remplacer la batterie.", "Vérifier le circuit de charge sur la carte."] },
-                        { title: "Problème d'alimentation (12V / Voiture)", causes: ["Cordon DC mal inséré", "Fusible allume-cigare grillé", "Prise voiture défectueuse", "Surchauffe du bloc DC"], solutionsPatient: ["Vérifiez que la prise est bien enfoncée dans l'allume-cigare.", "Vérifiez le voyant sur la prise.", "Dévissez l'embout pour vérifier le petit fusible.", "Essayez sur une autre prise 12V."], solutionsTech: ["Tester la continuité du câble DC.", "Vérifier le fusible du câble.", "Contrôler la tension de sortie sous charge."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Saturation des tamis moléculaires", "Filtre d'entrée colmaté", "Fuite interne", "Humidité excessive"], solutionsPatient: ["Vérifiez que le filtre à poussière à l'arrière est propre.", "Placez l'appareil dans un endroit bien aéré.", "Assurez-vous de ne pas être trop près d'une source de vapeur.", "Aérez la pièce."], solutionsTech: ["Mesurer la pureté O2 avec un analyseur.", "Remplacer les colonnes de tamis.", "Vérifier la pression du compresseur.", "Contrôler l'étanchéité pneumatique."] },
-                        { title: "Débit faible ou irrégulier", causes: ["Canule pliée ou écrasée", "Filtre HEPA bouché", "Vanne de sortie bloquée", "Bocal humidificateur fuyard"], solutionsPatient: ["Vérifiez que votre canule n'est pas pliée.", "Essayez avec une canule neuve.", "Si vous utilisez un humidificateur, vérifiez qu'il est bien fermé.", "Sentez-vous l'air sortir au bout ?"], solutionsTech: ["Vérifier le capteur de débit.", "Remplacer le filtre HEPA de sortie.", "Tester la pression de sortie.", "Vérifier le cycle de la vanne de pulsion."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Ventilation obstruée", "Ventilateur interne HS", "Environnement trop chaud", "Filtres internes encrassés"], solutionsPatient: ["Sortez l'appareil de sa sacoche.", "Vérifiez que les grilles sont libres.", "Laissez refroidir l'appareil 30 minutes.", "Éloignez l'appareil du soleil."], solutionsTech: ["Vérifier le ventilateur interne.", "Nettoyage interne à l'air sec.", "Contrôler la température de la turbine via le menu service."] },
-                        { title: "Problème de détection respiratoire (Trigger)", causes: ["Respiration par la bouche", "Canule trop longue (> 2.1m)", "Sensibilité trigger basse", "Valve de pulsion bloquée"], solutionsPatient: ["Respirez bien par le nez.", "Utilisez une canule de 2 mètres maximum.", "Vérifiez le branchement du tuyau.", "Testez on mode continu."], solutionsTech: ["Recalibrer la sensibilité du trigger.", "Tester la valve pneumatique.", "Vérifier l'étanchéité du circuit."] },
-                        { title: "Erreur Système (Message d'erreur)", causes: ["Fail 01 (O2)", "Fail 02 (Pression)", "Fail 04 (Batterie)", "Défaut carte mère"], solutionsPatient: ["Retirez la batterie et débranchez le secteur 1 minute.", "Redémarrez l'appareil.", "Notez le numéro de Fail qui s'affiche."], solutionsTech: ["Identifier le composant via le code erreur.", "Tester les tensions de carte.", "Contrôler les capteurs internes."] },
-                        { title: "Bruit de sifflement ou fuite interne", causes: ["Tuyau débranché", "Joint vanne usé", "Membrane compresseur fendue"], solutionsPatient: ["Entendez-vous un sifflement venant de l'intérieur ?", "Le bruit s'arrête-t-il si vous bouchez la sortie ?"], solutionsTech: ["Recherche de fuite interne.", "Remplacer la tubulure défectueuse.", "Vérifier le compresseur."] }
-          ] }
             ] 
           }
         ]
@@ -2464,29 +2124,36 @@ export default function LibraryPage() {
       setSearchResults([]);
       return;
     }
-    const lowerQuery = query.toLowerCase();
+    const normalize = (str) => str ? str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase() : "";
+    const lowerQuery = normalize(query);
     const results = [];
 
-    const traverse = (items, path = "") => {
+    const traverse = (items, path = "", topType = null, parentMatched = false) => {
       items.forEach(item => {
         const currentPath = path ? `${path} > ${item.name}` : item.name;
+        const currentTopType = topType || item;
+        const itemMatch = parentMatched || normalize(item.name).includes(lowerQuery);
+
         // Recherche dans les modèles directs
         if (item.models) {
           item.models.forEach(m => {
-            if (m.name.toLowerCase().includes(lowerQuery)) {
-              results.push({ model: m, type: item, path: `${currentPath} > ${m.name}` });
+            if (normalize(m.name).includes(lowerQuery) || itemMatch) {
+              results.push({ model: m, type: currentTopType, path: `${currentPath} > ${m.name}` });
             }
           });
         }
         // Recherche dans les marques
         if (item.brands) {
           item.brands.forEach(b => {
+            const brandMatch = itemMatch || normalize(b.name).includes(lowerQuery);
             if (b.models) b.models.forEach(m => {
-              if (m.name.toLowerCase().includes(lowerQuery)) results.push({ model: m, type: item, brand: b, path: `${currentPath} > ${b.name} > ${m.name}` });
+              if (normalize(m.name).includes(lowerQuery) || brandMatch) {
+                results.push({ model: m, type: currentTopType, brand: b, path: `${currentPath} > ${b.name} > ${m.name}` });
+              }
             });
           });
         }
-        if (item.subTypes) traverse(item.subTypes, currentPath);
+        if (item.subTypes) traverse(item.subTypes, currentPath, currentTopType, itemMatch);
       });
     };
     traverse(data);
@@ -2647,7 +2314,11 @@ export default function LibraryPage() {
       device: `${selectedType?.name}${selectedBrand ? ` (${selectedBrand.name})` : ''} > ${selectedModel?.name}`,
       failure: selectedFailure?.title,
       status: status, // 'Succès' ou 'Échec'
-      comment: otherCause || ''
+      comment: otherCause || '',
+      // Enregistrement des détails pour l'export complet
+      causes: selectedFailure?.causes || [],
+      solutionsPatient: selectedFailure?.solutionsPatient || [],
+      solutionsTech: selectedFailure?.solutionsTech || []
     };
 
     try {
@@ -2678,24 +2349,29 @@ export default function LibraryPage() {
   const shouldHideNameInTitle = (name) => 
     !name || ["concentrateur", "fixe", "portable", "transportable"].some(term => name.toLowerCase().includes(term));
 
-  const downloadHistoryPDF = () => {
+  const downloadHistoryExcel = () => {
+    if (typeof XLSX === 'undefined') {
+      alert("La librairie Excel n'est pas chargée.");
+      return;
+    }
     if (history.length === 0) return alert("Le journal est vide.");
-    
-    const doc = new jsPDF('l', 'mm', 'a4');
-    doc.setFontSize(18);
-    doc.text("Journal des Interventions - Bibliotech", 14, 15);
-    doc.setFontSize(10);
-    doc.text(`Généré le ${new Date().toLocaleString('fr-FR')}`, 14, 22);
 
-    const tableRows = history.map(item => [item.date, item.device, item.failure, item.status, item.comment || '-']);
-    doc.autoTable({
-      head: [['Date', 'Appareil', 'Problème', 'Statut', 'Notes']],
-      body: tableRows,
-      startY: 28,
-      styles: { fontSize: 8, cellPadding: 2 },
-      headStyles: { fillColor: [2, 132, 199] }
-    });
-    doc.save(`journal_bibliotech_${new Date().toLocaleDateString('fr-FR').replace(/\//g, '-')}.pdf`);
+    const worksheetData = history.map(item => ({
+      Date: item.date,
+      Appareil: item.device,
+      "Problème": item.failure,
+      "Causes": (item.causes || []).join(', '),
+      "Solutions Patient": (item.solutionsPatient || []).join(', '),
+      "Actions Technicien": (item.solutionsTech || []).join(', '),
+      Statut: item.status,
+      Notes: item.comment || '-'
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Interventions");
+
+    XLSX.writeFile(workbook, "journal.xlsx");
   };
 
   return ( // Le composant ErrorBoundary est ajouté ici
@@ -2808,9 +2484,9 @@ export default function LibraryPage() {
               <div style={{ display: 'flex', gap: '10px' }}>
                 <button 
                   className="header-btn primary"
-                  onClick={downloadHistoryPDF}
+                  onClick={downloadHistoryExcel}
                 >
-                  📥 Télécharger PDF
+                  📥 Télécharger Excel
                 </button>
                 <button className="header-btn" style={{ border: "1px solid #ef4444", color: "#ef4444" }} onClick={clearHistory}>
                   Vider le journal
