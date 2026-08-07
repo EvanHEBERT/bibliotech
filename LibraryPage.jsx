@@ -11,8 +11,8 @@ const LIBRARY_DATA = [
     id: "aerosol",
     name: "Aérosol",
     models: [
-      { id: "airforce-max", name: "Airforce Max", failures: [
-          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Fusible interne grillé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
+      { id: "airforce-max", name: "Airforce Max", failures: [ // MODIFIED
+          { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté ou défectueux", "Prise murale hors service", "Disjoncteur déclenché", "Interrupteur de l'appareil sur 'Off'", "Fusible interne grillé", "Panne de la carte d'alimentation"], solutionsPatient: ["Vérifiez que le cordon est bien enfoncé dans la prise murale ET à l'arrière de l'appareil.", "Branchez une lampe sur la même prise pour vérifier si elle fonctionne. Si non, vérifiez le disjoncteur.", "Assurez-vous que le bouton Marche/Arrêt est bien sur la position 'I' (Marche).", "Inspectez visuellement le câble pour toute coupure ou dommage."], solutionsTech: ["Tester la continuité du cordon d'alimentation avec un multimètre.", "Vérifier la présence de tension (230V AC) sur la prise murale.", "Contrôler l'interrupteur de l'appareil (continuité en position 'On').", "Ouvrir l'appareil et vérifier le fusible interne sur la carte d'alimentation.", "Mesurer les tensions de sortie de la carte d'alimentation."] },
           { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane.", "Vérifier les fuites internes."] },
           { title: "Bruit anormal ou vibrations", causes: ["Moteur usé", "Filtre mal inséré", "Corps étranger dans la turbine"], solutionsPatient: ["Vérifier que le filtre est bien en place.", "S'assurer que l'appareil est sur une surface stable."], solutionsTech: ["Nettoyer/remplacer la turbine.", "Vérifier les silentblocs."] },
           { title: "Surchauffe de l'appareil", causes: ["Aérations obstruées", "Utilisation prolongée", "Filtre encrassé"], solutionsPatient: ["Dégager les aérations de l'appareil.", "Laisser refroidir l'appareil avant de le réutiliser."], solutionsTech: ["Nettoyer les conduits d'air internes.", "Vérifier le fonctionnement du ventilateur."] },
@@ -21,7 +21,7 @@ const LIBRARY_DATA = [
       ] },
       { id: "innospire-elegance", name: "Innospire Elegance", failures: [
            { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Interrupteur défaillant"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }, // MODIFIED
           { title: "Fuites importantes (Masque ou Circuit)", causes: ["Kit mal assemblé", "Joint usé", "Fissure dans le kit"], solutionsPatient: ["Réassembler correctement le kit.", "Vérifier l'état des joints du kit."], solutionsTech: ["Remplacer le kit de nébulisation.", "Vérifier la pression de sortie de l'appareil."] },
           { title: "Bruit anormal ou vibrations", causes: ["Pieds caoutchouc usés", "Surface instable", "Fixation interne desserrée"], solutionsPatient: ["Placer sur une surface plane et solide", "Vérifier les 4 pieds sous l'appareil"], solutionsTech: ["Resserrer les fixations compresseur.", "Remplacer les silentblocs."] },
           { title: "Arrêt intermittent", causes: ["Surchauffe moteur", "Faux contact cordon", "Interrupteur HS"], solutionsPatient: ["Laisser refroidir 30 min", "Vérifier le branchement mural", "Ne pas utiliser de multiprise"], solutionsTech: ["Tester le cordon.", "Vérifier la sécurité thermique.", "Remplacer l'interrupteur."] },
@@ -29,7 +29,7 @@ const LIBRARY_DATA = [
       ] },
       { id: "innospire-mini", name: "Innospire Mini", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Batterie déchargée", "Chargeur défectueux", "Carte mère HS"], solutionsPatient: ["Le chargeur est-il bien branché ?", "Le voyant de charge s'allume-t-il ?", "Est-ce que vous êtes dehors avec l'appareil ?"], solutionsTech: ["Tester avec un autre chargeur.", "Remplacer la batterie.", "Remplacer la carte électronique."] },
-          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le compresseur."] }, // MODIFIED
           { title: "Voyant de charge ne s'allume pas", causes: ["Chargeur défectueux", "Port de charge endommagé", "Batterie HS"], solutionsPatient: ["Tester avec un autre chargeur.", "Vérifier que le port de charge n'est pas obstrué."], solutionsTech: ["Remplacer le chargeur.", "Vérifier la carte de charge."] },
           { title: "Batterie faible autonomie / Gonflée", causes: ["Cellules Lithium usées", "Chaleur excessive", "Défaut de charge"], solutionsPatient: ["Utiliser sur secteur", "Retirer la batterie si déformée", "Ne pas charger au soleil"], solutionsTech: ["Remplacer la batterie.", "Vérifier tension chargeur."] },
           { title: "Fuites importantes (Masque ou Circuit)", causes: ["Fuite kit nébuliseur", "Tuyau micro-percé", "Filtre mal inséré"], solutionsPatient: ["Réassembler le kit fermement", "Vérifier l'état du tuyau", "Vérifier le filtre à air"], solutionsTech: ["Test étanchéité interne.", "Vérifier clapet compresseur."] },
@@ -37,7 +37,7 @@ const LIBRARY_DATA = [
       ] },
       { id: "inspiration-elite", name: "Inspiration Elite", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Fusible", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester la continuité du cordon.", "Vérifier l'interrupteur.", "Contrôler la carte électronique."] },
-          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Vérifier la pression de sortie.", "Remplacer le kit piston/membrane."] }, // MODIFIED
           { title: "Bruit anormal ou vibrations", causes: ["Coussinets moteur usés", "Ventilateur touchant le boîtier"], solutionsPatient: ["Vérifier si l'appareil a subi un choc", "S'assurer qu'aucun objet n'est entré dedans"], solutionsTech: ["Ouvrir et inspecter la mécanique.", "Remplacer roulements."] },
           { title: "Fuites importantes (Masque ou Circuit)", causes: ["Joint interne usé", "Raccord fissuré"], solutionsPatient: ["Vérifier l'extrémité du tuyau", "Enfoncer le tuyau fermement"], solutionsTech: ["Remplacer le raccord sortie.", "Vérifier tubes internes."] },
           { title: "Surchauffe rapide du boîtier", causes: ["Entrées air bouchées", "Filtre interne colmaté"], solutionsPatient: ["Dégager l'espace autour de l'appareil", "Changer le filtre à air"], solutionsTech: ["Nettoyage circuit aération.", "Vérifier ventilateur."] },
@@ -45,7 +45,7 @@ const LIBRARY_DATA = [
       ] },
       { id: "pariboy-pro", name: "PariBoy Pro", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }, // MODIFIED
           { title: "Bruit anormal ou vibrations", causes: ["Moteur desserré", "Segment piston usé"], solutionsPatient: ["Vérifier que rien ne vibre contre l'appareil"], solutionsTech: ["Resserrer berceau moteur.", "Maintenance compresseur."] },
           { title: "Fuites importantes (Masque ou Circuit)", causes: ["Tuyau interne débranché", "Joint culasse HS"], solutionsPatient: ["Appareil semble moins puissant", "Sifflement venant de l'intérieur"], solutionsTech: ["Réparation pneumatique interne."] },
           { title: "Interrupteur bloqué", causes: ["Résidus de médicaments", "Ressort cassé"], solutionsPatient: ["Nettoyer le bouton au sec"], solutionsTech: ["Remplacer interrupteur."] },
@@ -53,7 +53,7 @@ const LIBRARY_DATA = [
       ] },
       { id: "pariboy-sx", name: "PariBoy SX", failures: [
           { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Alimentation", "Cordon", "Interrupteur"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Si vous essayez sur une autre prise, est-ce que ça marche ?", "Le bouton est-il bien sur la position 'I' (Marche) ?"], solutionsTech: ["Tester le cordon d'alimentation.", "Vérifier l'interrupteur.", "Remplacer la carte électronique."] },
-          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] },
+          { title: "Débit faible ou irrégulier", causes: ["Kit bouché", "Filtre sale", "Compresseur"], solutionsPatient: ["Avez-vous nettoyé la petite buse du kit ?", "Est-ce que le tuyau est plié ou écrasé ?", "Le filtre à air est-il propre ?"], solutionsTech: ["Mesurer la pression de service.", "Remplacer le compresseur."] }, // MODIFIED
           { title: "Bruit anormal ou vibrations", causes: ["Amortisseurs moteur usés", "Axe moteur voilé"], solutionsPatient: ["Poser sur un support stable", "Vérifier les pieds"], solutionsTech: ["Remplacer silentblocs."] },
           { title: "Débit saccadé", causes: ["Membrane compresseur usée", "Clapets fatigués"], solutionsPatient: ["Vérifier si le bruit change", "Vérifier le filtre"], solutionsTech: ["Révision tête compresseur."] },
           { title: "Odeur de chaud", causes: ["Moteur surchauffe", "Ventilation interne obstruée"], solutionsPatient: ["Vérifier le dessous de l'appareil", "Changer le filtre"], solutionsTech: ["Contrôler température moteur."] },
@@ -78,11 +78,11 @@ const LIBRARY_DATA = [
                 id: "prismaline",
                 name: "prismaLine (Série WM100TD)",
                 failures: [
-                  {
+                  { // MODIFIED
                     title: "Problème d'alimentation (L'appareil ne démarre pas)",
-                    causes: ["Le cordon secteur n'est pas branché", "La prise de courant est hors tension ou le disjoncteur a sauté", "Le bloc d'alimentation est défectueux", "Câble endommagé ou sectionné", "Fusible interne de l'appareil grillé"],
-                    solutionsPatient: ["Brancher correctement le cordon sur l'appareil et sur la prise", "Tester la prise avec un autre appareil électrique", "Inspecter le câble sur toute sa longueur", "Faire tester le bloc d'alimentation par votre prestataire"],
-                    solutionsTech: ["Vérifier la continuité du cordon secteur.", "Mesurer la tension de sortie du bloc (V DC).", "Vérifier et remplacer le fusible interne si accessible.", "Tester l'embase de connexion."]
+                    causes: ["Cordon secteur mal branché", "Prise murale hors tension", "Bloc d'alimentation externe défectueux", "Câble DC endommagé", "Connecteur d'embase de l'appareil défectueux", "Panne carte mère"],
+                    solutionsPatient: ["Vérifier que le cordon est bien enfoncé dans la prise murale ET dans le bloc d'alimentation.", "S'assurer que le câble DC est bien branché à l'arrière de l'appareil.", "Le voyant vert sur le bloc d'alimentation est-il allumé ? Si non, tester une autre prise.", "Inspecter les câbles pour toute coupure ou pliure excessive."],
+                    solutionsTech: ["Mesurer la tension de sortie du bloc d'alimentation externe (doit être ~24V DC).", "Tester avec un bloc d'alimentation compatible connu pour être fonctionnel.", "Vérifier la continuité et l'état du connecteur d'embase à l'arrière de l'appareil.", "Contrôler les tensions d'entrée sur la carte mère."]
                   },
                   {
                     title: "Problème d'affichage (Écran noir ou figé)",
@@ -129,8 +129,8 @@ const LIBRARY_DATA = [
                 ]
               },
               { id: "prisma-30st", name: "Prisma 30ST", failures: [
-                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Bloc d'alimentation HS", "Connecteur arrière endommagé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous essayé de brancher une lampe sur cette prise ?", "Est-ce que le voyant du bloc est allumé ?"], solutionsTech: ["Vérifier le bloc d'alimentation externe.", "Tester la tension de sortie du bloc.", "Contrôler la continuité du câble secteur."] },
-                { title: "Pression insuffisante ou instable", causes: ["Le filtre à air est colmaté", "Fuite excessive au masque", "Le tuyau est percé ou mal raccordé", "Usure des roulements de la turbine", "Obstruction de l'entrée d'air interne"], solutionsPatient: ["Remplacer immédiatement le filtre à air", "Réajuster le masque et vérifier les sangles", "Inspecter le tuyau sur toute sa longueur", "Vérifier que rien n'obstrue la grille d'aération"], solutionsTech: ["Vérifier la calibration du capteur de pression.", "Inspecter l'étanchéité interne (tubulures).", "Vérifier le nombre d'heures de la turbine.", "Mesurer la pression réelle avec un manomètre externe."] },
+                { title: "Problème d'alimentation (L'appareil ne démarre pas)", causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Bloc d'alimentation HS", "Connecteur arrière endommagé"], solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous essayé de brancher une lampe sur cette prise ?", "Est-ce que le voyant du bloc est allumé ?"], solutionsTech: ["Vérifier le bloc d'alimentation externe.", "Tester la tension de sortie du bloc.", "Contrôler la continuité du câble secteur."] }, // MODIFIED
+                { title: "Pression insuffisante ou instable", causes: ["Le filtre à air est colmaté", "Fuite excessive au masque", "Le tuyau est percé ou mal raccordé", "Usure des roulements de la turbine", "Obstruction de l'entrée d'air interne"], solutionsPatient: ["Remplacer immédiatement le filtre à air", "Réajuster le masque et vérifier les sangles", "Inspecter le tuyau sur toute sa longueur", "Vérifier que rien n'obstrue la grille d'aération"], solutionsTech: ["Vérifier la calibration du capteur de pression.", "Inspecter l'étanchéité interne (tubulures).", "Vérifier le nombre d'heures de la turbine.", "Mesurer la pression réelle avec un manomètre externe."] }, // MODIFIED
                 { title: "Erreur Système (Message d'erreur)", causes: ["Surchauffe de l'appareil due à une obstruction des entrées d'air", "Un bug logiciel passager", "Utilisation d'accessoires non compatibles"], solutionsPatient: ["Laisser l'appareil refroidir et vérifier que rien ne bloque le filtre à l'arrière", "Débrancher l'alimentation, attendre 2 minutes, puis rebrancher", "Vérifier que le filtre est propre et que le tuyau n'est pas plié"], solutionsTech: ["Nettoyer les filtres et les grilles d'aération.", "Mettre à jour le firmware de l'appareil.", "Vérifier la compatibilité des accessoires."] },
                 {
                   title: "Problème d'affichage (Écran noir ou figé)",
@@ -188,11 +188,11 @@ const LIBRARY_DATA = [
                 solutionsPatient: ["Entendez-vous un clapotis dans le tuyau ?", "Baisser le réglage d'humidité"],
                 solutionsTech: ["Réduire l'humidité.", "Utiliser ClimateLineAir.", "Ajouter une housse."]
               },
-              {
+              { // MODIFIED
                 title: "Problème d'alimentation (L'appareil ne démarre pas)",
-                causes: ["Cordon secteur déconnecté", "Prise murale défectueuse", "Bloc d'alimentation HS", "Connecteur arrière endommagé"],
-                solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Avez-vous essayé de brancher une lampe sur cette prise ?", "Est-ce que le voyant du bloc est allumé ?"],
-                solutionsTech: ["Vérifier le bloc d'alimentation externe.", "Tester la tension de sortie du bloc.", "Contrôler la continuité du câble secteur."]
+                causes: ["Cordon secteur mal branché", "Prise murale hors service", "Bloc d'alimentation 90W défectueux", "Connecteur d'embase de l'appareil endommagé", "Panne interne de la machine"],
+                solutionsPatient: ["Vérifier que le cordon est bien enfoncé dans la prise murale ET dans le bloc d'alimentation.", "Le voyant vert sur le bloc d'alimentation est-il allumé ? Si non, tester une autre prise.", "S'assurer que le câble DC est bien branché à l'arrière de l'appareil. L'appareil doit bipper au branchement.", "Inspecter les câbles pour toute coupure ou dommage."],
+                solutionsTech: ["Mesurer la tension de sortie du bloc d'alimentation 90W (doit être ~24V DC).", "Tester avec un bloc d'alimentation ResMed 90W fonctionnel.", "Vérifier la continuité et l'état du connecteur d'embase à l'arrière de l'appareil.", "Contrôler les tensions d'entrée sur la carte mère."]
               },
               {
                 title: "Bruit anormal ou vibrations",
@@ -228,11 +228,11 @@ const LIBRARY_DATA = [
                   "Tester l'appareil avec un poumon de test."
                 ]
               },
-              {
+              { // MODIFIED
                 title: "Problème d'alimentation (L'appareil ne démarre pas)",
-                causes: ["Cordon déconnecté", "Prise murale défectueuse", "Bloc secteur HS", "Surtension réseau"],
-                solutionsPatient: ["Est-ce que la prise est bien branchée au mur et à l'appareil ?", "Voyez-vous une lumière sur le bloc rectangulaire du fil ?", "L'appareil a-t-il bippé au branchement ?"],
-                solutionsTech: ["Vérifier le bloc d'alimentation externe.", "Tester avec un autre bloc 90W.", "Contrôler la continuité du câble secteur."]
+                causes: ["Cordon secteur mal branché", "Prise murale hors service", "Bloc d'alimentation 90W défectueux", "Connecteur d'embase de l'appareil endommagé", "Panne interne de la machine"],
+                solutionsPatient: ["Vérifier que le cordon est bien enfoncé dans la prise murale ET dans le bloc d'alimentation.", "Le voyant vert sur le bloc d'alimentation est-il allumé ? Si non, tester une autre prise.", "S'assurer que le câble DC est bien branché à l'arrière de l'appareil. L'appareil doit bipper au branchement.", "Inspecter les câbles pour toute coupure ou dommage."],
+                solutionsTech: ["Mesurer la tension de sortie du bloc d'alimentation 90W (doit être ~24V DC).", "Tester avec un bloc d'alimentation ResMed 90W fonctionnel.", "Vérifier la continuité et l'état du connecteur d'embase à l'arrière de l'appareil.", "Contrôler les tensions d'entrée sur la carte mère."]
               },
               {
                 title: "Bruit anormal ou vibrations",
